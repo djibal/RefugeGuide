@@ -13,7 +13,7 @@
   Upload and securely manage your asylum-related documents, including ARC, BRP, letters, and more.
 
 - 🌍 **Multilingual Support**  
-  Interface available in English, Arabic, Farsi, Urdu, Pashto, Kurdish, and Welsh — with translation support.
+  Interface available in English, Arabic, Farsi, French, Ukrainian, Urdu, Pashto, and Kurdish — with translation support.
 
 - 📍 **Resources Map**  
   Find NHS clinics, legal aid centres, Citizens Advice, food banks, and more near your location.
