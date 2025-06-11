@@ -100,22 +100,16 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		944A852C2DF86B6C004DB9D9 /* RefugeGuide */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = RefugeGuide;
 			sourceTree = "<group>";
 		};
 		944A853D2DF86B74004DB9D9 /* RefugeGuideTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = RefugeGuideTests;
 			sourceTree = "<group>";
 		};
 		944A85472DF86B74004DB9D9 /* RefugeGuideUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = RefugeGuideUITests;
 			sourceTree = "<group>";
 		};
@@ -158,7 +152,6 @@
 				0EDB859C23C3D2FA6526DC3A /* Pods-RefugeGuide.debug.xcconfig */,
 				667566E1E2571DDA6107CFBC /* Pods-RefugeGuide.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
