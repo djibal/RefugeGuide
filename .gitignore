@@ -5,8 +5,10 @@ DerivedData/
 *.xcodeproj/xcuserdata
 *.xcuserstate
 
-# Firebase
+# Firebase config
 GoogleService-Info.plist
+GoogleService-Info*.plist
+
 
 # CocoaPods
 Pods/

@@ -45,41 +45,31 @@ struct DocumentChecklistView: View {
                         isUploading = false
                         
                         switch result {
-                        case .success(let downloadURLString):
-                            self.uploadedFileURL = downloadURLString
-
-                            // ✅ Optional reset after upload
-                            self.uploadedFileURL = nil
+                        case .success(let (downloadURL, contentType)):
+                            self.uploadedFileURL = downloadURL.absoluteString
                             self.showSuccess = true
-
-                            let fileName = selectedURL.lastPathComponent
-                            let contentType = "application/pdf"
                             
-                            if let downloadURL = URL(string: downloadURLString) {
-                                print("📤 Saving document for user ID: \(Auth.auth().currentUser?.uid ?? "nil")")
-
-                                DocumentUploader.shared.saveDocumentMetadata(
-                                    fileName: fileName,
-                                    downloadURL: downloadURL,
-                                    contentType: contentType
-                                ) { error in
-                                    if let error = error {
-                                        print("❌ Firestore save failed: \(error.localizedDescription)")
-                                    } else {
-                                        print("✅ Firestore metadata saved")
-                                    }
+                            let fileName = selectedURL.lastPathComponent
+                            
+                            DocumentUploader.shared.saveDocumentMetadata(
+                                fileName: fileName,
+                                downloadURL: downloadURL,
+                                contentType: contentType
+                            ) { error in
+                                if let error = error {
+                                    print("❌ Metadata save failed: \(error.localizedDescription)")
                                 }
                             }
                             
                         case .failure(let error):
-                            print("Upload failed: \(error.localizedDescription)")
+                            print("❌ Upload failed: \(error.localizedDescription)")
                         }
                     }
                 }
             }
+            .toast(isPresenting: $showSuccess) {
+                AlertToast(type: .complete(Color.green), title: "Upload Successful")
+            }
         }
-        .toast(isPresenting: $showSuccess) {
-            AlertToast(type: .complete(Color.green), title: "Upload Successful")
-         }
-       }
     }
+}

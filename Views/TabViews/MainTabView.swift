@@ -19,9 +19,14 @@ struct MainTabView: View {
                     Label("Resources", systemImage: "lifepreserver")
                 }
 
-            DocumentsView()
+            MyDocumentsView()
                 .tabItem {
                     Label("Documents", systemImage: "doc.text")
+                }
+
+            UploadDocumentView()
+                .tabItem {
+                    Label("Upload", systemImage: "square.and.arrow.up")
                 }
 
             CommunityView()
@@ -36,8 +41,3 @@ struct MainTabView: View {
         }
     }
 }
-
-#Preview {
-    MainTabView()
-}
-

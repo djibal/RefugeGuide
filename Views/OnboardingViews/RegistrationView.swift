@@ -4,30 +4,41 @@
 //
 //  Created by Djibal Ramazani on 02/06/2025.
 //
-
 import SwiftUI
 
 struct RegistrationView: View {
-    @State private var firstName = ""
-    @State private var preferredName = ""
-    @State private var middleName = ""
-    @State private var lastName = ""
-    @State private var agreedToPolicy = false
+    @AppStorage("firstName") private var firstName = ""
+    @AppStorage("preferredName") private var preferredName = ""
+    @AppStorage("middleName") private var middleName = ""
+    @AppStorage("lastName") private var lastName = ""
+    @AppStorage("agreedToPolicy") private var agreedToPolicy = false
 
     var body: some View {
-        // START OF NavigationStack
         NavigationStack {
             Form {
                 Section(header: Text("Personal Details")) {
                     TextField("First Name", text: $firstName)
+                        .autocapitalization(.words)
+
                     TextField("Preferred Name (optional)", text: $preferredName)
+                        .autocapitalization(.words)
+
                     TextField("Middle Name (optional)", text: $middleName)
+                        .autocapitalization(.words)
+
                     TextField("Last Name", text: $lastName)
+                        .autocapitalization(.words)
                 }
 
                 Section {
                     Toggle(isOn: $agreedToPolicy) {
-                        Text("I agree to RefugeGuide’s Data Use Policy (linked) per UK GDPR.")
+                        HStack(spacing: 4) {
+                            Text("I agree to RefugeGuide’s")
+                            Link("Data Use Policy", destination: URL(string: "https://refugeguide.org/privacy")!)
+                                .foregroundColor(.blue)
+                                .underline()
+                            Text("per UK GDPR.")
+                        }
                     }
                 }
 
@@ -41,7 +52,6 @@ struct RegistrationView: View {
             }
             .navigationTitle("Registration")
         }
-        // END OF NavigationStack
     }
 
     var formIsValid: Bool {

@@ -1,0 +1,176 @@
+//
+//  MyDocumentsView.swift
+//  RefugeGuide
+//
+//  Created by Djibal Ramazani on 14/06/2025.
+import SwiftUI
+import FirebaseStorage
+import FirebaseFirestore
+import FirebaseAuth
+
+struct UploadedDocument: Identifiable {
+    let id: String
+    let fileName: String
+    let downloadURL: URL
+    let timestamp: Date
+    let category: String
+}
+
+struct MyDocumentsView: View {
+    @State private var documents: [UploadedDocument] = []
+    @State private var filteredDocuments: [UploadedDocument] = []
+    @State private var selectedCategory: String = NSLocalizedString("All", comment: "")
+    @State private var isLoading = true
+    @State private var errorMessage: String?
+
+    let documentCategories = [
+        NSLocalizedString("All", comment: ""),
+        NSLocalizedString("ARC (Asylum Registration Card)", comment: ""),
+        NSLocalizedString("BRP (Biometric Residence Permit)", comment: ""),
+        NSLocalizedString("Home Office Letter", comment: ""),
+        NSLocalizedString("Court Document", comment: ""),
+        NSLocalizedString("Travel Document", comment: ""),
+        NSLocalizedString("Other", comment: "")
+    ]
+
+    var body: some View {
+        NavigationStack {
+            VStack {
+                Picker(NSLocalizedString("Filter by Type", comment: ""), selection: $selectedCategory) {
+                    ForEach(documentCategories, id: \.self) { category in
+                        Text(category)
+                    }
+                }
+                .pickerStyle(.menu)
+                .padding(.horizontal)
+
+                if isLoading {
+                    ProgressView(NSLocalizedString("Loading your documents...", comment: ""))
+                        .padding()
+                } else if let errorMessage = errorMessage {
+                    Text("❌ \(errorMessage)")
+                        .foregroundColor(.red)
+                        .padding()
+                } else if filteredDocuments.isEmpty {
+                    VStack {
+                        Text(NSLocalizedString("No documents found for the selected type.", comment: ""))
+                            .font(.headline)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                        Spacer()
+                    }
+                } else {
+                    List {
+                        ForEach(filteredDocuments) { doc in
+                            Link(destination: doc.downloadURL) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(doc.fileName)
+                                        .font(.headline)
+                                    Text(doc.category)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                    Text(String(format: NSLocalizedString("Uploaded on %@", comment: ""), doc.timestamp.formatted(date: .abbreviated, time: .shortened)))
+                                        .font(.caption2)
+                                        .foregroundColor(.gray)
+                                }
+                            }
+                        }
+                        .onDelete(perform: deleteDocument)
+                    }
+                    .refreshable {
+                        fetchDocuments()
+                    }
+                }
+            }
+            .padding(.top)
+            .navigationTitle(NSLocalizedString("My Documents", comment: ""))
+            .onAppear(perform: fetchDocuments)
+            .onChange(of: selectedCategory) { _ in
+                applyFilter()
+            }
+        }
+    }
+
+    func fetchDocuments() {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            errorMessage = NSLocalizedString("User not logged in.", comment: "")
+            isLoading = false
+            return
+        }
+
+        let db = Firestore.firestore()
+        db.collection("users")
+            .document(userId)
+            .collection("documents")
+            .order(by: "timestamp", descending: true)
+            .getDocuments { snapshot, error in
+                isLoading = false
+                if let error = error {
+                    errorMessage = error.localizedDescription
+                } else {
+                    documents = snapshot?.documents.compactMap { doc in
+                        let data = doc.data()
+                        guard
+                            let fileName = data["fileName"] as? String,
+                            let urlStr = data["downloadURL"] as? String,
+                            let url = URL(string: urlStr),
+                            let timestamp = data["timestamp"] as? Timestamp
+                        else {
+                            return nil
+                        }
+
+                        let category = data["category"] as? String ?? NSLocalizedString("Other", comment: "")
+
+                        return UploadedDocument(
+                            id: doc.documentID,
+                            fileName: fileName,
+                            downloadURL: url,
+                            timestamp: timestamp.dateValue(),
+                            category: category
+                        )
+                    } ?? []
+                    applyFilter()
+                }
+            }
+    }
+
+    func applyFilter() {
+        if selectedCategory == NSLocalizedString("All", comment: "") {
+            filteredDocuments = documents
+        } else {
+            filteredDocuments = documents.filter { $0.category == selectedCategory }
+        }
+    }
+
+    func deleteDocument(at offsets: IndexSet) {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+
+        for index in offsets {
+            let document = filteredDocuments[index]
+            let db = Firestore.firestore()
+            let storage = Storage.storage()
+
+            // 1. Delete from Firestore
+            db.collection("users")
+                .document(userId)
+                .collection("documents")
+                .document(document.id)
+                .delete()
+
+            // 2. Delete from Firebase Storage
+            let storagePath = "uploads/\(document.fileName)"
+            Task {
+                do {
+                    try await storage.reference(withPath: storagePath).delete()
+                } catch {
+                    print("❌ Failed to delete file from Storage: \(error.localizedDescription)")
+                }
+            }
+
+
+            // 3. Update UI
+            documents.removeAll { $0.id == document.id }
+            applyFilter()
+        }
+    }
+}

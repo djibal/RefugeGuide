@@ -5,7 +5,6 @@
 //  Created by Djibal Ramazani on 02/06/2025.
 //
 
-
 import SwiftUI
 
 struct ExistingAsylumVerificationView: View {
@@ -16,18 +15,17 @@ struct ExistingAsylumVerificationView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                Text("""
-                Enter your Home Office reference number (UAN), which looks like:
-                1234-5678-9012-3456
+                Text("Verify Your Home Office Reference Number")
+                    .font(.title2)
+                    .bold()
+                    .multilineTextAlignment(.center)
 
-                This is different from your NASS reference number.
+                Text("""
+                If you’re an existing asylum seeker, we can help you manage your case, upload documents, and track your application.
+
+                Please enter your **Home Office UAN (Unique Application Number)** below:
                 """)
                 .font(.body)
-                .multilineTextAlignment(.center)
-
-                Text("Enter your Home Office reference number (UAN)")
-                    .font(.body)
-                    .multilineTextAlignment(.center)
 
                 TextField("e.g. 1234-5678-9012-3456", text: $referenceNumber)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -70,22 +68,27 @@ struct ExistingAsylumVerificationView: View {
                     }
                 }
 
-                Spacer()
+                Button("Skip and Continue to Registration") {
+                    // Optional path if user wants to continue without UAN
+                }
+                .foregroundColor(.blue)
+                .padding(.top)
+
+                Divider()
 
                 Text("""
-                🔒 Your Unique Application Number (UAN) is encrypted during verification.
+                🔒 Your UAN is encrypted during verification.
 
-                You can usually find it on:
-                - Your Home Office application confirmation email
-                - Your ARC (Asylum Registration Card)
+                You can find it on:
+                • Home Office confirmation email  
+                • ARC (Asylum Registration Card)
 
-                ❌ Do not enter your NASS reference number here — it’s used for support services only.
+                ⚠️ Do not enter your NASS number — that’s for support services only.
                 """)
                 .font(.footnote)
                 .foregroundColor(.gray)
-                .multilineTextAlignment(.center)
+                .multilineTextAlignment(.leading)
                 .padding(.horizontal)
-
             }
             .padding()
         }
@@ -93,7 +96,6 @@ struct ExistingAsylumVerificationView: View {
     }
 
     func verifyReference() {
-        // Simulated match for testing — use exact format
         if referenceNumber.trimmingCharacters(in: .whitespacesAndNewlines).uppercased() == "1234-5678-9012-3456" {
             isVerified = true
             showError = false
@@ -102,8 +104,4 @@ struct ExistingAsylumVerificationView: View {
             isVerified = false
         }
     }
-}
-
-#Preview {
-    ExistingAsylumVerificationView()
 }

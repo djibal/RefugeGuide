@@ -5,7 +5,6 @@
 //  Created by Djibal Ramazani on 03/06/2025.
 //
 
-// FileUploader.swift
 import Foundation
 import FirebaseStorage
 
@@ -14,33 +13,49 @@ class FileUploader {
     
     private init() {}
     
-    func uploadFile(url: URL, completion: @escaping (Result<String, Error>) -> Void) {
+    func uploadFile(
+        url: URL,
+        completion: @escaping (Result<(URL, String), Error>) -> Void
+    ) {
         let fileName = url.lastPathComponent
         let ref = Storage.storage().reference().child("uploads/\(fileName)")
-        
+
         do {
             let fileData = try Data(contentsOf: url)
-            print("📦 Loaded file data: \(fileData.count) bytes")
-            
-            ref.putData(fileData, metadata: nil) { metadata, error in
+            let contentType = url.pathExtension.lowercased().mimeType()
+
+            let metadata = StorageMetadata()
+            metadata.contentType = contentType
+
+            ref.putData(fileData, metadata: metadata) { _, error in
                 if let error = error {
-                    print("❌ Upload failed: \(error.localizedDescription)")
                     completion(.failure(error))
                 } else {
-                    ref.downloadURL { url, error in
-                        if let error = error {
-                            print("❌ Failed to get download URL: \(error.localizedDescription)")
-                            completion(.failure(error))
-                        } else if let url = url {
-                            print("✅ Download URL: \(url.absoluteString)")
-                            completion(.success(url.absoluteString))
+                    ref.downloadURL { downloadURL, error in
+                        if let downloadURL = downloadURL {
+                            completion(.success((downloadURL, contentType)))
+                        } else {
+                            completion(.failure(error ?? NSError()))
                         }
                     }
                 }
             }
         } catch {
-            print("❌ Failed to read file data: \(error.localizedDescription)")
             completion(.failure(error))
+        }
+    }
+}
+
+// MARK: - Helper
+extension String {
+    func mimeType() -> String {
+        switch self {
+        case "pdf": return "application/pdf"
+        case "jpg", "jpeg": return "image/jpeg"
+        case "png": return "image/png"
+        case "doc": return "application/msword"
+        case "docx": return "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        default: return "application/octet-stream"
         }
     }
 }

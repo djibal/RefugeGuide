@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUI
 
 struct LanguagePickerView: View {
     @AppStorage("selectedLanguage") var selectedLanguage: String = "en"
