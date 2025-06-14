@@ -1,44 +1,67 @@
 # RefugeGuide 🇬🇧
 
-**RefugeGuide** is a secure, multilingual iOS app designed to support asylum seekers and refugees navigating the UK asylum process. Built with SwiftUI and Firebase, it offers trusted guidance, document tools, and access to local support resources — all in one accessible app.
+**RefugeGuide** is a secure, multilingual iOS app designed to support asylum seekers and refugees navigating the UK asylum process. Built with SwiftUI and Firebase, it offers trusted guidance, document tools, live assistance, and access to local support resources — all in one accessible app.
 
 ---
 
-## ✨ Features
+## ✨ Core Features
 
 - 🧾 **Application Tracker**  
-  Follow your asylum application's status: screening, interviews, decision, and outcome.
+  Track your asylum application's progress: screening, interviews, decisions, and appeals.
 
 - 📂 **Document Upload & Storage**  
-  Upload and securely manage your asylum-related documents, including ARC, BRP, letters, and more.
+  Upload and manage asylum-related documents (ARC, BRP, Home Office letters) securely in the cloud.
 
-- 🌍 **Multilingual Support**  
-  Interface available in English, Arabic, Farsi, French, Ukrainian, Urdu, Pashto, and Kurdish — with translation support.
+- 🗂️ **Document Categories + Filtering**  
+  Tag your uploads by type (ARC, BRP, etc.) and filter them easily.
 
-- 📍 **Resources Map**  
-  Find NHS clinics, legal aid centres, Citizens Advice, food banks, and more near your location.
+- 🔄 **Pull-to-Refresh + File Deletion**  
+  View, refresh, and delete your uploaded documents with ease.
 
-- 🆘 **Emergency Help**  
-  One-tap access to crisis hotlines like Samaritans or Refugee Council; includes "Quick Exit" feature.
+- 🌍 **Multilingual Interface**  
+  App supports English, Arabic, Farsi, French, Pashto, Kurdish, Ukrainian, and Urdu.
 
-- 🤖 **AI Chatbot & Live Help** *(coming soon)*  
-  Ask questions about your rights and status. Escalate to human support when needed.
+- 📍 **Resource Finder (Map)**  
+  Locate NHS clinics, legal help, food banks, housing services near you.
 
-- 🛡️ **GDPR-Compliant & Private**  
-  Your data is encrypted, never shared, and fully compliant with UK GDPR regulations.
+- 🆘 **Emergency Help & Quick Exit**  
+  One-tap access to hotlines (e.g. Samaritans, Refugee Council) with a quick-exit option.
+
+- 🤖 **AI Assistant (Beta)**  
+  Chat with a multilingual AI assistant via OpenAI-powered Firebase Cloud Function.
+
+- 🛂 **eVisa Viewer & Verification**  
+  Simulate immigration status (BRP/eVisa) and store travel permission info.
+
+- 🔐 **Private by Design**  
+  Your data is encrypted, anonymized, and GDPR-compliant.
 
 ---
 
-## 🛠️ Built With
+## 🧠 Upcoming Features
+
+- [ ] AI Document Processing (OCR + NLP via ML Kit or GPT)
+- [ ] AR Navigation to Support Services (ARKit + CoreLocation)
+- [ ] Video Consultation (Agora.io Integration)
+- [ ] Biometric Login (Face ID / Touch ID)
+- [ ] Offline Forms & Emergency Info
+- [ ] Human Support Escalation (Live Help)
+
+---
+
+## 🛠️ Tech Stack
 
 - **SwiftUI** (iOS 16+)
-- **Firebase** (Auth, Firestore, Storage)
-- **MapKit** for local resources
-- **CocoaPods** for dependency management
+- **Firebase** (Auth, Firestore, Storage, Functions)
+- **OpenAI SDK** (via Firebase Functions)
+- **MapKit** (local resource discovery)
+- **CocoaPods** & **Swift Package Manager**
+- **Node.js 18/20** for Firebase backend
+- **Multilingual `.strings` Localization**
 
 ---
 
-## 📁 Folder Structure
+## 📁 Project Structure
 
 RefugeGuide/
 ├── Views/
@@ -47,40 +70,40 @@ RefugeGuide/
 │ ├── DocumentViews/
 │ ├── CommunityViews/
 │ ├── SettingsViews/
+│ ├── Components/
 ├── Models/
 ├── Services/
 ├── Utilities/
 ├── ViewModels/
+├── Firebase/ (functions/chatWithGPT)
 
 
 ---
 
-## 🚧 Roadmap
+## 🔐 Security
 
-- [x] Language Picker & Welcome Flow  
-- [x] Firebase Auth + Registration  
-- [x] Onboarding for asylum seekers  
-- [ ] Document storage & sync  
-- [ ] Dashboard with status tracker  
-- [ ] Emergency support screen  
-- [ ] Help chatbot + live escalation  
-- [ ] Offline form downloads  
-- [ ] Localization system  
+Sensitive keys like `GoogleService-Info.plist` are excluded from the repo and managed via `.gitignore`.
 
 ---
 
-## 🔐 Security Notice
+## 📦 Backend Setup
 
-Please note: `GoogleService-Info.plist` and other sensitive keys are excluded from this repo and handled securely via `.gitignore`.
+- `firebase init functions` in `refugeguide2025/`
+- Installed OpenAI SDK + Firebase Admin SDK
+- Created `chatWithGPT` function using Node.js 18 (deployed via Node.js 20)
+- Secured OpenAI API key via environment config
+- ✅ Deployed & tested via Firebase CLI
 
 ---
 
-## 🤝 Acknowledgements
+## 🤝 Credits
 
-Developed with input from UK refugee charities and guided by best practices in digital accessibility, security, and trauma-informed design.
+Developed with input from UK refugee organizations and trauma-informed design principles.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+MIT License – use freely, contribute openly, protect privacy.
+
+
