@@ -1,21 +1,71 @@
-# Xcode
+# ========================
+# 📦 Xcode / macOS
+# ========================
 DerivedData/
 *.xcworkspace
 *.xcodeproj/project.xcworkspace/xcuserdata
 *.xcodeproj/xcuserdata
 *.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+*.xcresult
+*.xcuserdatad
 
-# Firebase config
+# ========================
+# 🔐 Firebase / Secrets
+# ========================
 GoogleService-Info.plist
 GoogleService-Info*.plist
+.env
+*.key
+*.pem
+*.p12
+*.mobileprovision
+*.xcconfig # If using for secrets
 
-
-# CocoaPods
+# ========================
+# 📦 CocoaPods
+# ========================
 Pods/
 Podfile.lock
 
-# SwiftPM
+# ========================
+# 📦 Swift Package Manager
+# ========================
 .build/
+Package.resolved
 
-# Misc
+# ========================
+# 🧪 Simulator / Debug / Archive
+# ========================
+*.dSYM
+*.ipa
+*.app
+*.xcarchive
+
+# ========================
+# 🧪 Unit/UI Test Output
+# ========================
+Logs/
+TestResults/
+*.gcda
+*.gcno
+*.profraw
+*.profdata
+
+# ========================
+# 🧹 Miscellaneous
+# ========================
 *.DS_Store
+*.swp
+*.swo
+*.orig
+.idea/
+*.log
+*.bak
+*.tmp
+GoogleService-Info.plist
+
+# 🔐 Secure local config (not committed)
+SecureConfig.swift
+

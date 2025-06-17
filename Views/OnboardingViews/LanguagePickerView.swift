@@ -14,7 +14,7 @@ struct LanguagePickerView: View {
     let languages: [(name: String, code: String)] = [
         ("English", "en"),
         ("Arabic", "ar"),
-        ("Farsi", "fa"),
+        ("Persian", "fa"),
         ("French", "fr"),
         ("Ukrainian", "uk"),
         ("Urdu", "ur"),

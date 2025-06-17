@@ -4,12 +4,13 @@
 //
 //  Created by Djibal Ramazani on 11/06/2025.
 
-import FirebaseAuth
 import SwiftUI
+import FirebaseAuth
+import FirebaseCore
 import AuthenticationServices
 import GoogleSignIn
 import CryptoKit
-import Firebase
+
 
 struct SignInView: View {
     @State private var email = ""
@@ -164,10 +165,9 @@ struct SignInView: View {
                let tokenString = String(data: tokenData, encoding: .utf8) {
 
                 let credential = OAuthProvider.credential(
-                    providerID: .apple,
+                    withProviderID: "apple.com",
                     idToken: tokenString,
-                    rawNonce: currentNonce ?? "",
-                    accessToken: ""
+                    rawNonce: currentNonce ?? ""
                 )
 
                 Auth.auth().signIn(with: credential) { result, error in

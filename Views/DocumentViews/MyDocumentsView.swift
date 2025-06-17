@@ -63,18 +63,29 @@ struct MyDocumentsView: View {
                     List {
                         ForEach(filteredDocuments) { doc in
                             Link(destination: doc.downloadURL) {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(doc.fileName)
-                                        .font(.headline)
-                                    Text(doc.category)
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                    Text(String(format: NSLocalizedString("Uploaded on %@", comment: ""), doc.timestamp.formatted(date: .abbreviated, time: .shortened)))
-                                        .font(.caption2)
-                                        .foregroundColor(.gray)
+                                HStack(alignment: .top, spacing: 12) {
+                                    let (icon, color) = iconAndColor(for: doc.category)
+
+                                    Image(systemName: icon)
+                                        .foregroundColor(color)
+                                        .frame(width: 24)
+
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(doc.fileName.removingPercentEncoding ?? doc.fileName)
+                                            .font(.headline)
+
+                                        Text(doc.category)
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+
+                                        Text(String(format: NSLocalizedString("Uploaded on %@", comment: ""), doc.timestamp.formatted(date: .abbreviated, time: .shortened)))
+                                            .font(.caption2)
+                                            .foregroundColor(.gray)
+                                    }
                                 }
                             }
                         }
+
                         .onDelete(perform: deleteDocument)
                     }
                     .refreshable {
@@ -171,6 +182,23 @@ struct MyDocumentsView: View {
             // 3. Update UI
             documents.removeAll { $0.id == document.id }
             applyFilter()
+        }
+    }
+    // MARK: - Helper for Category Icon + Color
+    func iconAndColor(for category: String) -> (icon: String, Color) {
+        switch category {
+        case "ARC (Asylum Registration Card)":
+            return ("person.badge.shield.checkmark", .purple)
+        case "BRP (Biometric Residence Permit)":
+            return ("idcard", .blue)
+        case "Home Office Letter":
+            return ("envelope", .green)
+        case "Court Document":
+            return ("doc.text.fill", .red)
+        case "Travel Document":
+            return ("airplane", .orange)
+        default:
+            return ("doc", .gray)
         }
     }
 }

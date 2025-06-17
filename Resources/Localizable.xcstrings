@@ -1,0 +1,786 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "24/7 immediate support" : {
+      "comment" : "Description for hotline",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دعم فوري على مدار الساعة طوال أيام الأسبوع   24/7"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24/7 immediate support"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پشتیبانی فوری ۲۴ ساعته\n"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پشتیبانی فوری ۲۴ ساعته\t"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assistance 24h/24\t"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پشتگیری فوری ۲٤ ساعەتە\n"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "۲۴/۷ بېړنۍ مرسته\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Підтримка 24/7\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فوری مدد 24/7\n"
+          }
+        }
+      }
+    },
+    "Advice and support" : {
+      "comment" : "Refugee Council description",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نصيحة ودعم"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advice and support"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشاوره و پشتیبانی"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشاوره و پشتیبانی\t"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conseil et soutien\t"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ڕاوێژ و یارمەتی\n"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشوره او ملاتړ\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Консультація і підтримка\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشورہ اور مدد\n"
+          }
+        }
+      }
+    },
+    "Call" : {
+      "comment" : "Button label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اتصل"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Call"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تماس\n"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تماس"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appeler\t"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پەیوەندیکردن"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "زنګ ووهئ\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дзвінок\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کال کریں\n"
+          }
+        }
+      }
+    },
+    "Crisis Hotline" : {
+      "comment" : "Name of support hotline",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخط الساخن للطوارئ"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crisis Hotline"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خط تماس اضطراری\n"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خط تماس اضطراری"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ligne d’urgence\t"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هێڵی فۆری\n"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "د بیړني اړیکو شمېره\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Гаряча лінія\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ہنگامی ہاٹ لائن\n"
+          }
+        }
+      }
+    },
+    "Emergency Services" : {
+      "comment" : "999 help",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خدمات الطوارئ"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emergency Services"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خدمات اضطراری\n"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خدمات اضطراری\t"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Services d’urgence\t"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خزمەتگوزارییە فۆریەکان\n"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "د بیړني خدمات\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Служби екстреної допомоги\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ایمرجنسی سروسز\n"
+          }
+        }
+      }
+    },
+    "Help Resources" : {
+      "comment" : "Title for help tab",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "موارد المساعدة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help Resources"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منابع کمک‌رسانی"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منابع کمک‌رسانی"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ressources d’aide\t"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سەرچاوە یارمەتی\n"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "د مرستې سرچینې\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Допомога та ресурси\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مدد کے وسائل"
+          }
+        }
+      }
+    },
+    "NHS 111" : {
+      "comment" : "Medical advice hotline",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\t١١١ الصحة الوطنية"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NHS 111"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خدمات درمانی ۱۱۱\n"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خدمات درمانی ۱۱۱\t"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Urgences médicales 111\t"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ئەنه‌چه‌س ١١١\n"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "د ان اېچ اېس ۱۱۱\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "НСЗ 111\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "این ایچ ایس ۱۱۱\n"
+          }
+        }
+      }
+    },
+    "Non-emergency medical advice" : {
+      "comment" : "NHS line purpose",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نصيحة طبية غير طارئة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non-emergency medical advice"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشاوره پزشکی غیر اضطراری\n"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشاوره پزشکی غیر اضطراری\t"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conseil médical non urgent\t"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ڕاوه‌ژکاری نه‌گه‌ڕاوی پزیشکی\n"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "د نه بیړنۍ طبي مشوره\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Медична консультація\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غیر ہنگامی طبی مشورہ\n"
+          }
+        }
+      }
+    },
+    "Police, Ambulance, Fire" : {
+      "comment" : "Description of 999\n",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الشرطة، الإسعاف، الإطفاء"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Police, Ambulance, Fire"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پلیس، آمبولانس، آتش‌نشانی\n"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پلیس، آمبولانس، آتش‌نشانی\t"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Police, Ambulance, Pompiers\t"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پۆلیس، ئەمبولانس، ئاگرکوژە\n"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پولیس، امبولانس، اور وژونکی\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поліція, Швидка, Пожежна\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پولیس، ایمبولینس، آگ\n"
+          }
+        }
+      }
+    },
+    "Quick Exit" : {
+      "comment" : "Emergency safe-exit button label",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خروج سريع"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick Exit"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خروج اضطراری\n"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خروج اضطراری\t"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortie rapide\t"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دەرچوونی خێرا\n"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "چټک وتل\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Швидкий вихід\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فوری خروج\n"
+          }
+        }
+      }
+    },
+    "Refugee Council" : {
+      "comment" : "Name of support group",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مجلس اللاجئين"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refugee Council"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شورای پناهندگان\n"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شورای پناهندگان\t"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conseil des réfugiés\t"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ئەنجومەنی پەنابەرەکان\n"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "د کډوالو شورا\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рада біженців\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پناہ گزین کونسل\n"
+          }
+        }
+      }
+    },
+    "Safety Plan" : {
+      "comment" : "Title for SafetyPlanView",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خطة أمان"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safety Plan"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طرح ایمنی\n"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "طرح ایمنی\t"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plan de sécurité"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پلانی سەلامەتی\n"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "د خوندیتوب پلان\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "План безпеки\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حفاظتی منصوبہ\n"
+          }
+        }
+      }
+    },
+    "Save Safety Plan" : {
+      "comment" : "Button in SafetyPlanView",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حفظ خطة الأمان"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save Safety Plan"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ذخیره طرح ایمنی"
+          }
+        },
+        "fa-IR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ذخیره طرح ایمنی\t"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer le plan\t"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پاشەکەوتی پلانی سەلامەتی"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پلان ذخیره کړئ\t"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зберегти план\t"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منصوبہ محفوظ کریں"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -13,7 +13,7 @@ struct WelcomeView: View {
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
     @State private var showUserPathScreen = false
 
-    let languages = ["English", "Arabic", "Farsi", "French", "Ukrainian", "Urdu", "Pashto", "Kurdish"]
+    let languages = ["English", "Arabic", "Persian", "French", "Ukrainian", "Urdu", "Pashto", "Kurdish"]
 
     var body: some View {
         NavigationStack {
@@ -73,7 +73,7 @@ func welcomeTitle(for lang: String) -> String {
     switch lang {
     case "Arabic": return "مرحبًا بك في RefugeGuide"
     case "French": return "Bienvenue sur RefugeGuide"
-    case "Farsi": return "به RefugeGuide خوش آمدید"
+    case "Persian": return "به RefugeGuide خوش آمدید"
     case "Urdu": return "RefugeGuide میں خوش آمدید"
     case "Kurdish": return "Bi xêr hatî RefugeGuide"
     case "Pashto": return "RefugeGuide ته ښه راغلاست"
@@ -86,7 +86,7 @@ func welcomeMessage(for lang: String) -> String {
     switch lang {
     case "Arabic": return "دليلك الموثوق في عملية اللجوء داخل المملكة المتحدة."
     case "French": return "Votre guide de confiance pour le processus d'asile au Royaume-Uni."
-    case "Farsi": return "راهنمای قابل اعتماد شما در روند پناهندگی در بریتانیا."
+    case "Persian": return "راهنمای مورد اعتماد شما در روند پناهندگی در بریتانیا."
     case "Urdu": return "برطانیہ میں پناہ کے عمل کے لیے آپ کا قابل اعتماد ساتھی۔"
     case "Kurdish": return "Rehberê te ya piştrast di pêvajoya penaberî de li UKê."
     case "Pashto": return "ستاسو د پناه غوښتنې پروسې لپاره باوري لارښود په برتانیا کې."

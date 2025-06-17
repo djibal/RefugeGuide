@@ -4,7 +4,9 @@
 //
 //  Created by Djibal Ramazani on 02/06/2025.
 //
+
 import SwiftUI
+import FirebaseAuth
 
 struct RegistrationView: View {
     @AppStorage("firstName") private var firstName = ""
@@ -12,22 +14,27 @@ struct RegistrationView: View {
     @AppStorage("middleName") private var middleName = ""
     @AppStorage("lastName") private var lastName = ""
     @AppStorage("agreedToPolicy") private var agreedToPolicy = false
+    
+    @State private var email = ""
+    @State private var password = ""
+    @State private var errorMessage: String?
 
     var body: some View {
         NavigationStack {
             Form {
                 Section(header: Text("Personal Details")) {
                     TextField("First Name", text: $firstName)
-                        .autocapitalization(.words)
-
                     TextField("Preferred Name (optional)", text: $preferredName)
-                        .autocapitalization(.words)
-
                     TextField("Middle Name (optional)", text: $middleName)
-                        .autocapitalization(.words)
-
                     TextField("Last Name", text: $lastName)
-                        .autocapitalization(.words)
+                }
+
+                Section(header: Text("Account Details")) {
+                    TextField("Email", text: $email)
+                        .keyboardType(.emailAddress)
+                        .autocapitalization(.none)
+
+                    SecureField("Password", text: $password)
                 }
 
                 Section {
@@ -43,11 +50,21 @@ struct RegistrationView: View {
                 }
 
                 Section {
-                    NavigationLink(destination: UserTypeSelectionView()) {
+                    Button {
+                        registerUser()
+                    } label: {
                         Text("Continue")
                             .frame(maxWidth: .infinity)
                     }
                     .disabled(!formIsValid)
+                }
+
+                // Optional: Error message display
+                if let errorMessage = errorMessage {
+                    Section {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                    }
                 }
             }
             .navigationTitle("Registration")
@@ -55,6 +72,22 @@ struct RegistrationView: View {
     }
 
     var formIsValid: Bool {
-        !firstName.isEmpty && !lastName.isEmpty && agreedToPolicy
+        !firstName.isEmpty &&
+        !lastName.isEmpty &&
+        agreedToPolicy &&
+        !email.isEmpty &&
+        password.count >= 6
+    }
+
+    func registerUser() {
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            if let error = error {
+                errorMessage = "Registration failed: \(error.localizedDescription)"
+                return
+            }
+
+            print("✅ User registered: \(result?.user.uid ?? "unknown")")
+            // You can navigate to the next screen here if needed
+        }
     }
 }
