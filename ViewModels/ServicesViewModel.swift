@@ -4,9 +4,9 @@
 //
 //  Created by Djibal Ramazani on 17/06/2025.
 //
-
 import Foundation
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class ServicesViewModel: ObservableObject {
     @Published var services: [LocalService] = []
@@ -22,7 +22,7 @@ class ServicesViewModel: ObservableObject {
                 }
 
                 self.services = documents.compactMap { document in
-                    LocalService(document: document.data())
+                    try? document.data(as: LocalService.self)
                 }
             }
     }

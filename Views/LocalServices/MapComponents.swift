@@ -169,7 +169,8 @@ struct MapRouteOverlay: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
         
-        guard !route.polyline.points().isEmpty else { return path }
+        guard route.polyline.pointCount > 0 else { return path }
+
         
         let points = route.polyline.points()
         path.move(to: points[0].cgPoint)
@@ -213,8 +214,8 @@ extension Array where Element == CLLocationCoordinate2D {
         }
         
         return (
-            latitudeDelta: max(0.05, (maxLat - minLat) * 1.2),
-            longitudeDelta: max(0.05, (maxLon - minLon) * 1.2)
+            latitudeDelta: Swift.max(0.05, (maxLat - minLat) * 1.2),
+            longitudeDelta: Swift.max(0.05, (maxLon - minLon) * 1.2)
         )
     }
 }
@@ -222,7 +223,7 @@ extension Array where Element == CLLocationCoordinate2D {
 extension MKMapRect {
     var region: MKCoordinateRegion {
         MKCoordinateRegion(
-            center: MKCoordinatePointForMapPoint(origin),
+            center: origin.coordinate,
             span: MKCoordinateSpan(
                 latitudeDelta: size.height * 0.5 / 111_000,
                 longitudeDelta: size.width * 0.5 / 111_000

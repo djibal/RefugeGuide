@@ -24,8 +24,8 @@ extension Sequence where Element == CLLocationCoordinate2D {
             return (0.1, 0.1)
         }
         return (
-            latitudeDelta: max(0.05, (maxLat - minLat) * 1.2),
-            longitudeDelta: max(0.05, (maxLon - minLon) * 1.2)
+            latitudeDelta: Swift.max(0.05, (maxLat - minLat) * 1.2),
+            longitudeDelta: Swift.max(0.05, (maxLon - minLon) * 1.2)
         )
     }
 }

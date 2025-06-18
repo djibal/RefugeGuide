@@ -6,14 +6,12 @@
 import Foundation
 import CoreLocation
 import MapKit
-import Foundation
-import CoreLocation
-import MapKit
-import Foundation
-import CoreLocation
+import FirebaseFirestoreSwift 
+
 
 struct LocalService: Identifiable, Codable, Hashable {
-    
+    @DocumentID var id: String?  // ✅ THIS is enough
+
     var distanceString: String {
         if let userLocation = CLLocationManager().location {
             return distance(from: userLocation)
@@ -22,7 +20,6 @@ struct LocalService: Identifiable, Codable, Hashable {
         }
     }
 
-    let id: String
     let name: String
     let category: String
     let description: String
