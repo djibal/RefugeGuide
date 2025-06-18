@@ -60,7 +60,6 @@
 		945291A92E011B3D00D0BAE0 /* ServiceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945291A82E011B3500D0BAE0 /* ServiceRow.swift */; };
 		945291AB2E011B5E00D0BAE0 /* ServiceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945291AA2E011B5500D0BAE0 /* ServiceDetailView.swift */; };
 		9463D6272E01EB58003C3C63 /* MapComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9463D6262E01EB4F003C3C63 /* MapComponents.swift */; };
-		9463D6282E020635003C3C63 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9444DB372DFC7BA600A167FC /* Info.plist */; };
 		948C5B0A2DFF719300837EB3 /* ConsultationScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948C5B092DFF718C00837EB3 /* ConsultationScheduleViewModel.swift */; };
 		948C5B0D2DFF8E4800837EB3 /* FlowPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948C5B0C2DFF8E4200837EB3 /* FlowPreview.swift */; };
 		94AA6DC12DF8C78100858077 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 94AA6DC02DF8C78100858077 /* AlertToast */; };
@@ -367,8 +366,8 @@
 		944A85212DF86B6C004DB9D9 = {
 			isa = PBXGroup;
 			children = (
-				9444DB372DFC7BA600A167FC /* Info.plist */,
 				94325D802DF89C1F00B3DBC4 /* AppDelegate.swift */,
+				9444DB372DFC7BA600A167FC /* Info.plist */,
 				94325D7E2DF89C1000B3DBC4 /* Models */,
 				94325D7A2DF89BFE00B3DBC4 /* Services */,
 				945291922E00A70B00D0BAE0 /* Resources */,
@@ -568,7 +567,6 @@
 			files = (
 				945291942E00A9CF00D0BAE0 /* Localizable.xcstrings in Resources */,
 				94D190312DFA162700D3E366 /* GoogleService-Info.plist in Resources */,
-				9463D6282E020635003C3C63 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -874,7 +872,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"RefugeGuide/Preview Content\"";
 				DEVELOPMENT_TEAM = 4L6567GY3U;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -906,7 +905,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"RefugeGuide/Preview Content\"";
 				DEVELOPMENT_TEAM = 4L6567GY3U;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
