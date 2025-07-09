@@ -24,9 +24,12 @@ struct LanguagePickerView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("Select Your Preferred Language")
-                .font(.title2)
+            Text("Select your preferred language")
+                .font(.title2.bold())
                 .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.5)
+                .padding()
 
             Picker("Language", selection: $selectedLanguage) {
                 ForEach(languages, id: \.code) { lang in

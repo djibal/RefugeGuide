@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AgoraRtcKit
 
 struct VideoCallView: View {
     @ObservedObject var vm: VideoConsultationViewModel
@@ -13,11 +14,11 @@ struct VideoCallView: View {
     var body: some View {
         ZStack {
             // Remote video
-            AgoraVideoCanvas(view: vm.remoteVideoView)
+            AgoraVideoView(view: vm.remoteVideoView)
                 .edgesIgnoringSafeArea(.all)
 
             // Local video preview
-            AgoraVideoCanvas(view: vm.localVideoView)
+            AgoraVideoView(view: vm.localVideoView)
                 .frame(width: 100, height: 150)
                 .cornerRadius(8)
                 .padding()
@@ -46,3 +47,14 @@ struct VideoCallView: View {
         }
     }
 }
+
+struct AgoraVideoView: UIViewRepresentable {
+    let view: UIView?
+
+    func makeUIView(context: Context) -> UIView {
+        return view ?? UIView()
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {}
+}
+

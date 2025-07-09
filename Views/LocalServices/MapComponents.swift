@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import MapKit
+@preconcurrency import MapKit
 
 // MARK: - Map Annotation View
 struct MapAnnotationView: View {

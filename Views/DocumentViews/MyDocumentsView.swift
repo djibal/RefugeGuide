@@ -8,7 +8,7 @@ import FirebaseStorage
 import FirebaseFirestore
 import FirebaseAuth
 
-struct UploadedDocument: Identifiable {
+struct UploadedDoc: Identifiable {
     let id: String
     let fileName: String
     let downloadURL: URL
@@ -17,8 +17,8 @@ struct UploadedDocument: Identifiable {
 }
 
 struct MyDocumentsView: View {
-    @State private var documents: [UploadedDocument] = []
-    @State private var filteredDocuments: [UploadedDocument] = []
+    @State private var documents: [UploadedDoc] = []
+    @State private var filteredDocuments: [UploadedDoc] = []
     @State private var selectedCategory: String = NSLocalizedString("All", comment: "")
     @State private var isLoading = true
     @State private var errorMessage: String?
@@ -35,14 +35,18 @@ struct MyDocumentsView: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
-                Picker(NSLocalizedString("Filter by Type", comment: ""), selection: $selectedCategory) {
-                    ForEach(documentCategories, id: \.self) { category in
-                        Text(category)
+            Form {
+                Section(header: Text(NSLocalizedString("Filter by Type", comment: ""))) {
+                    Picker("", selection: $selectedCategory) {
+                        ForEach(documentCategories, id: \.self) { category in
+                            Text(category).tag(category)
+                        }
+                    }
+                    .pickerStyle(.inline)
+                    .onChange(of: selectedCategory) { _ in
+                        applyFilter()
                     }
                 }
-                .pickerStyle(.menu)
-                .padding(.horizontal)
 
                 if isLoading {
                     ProgressView(NSLocalizedString("Loading your documents...", comment: ""))
@@ -52,15 +56,11 @@ struct MyDocumentsView: View {
                         .foregroundColor(.red)
                         .padding()
                 } else if filteredDocuments.isEmpty {
-                    VStack {
-                        Text(NSLocalizedString("No documents found for the selected type.", comment: ""))
-                            .font(.headline)
-                            .multilineTextAlignment(.center)
-                            .padding()
-                        Spacer()
-                    }
+                    Text(NSLocalizedString("No documents found for the selected type.", comment: ""))
+                        .multilineTextAlignment(.center)
+                        .padding()
                 } else {
-                    List {
+                    Section(header: Text(NSLocalizedString("Documents", comment: ""))) {
                         ForEach(filteredDocuments) { doc in
                             Link(destination: doc.downloadURL) {
                                 HStack(alignment: .top, spacing: 12) {
@@ -85,19 +85,14 @@ struct MyDocumentsView: View {
                                 }
                             }
                         }
-
                         .onDelete(perform: deleteDocument)
-                    }
-                    .refreshable {
-                        fetchDocuments()
                     }
                 }
             }
-            .padding(.top)
             .navigationTitle(NSLocalizedString("My Documents", comment: ""))
             .onAppear(perform: fetchDocuments)
-            .onChange(of: selectedCategory) { _ in
-                applyFilter()
+            .refreshable {
+                fetchDocuments()
             }
         }
     }
@@ -132,7 +127,7 @@ struct MyDocumentsView: View {
 
                         let category = data["category"] as? String ?? NSLocalizedString("Other", comment: "")
 
-                        return UploadedDocument(
+                        return UploadedDoc(
                             id: doc.documentID,
                             fileName: fileName,
                             downloadURL: url,
@@ -161,14 +156,12 @@ struct MyDocumentsView: View {
             let db = Firestore.firestore()
             let storage = Storage.storage()
 
-            // 1. Delete from Firestore
             db.collection("users")
                 .document(userId)
                 .collection("documents")
                 .document(document.id)
                 .delete()
 
-            // 2. Delete from Firebase Storage
             let storagePath = "uploads/\(document.fileName)"
             Task {
                 do {
@@ -178,13 +171,11 @@ struct MyDocumentsView: View {
                 }
             }
 
-
-            // 3. Update UI
             documents.removeAll { $0.id == document.id }
             applyFilter()
         }
     }
-    // MARK: - Helper for Category Icon + Color
+
     func iconAndColor(for category: String) -> (icon: String, Color) {
         switch category {
         case "ARC (Asylum Registration Card)":

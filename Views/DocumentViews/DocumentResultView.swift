@@ -1,0 +1,68 @@
+//
+//  DocumentResultView.swift
+//  RefugeGuide
+//
+//  Created by Djibal Ramazani on 30/06/2025.
+//
+
+import SwiftUI
+
+struct DocumentResultView: View {
+    let result: DocumentAIResult
+    let onRetry: () -> Void
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Document Analysis Result")
+                    .font(.title2)
+                    .padding(.bottom)
+
+                InfoRow(title: "Document Type", value: result.type.rawValue)
+                InfoRow(title: "Validity Status", value: result.validationStatus.rawValue)
+                InfoRow(title: "Expiry Date", value: result.expiryDate?.formatted(date: .abbreviated, time: .omitted) ?? "N/A")
+
+                if !result.issues.isEmpty {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Potential Issues:")
+                            .font(.headline)
+                        ForEach(result.issues, id: \.self) {
+                            Text("• \($0)")
+                        }
+                    }
+                }
+
+                if !result.suggestions.isEmpty {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Recommendations:")
+                            .font(.headline)
+                        ForEach(result.suggestions, id: \.self) {
+                            Text("• \($0)")
+                        }
+                    }
+                }
+
+                Button("Scan Another", action: onRetry)
+                    .buttonStyle(PrimaryButtonStyle())
+                    .padding(.top)
+            }
+            .padding()
+        }
+    }
+
+    private struct InfoRow: View {
+        let title: String
+        let value: String
+
+        var body: some View {
+            HStack {
+                Text(title)
+                    .fontWeight(.medium)
+                Spacer()
+                Text(value)
+                    .foregroundColor(.secondary)
+            }
+            .padding(.vertical, 4)
+        }
+    }
+}

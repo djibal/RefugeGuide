@@ -9,58 +9,63 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct DocumentPickerView: UIViewControllerRepresentable {
-
-
+    var supportedTypes: [UTType] = [.pdf, .image, .text]
     var onDocumentPicked: (URL) -> Void
-
+    var onError: (Error) -> Void = { _ in }
+    
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
     }
-
+    
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
-        let picker = UIDocumentPickerViewController(
-            forOpeningContentTypes: [.pdf, .image, .data],
-            asCopy: true
-        )
+        let picker = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes, asCopy: true)
         picker.delegate = context.coordinator
         picker.allowsMultipleSelection = false
         picker.shouldShowFileExtensions = true
         return picker
     }
-
-
+    
     func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
-
+    
     class Coordinator: NSObject, UIDocumentPickerDelegate {
         let parent: DocumentPickerView
-
+        
         init(parent: DocumentPickerView) {
             self.parent = parent
         }
-
+        
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-            guard let fileURL = urls.first else {
-                print("❌ No file URL returned.")
+            guard let url = urls.first else {
+                parent.onError(URLError(.badURL))
                 return
             }
-
-            print("📂 File selected: \(fileURL)")
-
-            if fileURL.startAccessingSecurityScopedResource() {
-                print("🔐 Access granted to file")
-                defer { fileURL.stopAccessingSecurityScopedResource() }
-
-                // ✅ Check if file is locally readable
-                if FileManager.default.isReadableFile(atPath: fileURL.path) {
-                    parent.onDocumentPicked(fileURL)
+            
+            if url.startAccessingSecurityScopedResource() {
+                defer { url.stopAccessingSecurityScopedResource() }
+                
+                if FileManager.default.isReadableFile(atPath: url.path) {
+                    parent.onDocumentPicked(url)
                 } else {
-                    print("❌ File not locally downloaded or readable.")
+                    parent.onError(DocumentError.unreadableFile)
                 }
             } else {
-                print("❌ Failed to access security-scoped resource")
+                parent.onError(DocumentError.accessDenied)
             }
         }
-
+        
+        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+            parent.onError(DocumentError.cancelled)
+        }
+    }
+    
+    enum DocumentError: Error {
+        case unreadableFile, accessDenied, cancelled
+        var localizedDescription: String {
+            switch self {
+            case .unreadableFile: return "File is not readable"
+            case .accessDenied: return "Access to file denied"
+            case .cancelled: return "Document selection cancelled"
+            }
+        }
     }
 }
-

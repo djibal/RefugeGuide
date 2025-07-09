@@ -4,17 +4,20 @@
 //
 //  Created by Djibal Ramazani on 15/06/2025.
 //
-
 import SwiftUI
+import AgoraRtcKit
 
-struct AgoraVideoCanvas: UIViewRepresentable {
-    let view: UIView
-
+struct AgoraVideoViewRepresentable: UIViewRepresentable {
+    let canvas: AgoraRtcVideoCanvas
+    
     func makeUIView(context: Context) -> UIView {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
         return view
     }
-
+    
     func updateUIView(_ uiView: UIView, context: Context) {
-        // No update needed
+        // Update video canvas settings
+        AgoraManager.shared.agoraKit.setupRemoteVideo(canvas)
     }
 }

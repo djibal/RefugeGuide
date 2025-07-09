@@ -3,119 +3,206 @@
 //  RefugeGuide
 //
 //  Created by Djibal Ramazani on 02/06/2025.
-//
+// MARK: - Static Text Constants
+
+let statusItem1 = "Application Received"
+let statusItem2 = "Interview Scheduled"
+let statusItem3 = "Decision Pending"
+let statusItem4 = "Visa Issued"
+
+let shareCodeTitle = "Your Unique Share Code"
+let shareCodeDescription = "Share this code with caseworkers or officials to give them limited access to your case."
+
+let eVisaInfoButton = "View eVisa Info"
+let portalButton = "Go to UKVI Portal"
+let privacyNote = "Your data is encrypted and securely stored."
+
 import SwiftUI
 
 struct EVisaView: View {
-    @State private var showCopySuccess = false
-
+    @AppStorage("selectedLanguage") private var selectedLanguage = "en"
+    
     var body: some View {
         ScrollView {
-            VStack(spacing: 24) {
-
-                // Profile Image
-                Image(systemName: "person.crop.circle.fill")
-                    .resizable()
-                    .frame(width: 100, height: 100)
-                    .foregroundColor(.gray)
-                    .accessibilityLabel("Your photo")
-
-                // Welcome & App Introduction
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Welcome, Residence Permit Holder")
-                        .font(.title2)
+            VStack(alignment: .leading, spacing: 24) {
+                // Header
+                VStack(alignment: .center) {
+                    Image(systemName: "person.crop.rectangle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
+                        .foregroundColor(.accentColor)
+                    
+                    Text(eVisaTitle)
+                        .font(.title)
                         .bold()
-
-                    Text("""
-                    Congratulations on receiving your UK residence permit.
-
-                    With the RefugeGuide app, you can:
-                    • Securely store your travel or case documents
-                    • View eVisa records and history
-                    • Access local legal and community services
-                    • Get help in multiple languages
-                    """)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 8)
+                    
+                    Text(eVisaSubtitle)
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
                 }
-
-                Divider()
-
-                // Immigration Status Section
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Immigration Status")
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 24)
+                
+                // Status Card
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(statusSectionTitle)
                         .font(.headline)
-
-                    Label("Status: Granted", systemImage: "checkmark.shield.fill")
-                    Label("Visa Type: Asylum Protection", systemImage: "person.fill.checkmark")
-                    Label("Permission to stay: Yes", systemImage: "house.fill")
-                    Label("Expiry Date: 12 May 2026", systemImage: "calendar")
+                    
+                    StatusItem(icon: "checkmark.shield.fill", label: statusItem1)
+                    StatusItem(icon: "calendar", label: statusItem2)
+                    StatusItem(icon: "house.fill", label: statusItem3)
+                    StatusItem(icon: "briefcase.fill", label: statusItem4)
                 }
                 .padding()
-                .background(Color(.systemGray6))
+                .background(Color(.secondarySystemBackground))
                 .cornerRadius(12)
-
-                // Conditions & Rights Section
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Conditions & Rights")
+                
+                // Share Code
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(shareCodeTitle)
                         .font(.headline)
-
-                    Label("Right to Work: Yes", systemImage: "briefcase.fill")
-                    Label("Right to Rent: Yes", systemImage: "building.2.fill")
-                    Label("Eligible for Benefits: Limited", systemImage: "creditcard.fill")
-                    Label("Linked Passport: Valid (123456789)", systemImage: "passport")
-                }
-                .padding()
-                .background(Color(.systemGray6))
-                .cornerRadius(12)
-
-                // Share Code Section
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Share Code")
-                        .font(.headline)
-
-                    Label("Code: ABCD-1234", systemImage: "doc.on.doc")
-
-                    Button("Copy Share Code") {
-                        UIPasteboard.general.string = "ABCD-1234"
-                        showCopySuccess = true
+                    
+                    HStack {
+                        Text("ABCD-1234")
+                            .font(.title2)
+                            .bold()
+                        
+                        Spacer()
+                        
+                        Button(action: copyShareCode) {
+                            Image(systemName: "doc.on.doc")
+                                .font(.title2)
+                        }
                     }
                     .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                    .background(Color(.tertiarySystemBackground))
+                    .cornerRadius(8)
+                    
+                    Text(shareCodeDescription)
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
                 }
-
-                // eVisa Explanation & External Link
-                NavigationLink(destination: EVisaInfoView()) {
-                    Text("What is an eVisa?")
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color(.systemGray5))
-                        .cornerRadius(10)
+                .padding()
+                .background(Color(.secondarySystemBackground))
+                .cornerRadius(12)
+                
+                // Actions
+                VStack(spacing: 16) {
+                    NavigationLink(destination: EVisaInfoView()) {
+                        ActionButton(
+                            title: eVisaInfoButton,
+                            icon: "info.circle",
+                            color: .blue
+                        )
+                    }
+                    
+                    Link(destination: URL(string: "https://www.gov.uk/view-prove-immigration-status")!) {
+                        ActionButton(
+                            title: portalButton,
+                            icon: "globe",
+                            color: .green
+                        )
+                    }
                 }
-
-                Link("Visit UKVI eVisa Portal",
-                     destination: URL(string: "https://www.gov.uk/view-prove-immigration-status")!)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-
-                // Privacy Note
-                Text("🔒 Your information remains private and encrypted on your device and in the cloud.")
+                .padding(.vertical, 8)
+                
+                // Note
+                Text(privacyNote)
                     .font(.footnote)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-
-                Spacer()
+                    .padding(.top, 16)
             }
             .padding()
         }
-        .navigationTitle("eVisa")
-        .alert(isPresented: $showCopySuccess) {
-            Alert(title: Text("Copied"), message: Text("Your share code has been copied."), dismissButton: .default(Text("OK")))
+        .navigationTitle(eVisaTitle)
+        .alert(isPresented: .constant(false)) {
+            // We'll use a toast or sheet for copy confirmation
+            Alert(title: Text("Copied"))
+        }
+    }
+    
+    private func copyShareCode() {
+        UIPasteboard.general.string = "ABCD-1234"
+        // Show toast
+    }
+    
+    // MARK: - Localized Content
+    
+    private var eVisaTitle: String {
+        switch selectedLanguage {
+        case "ar": return "التأشيرة الإلكترونية"
+        case "fr": return "eVisa"
+        case "fa": return "ویزای الکترونیکی"
+        default: return "eVisa"
+        }
+    }
+    
+    private var eVisaSubtitle: String {
+        switch selectedLanguage {
+        case "ar": return "حالة الهجرة الرقمية الخاصة بك في المملكة المتحدة"
+        case "fr": return "Votre statut d'immigration numérique au Royaume-Uni"
+        case "fa": return "وضعیت دیجیتال مهاجرت شما در بریتانیا"
+        default: return "Your UK digital immigration status"
+        }
+    }
+    
+    private var statusSectionTitle: String {
+        switch selectedLanguage {
+        case "ar": return "حالة الهجرة"
+        case "fr": return "Statut d'immigration"
+        case "fa": return "وضعیت مهاجرت"
+        default: return "Immigration Status"
+        }
+    }
+    
+    // ... (similar localized properties for all text elements)
+    
+    struct StatusItem: View {
+        let icon: String
+        let label: String
+        
+        var body: some View {
+            HStack {
+                Image(systemName: icon)
+                    .foregroundColor(.accentColor)
+                    .frame(width: 30)
+                Text(label)
+            }
+        }
+    }
+    
+    struct ActionButton: View {
+        let title: String
+        let icon: String
+        let color: Color
+        
+        var body: some View {
+            HStack {
+                Image(systemName: icon)
+                    .font(.headline)
+                Text(title)
+                    .fontWeight(.medium)
+                Spacer()
+                Image(systemName: "arrow.up.forward")
+            }
+            .padding()
+            .foregroundColor(.white)
+            .background(color)
+            .cornerRadius(10)
+        }
+    }
+}
+
+struct EVisaView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            EVisaView()
         }
     }
 }

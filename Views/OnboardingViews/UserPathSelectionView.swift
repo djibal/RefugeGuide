@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct UserPathSelectionView: View {
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
 
@@ -22,7 +23,9 @@ struct UserPathSelectionView: View {
                     .multilineTextAlignment(.center)
 
                 VStack(spacing: 16) {
-                    NavigationLink(destination: IntroToAsylumView()) {
+                    NavigationLink(destination: IntroToAsylumView(onContinue: {
+                        hasCompletedOnboarding = true
+                    })) {
                         VStack(alignment: .leading) {
                             Text("Are you planning to seek asylum?")
                                 .font(.headline)
@@ -36,7 +39,10 @@ struct UserPathSelectionView: View {
                         .cornerRadius(12)
                     }
 
-                    NavigationLink(destination: ExistingAsylumVerificationView()) {
+
+                    NavigationLink(destination: ExistingAsylumVerificationView(onVerificationComplete: {
+                        hasCompletedOnboarding = true
+                    })) {
                         VStack(alignment: .leading) {
                             Text("Are you an existing asylum seeker?")
                                 .font(.headline)
@@ -50,7 +56,8 @@ struct UserPathSelectionView: View {
                         .cornerRadius(12)
                     }
 
-                     NavigationLink(destination: LeaveToRemainGuideView()) {
+
+                    NavigationLink(destination: LeaveToRemainGuideView(onContinue: {})) {
                         VStack(alignment: .leading) {
                             Text("I have received Leave to Remain")
                                 .font(.headline)

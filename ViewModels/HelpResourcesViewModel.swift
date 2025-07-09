@@ -5,40 +5,70 @@
 //  Created by Djibal Ramazani on 16/06/2025.
 //
 
+import Foundation
 import SwiftUI
 
 final class HelpResourcesViewModel: ObservableObject {
+
     @Published var resources: [HelpResource] = [
         HelpResource(
-            title: NSLocalizedString("Crisis Hotline", comment: ""),
-            description: NSLocalizedString("24/7 immediate support", comment: ""),
+            title: "Crisis Hotline",
+            description: "24/7 mental health and suicide prevention support",
             iconName: "phone.fill",
-            urlString: "tel://18002738255",
-            type: .phone
+            urlString: "tel://116123",
+            type: ResourceType.phone,
+            isCritical: true,
+            category: UserResourceCategory.mentalHealth,
+            contactInfo: "Samaritans UK (Freephone 116 123)",
+            languages: ["en"],
+            inAppDestination: nil,
+            location: nil,
+            distance: nil
         ),
         HelpResource(
-            title: NSLocalizedString("Safety Planning", comment: ""),
-            description: NSLocalizedString("Create a personalized safety plan", comment: ""),
-            iconName: "doc.text.fill",
+            title: "Safety Planning",
+            description: "Create a personalized safety plan for domestic abuse or emergencies",
+            iconName: "shield.lefthalf.fill",
             urlString: nil,
-            type: .inApp
+            type: ResourceType.inApp,
+            isCritical: true,
+            category: UserResourceCategory.safety,
+            contactInfo: "Use built-in planning tool",
+            languages: ["en", "ar", "ur", "fa"],
+            inAppDestination: "SafetyPlanView",
+            location: nil,
+            distance: nil
         ),
         HelpResource(
-            title: NSLocalizedString("Resource Directory", comment: ""),
-            description: NSLocalizedString("Find local shelters and services", comment: ""),
+            title: "Resource Directory",
+            description: "Search local shelters, clinics, food banks, and legal aid services",
             iconName: "map.fill",
             urlString: "https://refugeguide.org/directory",
-            type: .web
+            type: ResourceType.web,
+            isCritical: false,
+            category: UserResourceCategory.community,
+            contactInfo: "RefugeGuide Online Directory",
+            languages: ["en"],
+            inAppDestination: nil,
+            location: nil,
+            distance: nil
         ),
         HelpResource(
-            title: NSLocalizedString("Contact Support", comment: ""),
-            description: NSLocalizedString("Reach our support team", comment: ""),
+            title: "Contact Support",
+            description: "Reach the RefugeGuide help team by email",
             iconName: "envelope.fill",
             urlString: "mailto:support@refugeguide.org",
-            type: .email
+            type: ResourceType.email,
+            isCritical: false,
+            category: UserResourceCategory.generalSupport,
+            contactInfo: "support@refugeguide.org",
+            languages: ["en"],
+            inAppDestination: nil,
+            location: nil,
+            distance: nil
         )
     ]
-    
+
     func handleResourceTap(_ resource: HelpResource) {
         guard let urlString = resource.urlString,
               let url = URL(string: urlString),

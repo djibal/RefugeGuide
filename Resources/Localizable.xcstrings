@@ -1,6 +1,78 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    " ago" : {
+
+    },
+    "(%lld reviews)" : {
+
+    },
+    "%lld" : {
+
+    },
+    "%lld meters" : {
+
+    },
+    "%lld%% complete" : {
+
+    },
+    "%lld%% OFF" : {
+
+    },
+    "• %@" : {
+
+    },
+    "✅ Upload Successful!" : {
+
+    },
+    "❌ %@" : {
+
+    },
+    "🌍 Language Picker" : {
+
+    },
+    "🌍 Welcome View" : {
+
+    },
+    "🏠 Main Tab View (Full App)" : {
+
+    },
+    "👉 Refugee Guide" : {
+
+    },
+    "👥 Community View" : {
+
+    },
+    "💬 Help Chat View" : {
+
+    },
+    "📁 My Documents View" : {
+
+    },
+    "📄 Upload Document View" : {
+
+    },
+    "📝 Registration View" : {
+
+    },
+    "📹 Video Consultation View" : {
+
+    },
+    "🔍 RefugeGuide Previews" : {
+
+    },
+    "🔑 Sign In View" : {
+
+    },
+    "🧍 User Type Selection" : {
+
+    },
+    "12" : {
+
+    },
     "24/7 immediate support" : {
       "comment" : "Description for hotline",
       "extractionState" : "manual",
@@ -60,6 +132,30 @@
           }
         }
       }
+    },
+    "ABCD-1234" : {
+
+    },
+    "About" : {
+
+    },
+    "Access to housing" : {
+
+    },
+    "Account" : {
+
+    },
+    "Account Information" : {
+
+    },
+    "accountDetailsTitle" : {
+      "comment" : "Section title for account info"
+    },
+    "Additional Information" : {
+
+    },
+    "Additional Notes" : {
+
     },
     "Advice and support" : {
       "comment" : "Refugee Council description",
@@ -121,6 +217,90 @@
         }
       }
     },
+    "Advisor: %@" : {
+
+    },
+    "agreementText" : {
+      "comment" : "Text for agreeing to terms"
+    },
+    "All" : {
+
+    },
+    "All Categories" : {
+
+    },
+    "All Resources" : {
+
+    },
+    "Analyzing Document..." : {
+
+    },
+    "Announcements" : {
+
+    },
+    "Anonymous Refugee" : {
+
+    },
+    "Appearance" : {
+
+    },
+    "Application Status" : {
+
+    },
+    "Apply Filters" : {
+
+    },
+    "Appointment Date" : {
+
+    },
+    "Appointment Type" : {
+
+    },
+    "Appointments" : {
+
+    },
+    "AR Navigation" : {
+
+    },
+    "ARC (Asylum Registration Card)" : {
+
+    },
+    "Are you an existing asylum seeker?" : {
+
+    },
+    "Are you planning to seek asylum?" : {
+
+    },
+    "Arrival Date" : {
+
+    },
+    "Ask about UK support..." : {
+
+    },
+    "Asylum Benefits" : {
+
+    },
+    "Attach File" : {
+
+    },
+    "Available Today" : {
+
+    },
+    "Be the first to share your experiences, ask questions, or offer support to fellow refugees in the UK." : {
+
+    },
+    "Book Appointment" : {
+
+    },
+    "Book New Appointment" : {
+
+    },
+    "Booked" : {
+
+    },
+    "BRP (Biometric Residence Permit)" : {
+
+    },
     "Call" : {
       "comment" : "Button label",
       "extractionState" : "manual",
@@ -180,6 +360,75 @@
           }
         }
       }
+    },
+    "Call Office: %@" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Case Reference" : {
+
+    },
+    "Case Status" : {
+
+    },
+    "Case Status Tracker" : {
+
+    },
+    "Category" : {
+
+    },
+    "Choose File" : {
+
+    },
+    "Choose from Library" : {
+
+    },
+    "Clear Cache" : {
+
+    },
+    "Community" : {
+
+    },
+    "Community Support" : {
+
+    },
+    "Confirm Address" : {
+
+    },
+    "confirmPasswordPlaceholder" : {
+      "comment" : "Placeholder for confirm password"
+    },
+    "Connecting to legal advisor..." : {
+
+    },
+    "Connection Error" : {
+
+    },
+    "Consultation" : {
+
+    },
+    "Contact Information" : {
+
+    },
+    "Contact us at privacy@refugeguide.org for any privacy-related concerns." : {
+
+    },
+    "Continue" : {
+
+    },
+    "Copied" : {
+
+    },
+    "Copy" : {
+
+    },
+    "Court Document" : {
+
+    },
+    "Create Your First Post" : {
+
     },
     "Crisis Hotline" : {
       "comment" : "Name of support hotline",
@@ -241,6 +490,72 @@
         }
       }
     },
+    "Current Case Step:" : {
+
+    },
+    "Delete" : {
+
+    },
+    "Delete Account" : {
+
+    },
+    "Delete My Account" : {
+
+    },
+    "Details" : {
+
+    },
+    "Directions" : {
+
+    },
+    "Dismiss" : {
+
+    },
+    "Distance Unknown" : {
+
+    },
+    "Distance: %@" : {
+
+    },
+    "Distance: %@ km" : {
+
+    },
+    "Document AI" : {
+
+    },
+    "Document Analysis Result" : {
+
+    },
+    "Document Type" : {
+
+    },
+    "Documents" : {
+
+    },
+    "Don’t have an account? Register" : {
+
+    },
+    "Done" : {
+
+    },
+    "Duration: %@" : {
+
+    },
+    "Edit Profile" : {
+
+    },
+    "Education for children" : {
+
+    },
+    "Effective Date: August 1, 2023" : {
+
+    },
+    "Email" : {
+
+    },
+    "emailPlaceholder" : {
+      "comment" : "Placeholder for email"
+    },
     "Emergency Services" : {
       "comment" : "999 help",
       "extractionState" : "manual",
@@ -300,6 +615,63 @@
           }
         }
       }
+    },
+    "Error" : {
+
+    },
+    "Events" : {
+
+    },
+    "False Information" : {
+
+    },
+    "Filter" : {
+
+    },
+    "Filter by Type" : {
+
+    },
+    "Filter Categories" : {
+
+    },
+    "Filter Resources" : {
+
+    },
+    "Filters" : {
+
+    },
+    "firstNamePlaceholder" : {
+      "comment" : "Placeholder for first name"
+    },
+    "Free healthcare" : {
+
+    },
+    "Full Name" : {
+
+    },
+    "General" : {
+
+    },
+    "Get Directions" : {
+
+    },
+    "Get Started" : {
+
+    },
+    "Harassment" : {
+
+    },
+    "Hate Speech" : {
+
+    },
+    "Help" : {
+
+    },
+    "Help & Support" : {
+
+    },
+    "Help Chat" : {
+
     },
     "Help Resources" : {
       "comment" : "Title for help tab",
@@ -361,6 +733,141 @@
         }
       }
     },
+    "Home" : {
+
+    },
+    "Home Office Letter" : {
+
+    },
+    "Hours: %@" : {
+
+    },
+    "How can we help you today?" : {
+
+    },
+    "How to Request Help" : {
+
+    },
+    "I have received Leave to Remain" : {
+
+    },
+    "Initializing AR navigation..." : {
+
+    },
+    "Join" : {
+
+    },
+    "Key" : {
+      "extractionState" : "manual"
+    },
+    "Key 1" : {
+      "extractionState" : "manual"
+    },
+    "Language" : {
+
+    },
+    "Language Assistance" : {
+
+    },
+    "Language Support" : {
+
+    },
+    "Languages" : {
+
+    },
+    "Languages:" : {
+
+    },
+    "lastNamePlaceholder" : {
+      "comment" : "Placeholder for last name"
+    },
+    "Legal Aid Services" : {
+
+    },
+    "Legal Directory" : {
+
+    },
+    "Legal Help Resources" : {
+
+    },
+    "Legal Helplines" : {
+
+    },
+    "Legal Specialty" : {
+
+    },
+    "Legal Status" : {
+
+    },
+    "Let the staff know your preferred language. They must provide a qualified interpreter, especially during Home Office interviews and medical appointments." : {
+
+    },
+    "Loading Case Status..." : {
+
+    },
+    "Loading community posts..." : {
+
+    },
+    "Loading documents..." : {
+
+    },
+    "Loading profile..." : {
+
+    },
+    "Loading UK resources..." : {
+
+    },
+    "Loading your documents..." : {
+
+    },
+    "Loading..." : {
+
+    },
+    "Local Services" : {
+
+    },
+    "Local Support Services" : {
+
+    },
+    "Location" : {
+
+    },
+    "Log Out" : {
+
+    },
+    "Manage My Documents" : {
+
+    },
+    "Monthly financial support" : {
+
+    },
+    "More Filters" : {
+
+    },
+    "My Appointments" : {
+
+    },
+    "My Dashboard" : {
+
+    },
+    "My Documents" : {
+
+    },
+    "My Profile" : {
+
+    },
+    "Name" : {
+
+    },
+    "Nationality" : {
+
+    },
+    "New Post" : {
+
+    },
+    "New Scan" : {
+
+    },
     "NHS 111" : {
       "comment" : "Medical advice hotline",
       "extractionState" : "manual",
@@ -420,6 +927,21 @@
           }
         }
       }
+    },
+    "No documents found for the selected type." : {
+
+    },
+    "No documents found." : {
+
+    },
+    "No file selected" : {
+
+    },
+    "No Professionals Found" : {
+
+    },
+    "No resources match your filters" : {
+
     },
     "Non-emergency medical advice" : {
       "comment" : "NHS line purpose",
@@ -481,6 +1003,48 @@
         }
       }
     },
+    "Notifications" : {
+
+    },
+    "OFF" : {
+
+    },
+    "OK" : {
+
+    },
+    "Open in Apple Maps" : {
+
+    },
+    "Open in Google Maps" : {
+
+    },
+    "Open Uploaded File" : {
+
+    },
+    "Other" : {
+
+    },
+    "Password" : {
+
+    },
+    "passwordPlaceholder" : {
+      "comment" : "Placeholder for password"
+    },
+    "Personal Info" : {
+
+    },
+    "personalDetailsTitle" : {
+      "comment" : "Section title for personal info"
+    },
+    "Phone" : {
+
+    },
+    "Please choose your preferred language" : {
+
+    },
+    "Please select your current status:" : {
+
+    },
     "Police, Ambulance, Fire" : {
       "comment" : "Description of 999\n",
       "extractionState" : "manual",
@@ -540,6 +1104,36 @@
           }
         }
       }
+    },
+    "policyLinkText" : {
+      "comment" : "Link text for privacy policy"
+    },
+    "Post Anonymously" : {
+
+    },
+    "Post content" : {
+
+    },
+    "Potential Issues:" : {
+
+    },
+    "Preferences" : {
+
+    },
+    "Preferred Language" : {
+
+    },
+    "Privacy" : {
+
+    },
+    "Privacy Policy" : {
+
+    },
+    "Processing Error" : {
+
+    },
+    "Profile" : {
+
     },
     "Quick Exit" : {
       "comment" : "Emergency safe-exit button label",
@@ -601,6 +1195,12 @@
         }
       }
     },
+    "Recommendations:" : {
+
+    },
+    "Recommended Services" : {
+
+    },
     "Refugee Council" : {
       "comment" : "Name of support group",
       "extractionState" : "manual",
@@ -660,6 +1260,36 @@
           }
         }
       }
+    },
+    "Refugee Guide" : {
+
+    },
+    "Refugee Support Chat" : {
+
+    },
+    "RefugeGuide" : {
+
+    },
+    "RefugeGuide logo" : {
+
+    },
+    "registerButtonText" : {
+      "comment" : "Label for registration button"
+    },
+    "Report Post" : {
+
+    },
+    "Reset" : {
+
+    },
+    "Reset Onboarding" : {
+
+    },
+    "Reset Onboarding?" : {
+
+    },
+    "Resources" : {
+
     },
     "Safety Plan" : {
       "comment" : "Title for SafetyPlanView",
@@ -721,6 +1351,63 @@
         }
       }
     },
+    "Safety Planning" : {
+      "comment" : "Tips for staying safe during a crisis or emergency",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التخطيط للسلامة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safety Planning"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "برنامه‌ریزی ایمنی"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plan de sécurité"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Planê ewlehiyê"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "د خوندیتوب پلان جوړونه"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "План безпеки"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حفاظتی منصوبہ بندی"
+          }
+        }
+      }
+    },
+    "Save Changes" : {
+
+    },
     "Save Safety Plan" : {
       "comment" : "Button in SafetyPlanView",
       "extractionState" : "manual",
@@ -780,6 +1467,210 @@
           }
         }
       }
+    },
+    "Scan Another" : {
+
+    },
+    "Schedule a Consultation" : {
+
+    },
+    "Schedule Consultation" : {
+
+    },
+    "Scheduled Appointments" : {
+
+    },
+    "Search services..." : {
+
+    },
+    "Select Date & Time" : {
+
+    },
+    "Select Document Type" : {
+
+    },
+    "Select Source" : {
+
+    },
+    "Select your preferred language" : {
+
+    },
+    "Settings" : {
+
+    },
+    "Share" : {
+
+    },
+    "Share Post" : {
+
+    },
+    "Sign In" : {
+
+    },
+    "Sign in to RefugeGuide" : {
+
+    },
+    "Sign in with Google" : {
+
+    },
+    "Sign Out" : {
+
+    },
+    "Skip & Register" : {
+
+    },
+    "Skip and Register" : {
+
+    },
+    "🆘 Emergency Help View" : {
+
+    },
+    "Specialties" : {
+
+    },
+    "Specialty" : {
+
+    },
+    "Spoken Language" : {
+
+    },
+    "Support" : {
+
+    },
+    "Take Photo" : {
+
+    },
+    "Tasks" : {
+
+    },
+    "This is where users can create a personalized safety plan." : {
+
+    },
+    "This screen will allow users to book an appointment with a legal advisor or support professional." : {
+
+    },
+    "This service is available to all refugees and asylum seekers in the UK regardless of immigration status. Identification may be required for some services." : {
+
+    },
+    "This will permanently delete your account and all associated data. This action cannot be undone." : {
+
+    },
+    "This will show the initial setup screens next time you open the app." : {
+
+    },
+    "Tips" : {
+
+    },
+    "Travel Document" : {
+
+    },
+    "Try adjusting your search criteria or filters" : {
+
+    },
+    "Try Again" : {
+
+    },
+    "Type" : {
+
+    },
+    "Type your question here..." : {
+
+    },
+    "UK Asylum Information" : {
+
+    },
+    "UK Legal Resources" : {
+
+    },
+    "UK Support Services" : {
+
+    },
+    "Unknown" : {
+
+    },
+    "Upcoming Appointments" : {
+
+    },
+    "Upload" : {
+
+    },
+    "Upload Document" : {
+
+    },
+    "Upload ID" : {
+
+    },
+    "Upload required documents" : {
+
+    },
+    "Uploaded on %@" : {
+
+    },
+    "Uploaded: %@" : {
+
+    },
+    "Uploading..." : {
+
+    },
+    "URGENT" : {
+
+    },
+    "Urgent Support" : {
+
+    },
+    "User not logged in." : {
+
+    },
+    "User Type" : {
+
+    },
+    "Video Consultations" : {
+
+    },
+    "View Letter" : {
+
+    },
+    "View on Map" : {
+
+    },
+    "Visit Website" : {
+
+    },
+    "Website" : {
+
+    },
+    "Welcome to Refugee Guide" : {
+
+    },
+    "Welcome to the Community" : {
+
+    },
+    "What To Do Now" : {
+
+    },
+    "You already have a Home Office reference number." : {
+
+    },
+    "You are entitled to free interpretation and translation support when dealing with UK immigration, healthcare, and legal systems." : {
+
+    },
+    "You are starting or planning to start the asylum process in the UK." : {
+
+    },
+    "You have no upcoming appointments." : {
+
+    },
+    "You now have refugee status or humanitarian protection in the UK." : {
+
+    },
+    "You've been granted Leave to Remain – what next?" : {
+
+    },
+    "Your Post" : {
+
+    },
+    "Your Right to Language Assistance" : {
+
     }
   },
   "version" : "1.0"

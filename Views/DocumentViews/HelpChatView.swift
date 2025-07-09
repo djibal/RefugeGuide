@@ -12,9 +12,7 @@ struct HelpChatView: View {
     @State private var messages: [ChatMessage] = []
     @State private var inputText: String = ""
     @State private var isLoading = false
-
-    private var functions = Functions.functions()
-
+    
     var body: some View {
         VStack {
             ScrollViewReader { proxy in
@@ -47,14 +45,20 @@ struct HelpChatView: View {
                     }
                 }
             }
-
+            
             Divider()
-
+            
             HStack {
-                TextField("Type your question…", text: $inputText)
+                TextField("Type your question here...", text: $inputText)
+                    .padding()
+                    .frame(minHeight: 50)
+                    .background(Color(.secondarySystemBackground))
+                    .cornerRadius(10)
+                    .lineLimit(2...5)
+
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .disabled(isLoading)
-
+                
                 if isLoading {
                     ProgressView()
                         .padding(.horizontal, 4)
@@ -73,26 +77,27 @@ struct HelpChatView: View {
         .navigationTitle("Help Chat")
         .navigationBarTitleDisplayMode(.inline)
     }
-
+    
     func sendMessage() {
         let userMessage = ChatMessage(content: inputText, isUser: true)
         messages.append(userMessage)
         let prompt = inputText
         inputText = ""
         isLoading = true
-
-        functions.httpsCallable("chatWithGPT").call(["message": prompt]) { result, error in
-            isLoading = false
-            if let error = error {
-                messages.append(ChatMessage(content: "Error: \(error.localizedDescription)", isUser: false))
-                return
-            }
-
-            if let data = result?.data as? [String: Any],
-               let reply = data["reply"] as? String {
-                messages.append(ChatMessage(content: reply, isUser: false))
-            } else {
-                messages.append(ChatMessage(content: "Sorry, something went wrong.", isUser: false))
+        
+        let systemPrompt = "You are an expert advisor for refugees in the UK. Be clear, supportive, and practical."
+        
+        // Combine into single String
+        let combinedPrompt = "\(systemPrompt)\n\nUser Question: \(prompt)"
+        
+        OpenAIService.sendMessage(prompt: combinedPrompt) { reply in
+            DispatchQueue.main.async {
+                isLoading = false
+                if let reply = reply {
+                    messages.append(ChatMessage(content: reply, isUser: false))
+                } else {
+                    messages.append(ChatMessage(content: "Sorry, something went wrong.", isUser: false))
+                }
             }
         }
     }

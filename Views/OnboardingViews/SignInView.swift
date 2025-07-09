@@ -3,13 +3,14 @@
 //  RefugeGuide
 //
 //  Created by Djibal Ramazani on 11/06/2025.
-
+import Foundation
 import SwiftUI
 import FirebaseAuth
 import FirebaseCore
 import AuthenticationServices
 import GoogleSignIn
 import CryptoKit
+
 
 
 struct SignInView: View {
@@ -48,10 +49,9 @@ struct SignInView: View {
 
                 Divider().padding(.vertical, 10)
 
-                // Google Sign-In Button
                 Button(action: handleGoogleSignIn) {
                     HStack {
-                        Image(systemName: "globe") // Placeholder icon
+                        Image(systemName: "globe")
                         Text("Sign in with Google")
                             .fontWeight(.semibold)
                     }
@@ -63,7 +63,6 @@ struct SignInView: View {
                 }
                 .padding(.horizontal)
 
-                // Apple Sign-In Button
                 SignInWithAppleButton(
                     onRequest: { request in
                         let nonce = randomNonceString()
@@ -76,7 +75,9 @@ struct SignInView: View {
                 .frame(height: 48)
                 .padding(.horizontal)
 
-                NavigationLink("Don’t have an account? Register", destination: RegistrationView())
+                NavigationLink("Don’t have an account? Register", destination: RegistrationView(onComplete: {
+                    // Called after registration completes
+                }))
 
                 if let errorMessage = errorMessage {
                     Text("❌ \(errorMessage)")
@@ -120,31 +121,36 @@ struct SignInView: View {
 
     // MARK: - Google Sign-In
     func handleGoogleSignIn() {
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+        guard let clientID = FirebaseApp.app()?.options.clientID else {
+            self.errorMessage = "Missing Google Client ID"
+            return
+        }
 
         let config = GIDConfiguration(clientID: clientID)
 
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let rootViewController = windowScene.windows.first?.rootViewController else {
+              let rootVC = windowScene.windows.first?.rootViewController else {
             self.errorMessage = "No root view controller found"
             return
         }
 
-        GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { result, error in
+        GIDSignIn.sharedInstance.signIn(with: config, presenting: rootVC) { user, error in
             if let error = error {
                 self.errorMessage = error.localizedDescription
                 return
             }
 
-            guard let user = result?.user,
-                  let idToken = user.idToken?.tokenString else {
+            guard
+                let authentication = user?.authentication,
+                let idToken = authentication.idToken else {
                 self.errorMessage = "Google authentication failed"
                 return
             }
 
-            let accessToken = user.accessToken.tokenString
-
-            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+            let credential = GoogleAuthProvider.credential(
+                withIDToken: idToken,
+                accessToken: authentication.accessToken
+            )
 
             Auth.auth().signIn(with: credential) { result, error in
                 if let error = error {
@@ -184,7 +190,7 @@ struct SignInView: View {
         }
     }
 
-    // MARK: - Apple Sign-In Helpers
+    // MARK: - Helpers
     func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashed = SHA256.hash(data: inputData)

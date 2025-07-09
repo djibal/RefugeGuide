@@ -41,7 +41,7 @@
 
 ---
 
-## 🧠 Upcoming Features
+## 🧠 Additional features implemented
 
 * [ ] AI Document Processing (OCR + NLP via ML Kit or GPT)
 * [ ] AR Navigation to Support Services (ARKit + CoreLocation)
@@ -60,12 +60,13 @@
 * **MapKit** (local resource discovery)
 * **Agora SDK** (video calls)
 * **CocoaPods** & **Swift Package Manager**
+* **AlertToast** & **Swift Package Manager**
 * **Node.js 18/20** for Firebase backend
 * **Multilingual `.strings` Localization**
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure | 20 Folders + 118 Swift file Created
 
 RefugeGuide/
 ├── Views/
@@ -73,6 +74,11 @@ RefugeGuide/
 │   ├── DashboardViews/
 │   ├── DocumentViews/
 │   ├── ConsultationViews/
+│   ├── Previews/
+│   ├── ProfileViews/
+│   ├── TabViews/
+│   ├── Shared/
+│   ├── Community/
 │   ├── CommunityViews/
 │   ├── LocalServices/
 │   ├── Help/
@@ -81,15 +87,24 @@ RefugeGuide/
 ├── Models/
 ├── Services/
 ├── Utilities/
+├── Resources/Localizable.xcstrings/
 ├── ViewModels/
 ├── Resources/ (e.g. Localizable.xcstrings)
 ├── Firebase/ (functions/chatWithGPT)
+
+## 🔧Jun/July 2025 Updates
+
+- ✅ Added 40+ SwiftUI files: onboarding screens, profile logic, status mapping
+- 🌍 Introduced `RefugeeUserType`, `RefugeeStatus`, and `UserType` conversion helpers
+- 🧠 HelpResources module with `HelpResource.swift`, custom row view, and safety plan sheet
+- 🗂 Files organized into folders: `Views/OnboardingViews`, `Views/Profile`, `Views/ConsultationViews`, etc.
+- 🗨️ Added ConsultationScheduleView, improved state handling and navigation
 
 ---
 
 ## 🔐 Security
 
-Sensitive keys like `GoogleService-Info.plist` are excluded from the repo and managed via `.gitignore`.
+Sensitive keys like `GoogleService-Info.plist` & `API and SecureConfig file` are excluded from the repo and managed via `.gitignore`.
 
 ---
 

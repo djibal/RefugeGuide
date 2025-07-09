@@ -16,9 +16,6 @@ struct UploadDocumentView: View {
     @State private var uploadSuccess = false
     @State private var uploadError: String?
 
-    // ✅ Keep a reference to prevent deallocation
-    private var pickerDelegate = DocumentPickerDelegateWrapper { _ in }
-
     let documentCategories = [
         "ARC (Asylum Registration Card)",
         "BRP (Biometric Residence Permit)",
@@ -30,62 +27,68 @@ struct UploadDocumentView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 24) {
-                Text("Upload a Document")
-                    .font(.title2)
-                    .bold()
-
-                Picker("Document Type", selection: $selectedCategory) {
-                    ForEach(documentCategories, id: \.self) {
-                        Text($0)
-                    }
-                }
-                .pickerStyle(MenuPickerStyle())
-
-                if let fileURL = selectedFileURL {
-                    Text("📎 Selected: \(fileURL.lastPathComponent)")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-
-                Button("Choose File") {
-                    presentFilePicker()
-                }
-                .padding()
-                .background(Color(.systemGray6))
-                .cornerRadius(10)
-
-                if selectedFileURL != nil {
-                    Button(action: uploadDocument) {
-                        if isUploading {
-                            ProgressView()
-                        } else {
-                            Text("Upload Document")
+            Form {
+                Section(header: Text("Select Document Type")) {
+                    Picker("Document Type", selection: $selectedCategory) {
+                        ForEach(documentCategories, id: \.self) { category in
+                            Text(category).tag(category)
                         }
                     }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
+
+                    .pickerStyle(.inline)
+                }
+
+                Section(header: Text("Attach File")) {
+                    if let fileURL = selectedFileURL {
+                        HStack {
+                            Image(systemName: "doc.fill")
+                                .foregroundColor(.blue)
+                            Text(fileURL.lastPathComponent)
+                                .font(.subheadline)
+                                .lineLimit(1)
+                        }
+                    } else {
+                        Text("No file selected")
+                            .foregroundColor(.gray)
+                    }
+
+                    Button("Choose File") {
+                        presentFilePicker()
+                    }
+                }
+
+                if selectedFileURL != nil {
+                    Section {
+                        Button(action: uploadDocument) {
+                            HStack {
+                                Spacer()
+                                if isUploading {
+                                    ProgressView()
+                                } else {
+                                    Text("Upload Document")
+                                        .bold()
+                                }
+                                Spacer()
+                            }
+                        }
+                        .disabled(isUploading)
+                    }
                 }
 
                 if uploadSuccess {
-                    Label("✅ Upload Successful!", systemImage: "checkmark.seal.fill")
-                        .foregroundColor(.green)
-                        .padding(.top, 10)
+                    Section {
+                        Label("\u{2705} Upload Successful!", systemImage: "checkmark.seal.fill")
+                            .foregroundColor(.green)
+                    }
                 }
 
                 if let error = uploadError {
-                    Text("❌ \(error)")
-                        .foregroundColor(.red)
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 10)
+                    Section {
+                        Text("\u{274C} \(error)")
+                            .foregroundColor(.red)
+                    }
                 }
-
-                Spacer()
             }
-            .padding()
             .navigationTitle("Upload Document")
         }
     }
@@ -96,56 +99,57 @@ struct UploadDocumentView: View {
         uploadError = nil
         uploadSuccess = false
 
-        FileUploader.shared.uploadFile(url: url) { result in
-            DispatchQueue.main.async {
-                isUploading = false
-                switch result {
-                case .success(let (downloadURL, contentType)):
-                    let fileName = url.lastPathComponent
+        FileUploader.shared.uploadFile(
+            url: url,
+            progressHandler: { _ in },
+            completion: { result in
+                DispatchQueue.main.async {
+                    isUploading = false
+                    switch result {
+                    case .success(let (downloadURL, contentType)):
+                        let fileName = url.lastPathComponent
+                        let metadata: [String: Any] = [
+                            "fileName": fileName,
+                            "downloadURL": downloadURL.absoluteString,
+                            "contentType": contentType,
+                            "timestamp": Timestamp(date: Date()),
+                            "category": selectedCategory
+                        ]
 
-                    // ✅ Include category as part of metadata
-                    let metadata: [String: Any] = [
-                        "fileName": fileName,
-                        "downloadURL": downloadURL.absoluteString,
-                        "contentType": contentType,
-                        "timestamp": Timestamp(date: Date()),
-                        "category": selectedCategory
-                    ]
-
-                    guard let userId = Auth.auth().currentUser?.uid else {
-                        uploadError = "User not authenticated"
-                        return
-                    }
-
-                    Firestore.firestore()
-                        .collection("users")
-                        .document(userId)
-                        .collection("documents")
-                        .addDocument(data: metadata) { error in
-                            if let error = error {
-                                uploadError = "Error saving metadata: \(error.localizedDescription)"
-                            } else {
-                                uploadSuccess = true
-                                selectedFileURL = nil
-                            }
+                        guard let userId = Auth.auth().currentUser?.uid else {
+                            uploadError = "User not authenticated"
+                            return
                         }
 
-                case .failure(let error):
-                    uploadError = "Upload failed: \(error.localizedDescription)"
+                        Firestore.firestore()
+                            .collection("users")
+                            .document(userId)
+                            .collection("documents")
+                            .addDocument(data: metadata) { error in
+                                if let error = error {
+                                    uploadError = "Error saving metadata: \(error.localizedDescription)"
+                                } else {
+                                    uploadSuccess = true
+                                    selectedFileURL = nil
+                                }
+                            }
+
+                    case .failure(let error):
+                        uploadError = "Upload failed: \(error.localizedDescription)"
+                    }
                 }
             }
-        }
+        )
     }
 
     func presentFilePicker() {
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.item])
         picker.allowsMultipleSelection = false
 
-        // ✅ Avoid deallocation
-        pickerDelegate.completion = { url in
+        let delegate = DocumentPickerDelegateWrapper { url in
             self.selectedFileURL = url
         }
-        picker.delegate = pickerDelegate
+        picker.delegate = delegate
 
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let window = windowScene.windows.first,
@@ -153,21 +157,20 @@ struct UploadDocumentView: View {
             rootVC.present(picker, animated: true)
         }
     }
-}
 
-// MARK: - Delegate Helper for UIDocumentPickerViewController
-class DocumentPickerDelegateWrapper: NSObject, UIDocumentPickerDelegate {
-    var completion: (URL?) -> Void
+    class DocumentPickerDelegateWrapper: NSObject, UIDocumentPickerDelegate {
+        let completion: (URL?) -> Void
 
-    init(completion: @escaping (URL?) -> Void) {
-        self.completion = completion
-    }
+        init(completion: @escaping (URL?) -> Void) {
+            self.completion = completion
+        }
 
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        completion(urls.first)
-    }
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            completion(urls.first)
+        }
 
-    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        completion(nil)
+        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+            completion(nil)
+        }
     }
 }

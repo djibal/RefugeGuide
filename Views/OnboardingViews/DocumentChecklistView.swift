@@ -13,9 +13,9 @@ struct DocumentChecklistView: View {
     
     @State private var showPicker = false
     @State private var uploadedFileURL: String?
-    @State private var showSuccess = false // ✅ Make sure this exists!
+    @State private var showSuccess = false
     @State private var isUploading = false
-    
+    @State private var selectedDocumentType: String = "Other"  // You can wire this to a Picker if needed
     
     var onFinish: () -> Void = {}
     
@@ -36,40 +36,46 @@ struct DocumentChecklistView: View {
                 }
             }
         }
-        .sheet(isPresented: $showPicker) {
+        .sheet(isPresented: $showPicker, content: {
             DocumentPickerView { selectedURL in
                 isUploading = true
                 
-                FileUploader.shared.uploadFile(url: selectedURL) { result in
-                    DispatchQueue.main.async {
-                        isUploading = false
-                        
-                        switch result {
-                        case .success(let (downloadURL, contentType)):
-                            self.uploadedFileURL = downloadURL.absoluteString
-                            self.showSuccess = true
+                FileUploader.shared.uploadFile(
+                    url: selectedURL,
+                    progressHandler: { _ in },
+                    completion: { result in
+                        DispatchQueue.main.async {
+                            isUploading = false
                             
-                            let fileName = selectedURL.lastPathComponent
-                            
-                            DocumentUploader.shared.saveDocumentMetadata(
-                                fileName: fileName,
-                                downloadURL: downloadURL,
-                                contentType: contentType
-                            ) { error in
-                                if let error = error {
-                                    print("❌ Metadata save failed: \(error.localizedDescription)")
+                            switch result {
+                            case .success(let (downloadURL, contentType)):
+                                self.uploadedFileURL = downloadURL.absoluteString
+                                self.showSuccess = true
+                                
+                                let fileName = selectedURL.lastPathComponent
+                                
+                                DocumentUploader.shared.saveDocumentMetadata(
+                                    fileName: fileName,
+                                    downloadURL: downloadURL,
+                                    contentType: contentType,
+                                    documentType: UKDocumentType(rawValue: selectedDocumentType) ?? .other
+                                ) { result in
+                                    if case .failure(let error) = result {
+                                        print("❌ Metadata save failed: \(error.localizedDescription)")
+                                    }
                                 }
+
+                                
+                            case .failure(let error):
+                                print("❌ Upload failed: \(error.localizedDescription)")
                             }
-                            
-                        case .failure(let error):
-                            print("❌ Upload failed: \(error.localizedDescription)")
                         }
                     }
-                }
+                )
             }
             .toast(isPresenting: $showSuccess) {
                 AlertToast(type: .complete(Color.green), title: "Upload Successful")
             }
-        }
+        })
     }
 }

@@ -3,6 +3,7 @@
 //  RefugeGuide
 //
 //  Created by Djibal Ramazani on 17/06/2025.
+
 import Foundation
 import CoreLocation
 import MapKit
@@ -10,7 +11,8 @@ import FirebaseFirestoreSwift
 
 
 struct LocalService: Identifiable, Codable, Hashable {
-    @DocumentID var id: String?  // ✅ THIS is enough
+    @DocumentID var id: String?  // ✅ Firestore ID
+    var distance: Double? = nil  // ✅ Only declare ONCE
 
     var distanceString: String {
         if let userLocation = CLLocationManager().location {
@@ -19,6 +21,7 @@ struct LocalService: Identifiable, Codable, Hashable {
             return NSLocalizedString("Distance Unknown", comment: "")
         }
     }
+
 
     let name: String
     let category: String
@@ -33,6 +36,8 @@ struct LocalService: Identifiable, Codable, Hashable {
     let openingHours: String?
     let isRefugeeFriendly: Bool?
     let imageUrl: String?  // ✅ NEW
+
+    
 
     var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)

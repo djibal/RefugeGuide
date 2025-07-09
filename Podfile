@@ -20,8 +20,6 @@ target 'RefugeGuide' do
   # 📄 Document AI / OCR
   pod 'GoogleMLKit/TextRecognition'
 
-  # 🧭 AR Navigation
-  pod 'ARKit'
 
   # 📹 Video Consultation
   pod 'AgoraRtcEngine_iOS', '~> 4.0'

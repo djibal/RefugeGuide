@@ -6,8 +6,7 @@
 //
 
 import Testing
-@testable import RefugeGuide
-
+@testable import Pods_RefugeGuide
 struct RefugeGuideTests {
 
     @Test func example() async throws {

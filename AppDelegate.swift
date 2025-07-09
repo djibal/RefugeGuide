@@ -16,11 +16,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             FirebaseApp.configure()
         }
 
+        // Set default language if not already set
+        if UserDefaults.standard.string(forKey: "selectedLanguage") == nil {
+            UserDefaults.standard.set("en", forKey: "selectedLanguage")
+        }
+        
         return true
-    }
-
-    // Optional: Scene support for multi-window
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 }
