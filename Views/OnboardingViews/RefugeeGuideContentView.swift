@@ -2,111 +2,111 @@
 //  LeaveToRemainGuideView.swift
 //  RefugeGuide
 //
-//  Created by Djibal Ramazani on 29/06/2025.
+//  Created by Djibal Ramazani on 07/05/2025.
 //
-import Foundation
 import SwiftUI
 
 struct LeaveToRemainGuideView: View {
     @AppStorage("selectedLanguage") var selectedLanguage: String = "en"
     @AppStorage("hasCompletedInitialSetup") var hasCompletedInitialSetup = false
     @State private var currentStep: OnboardingStep = .languageSelection
+    
+    // MARK: - UI Constants
+    private var primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
+    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)   // UK accent orange
+    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+    
     var onContinue: () -> Void // Add closure for completion
+    
+    init(selectedLanguage: String, primaryColor: Color, onContinue: @escaping () -> Void) {
+        self.selectedLanguage = selectedLanguage
+        self.primaryColor = primaryColor
+        self.onContinue = onContinue
+    }
+
     
     var body: some View {
         NavigationView {
             ZStack {
-                backgroundGradient
-                
-                switch currentStep {
-                case .languageSelection:
-                    LanguageSelection(selectedLanguage: $selectedLanguage) {
-                        withAnimation { currentStep = .welcomeMessage }
+                backgroundColor.ignoresSafeArea()
+
+                VStack {
+                    switch currentStep {
+                    case .languageSelection:
+                        LanguageSelection(
+                            selectedLanguage: $selectedLanguage,
+                            primaryColor: primaryColor,
+                            onContinue: {
+                                withAnimation { currentStep = .welcomeMessage }
+                            }
+                        )
+
+                    case .welcomeMessage:
+                        WelcomeIntroView(
+                            selectedLanguage: selectedLanguage,
+                            onContinue: {
+                                withAnimation { currentStep = .statusSelection }
+                            },
+                            primaryColor: primaryColor // ✅ moved below
+                        )
+
+                    case .statusSelection:
+                        StatusSelectionView(
+                            selectedLanguage: selectedLanguage,
+                            onStatusSelected: { status in
+                            handleStatusSelection(status)
+                            }
+                        )
+
+
+                    case .asylumGuide:
+                        AsylumGuideView(selectedLanguage: selectedLanguage) {
+                            showRegistration()
+                        }
+
+                    case .existingAsylumGuide:
+                        ExistingAsylumGuideView(selectedLanguage: selectedLanguage) {
+                            showRegistration()
+                        }
+
+                    case .residenceGuide:
+                        ResidenceGuideView(selectedLanguage: selectedLanguage) {
+                            showRegistration()
+                        }
                     }
-                    
-                case .welcomeMessage:
-                    WelcomeIntroView(selectedLanguage: selectedLanguage) {
-                        withAnimation { currentStep = .statusSelection }
-                    }
-                    
-                case .statusSelection:
-                    StatusSelectionView(selectedLanguage: selectedLanguage) { refugeeUserType in
-                        let userType = convertToUserType(from: refugeeUserType)
-                        let refugeeStatus = convertToRefugeeStatus(from: userType)
-                        handleStatusSelection(refugeeStatus)
-                    }
-                    
-                case .asylumGuide:
-                    AsylumGuideView(selectedLanguage: selectedLanguage, onContinue: {
-                        showRegistration()
-                    })
-                    
-                case .existingAsylumGuide:
-                    ExistingAsylumGuideView(selectedLanguage: selectedLanguage, onContinue: {
-                        showRegistration()
-                    })
-                    
-                case .residenceGuide:
-                    ResidenceGuideView(selectedLanguage: selectedLanguage, onContinue: {
-                        showRegistration()
-                    })
                 }
             }
             .navigationBarHidden(true)
         }
     }
-    private func convertToRefugeeStatus(from userType: RefugeeUserType) -> RefugeeStatus {
-        switch userType {
-        case .asylumSeeker:
-            return .seekingAsylum
-        case .existingAsylumSeeker:
-            return .existingAsylumSeeker
-        case .refugee:
-            return .grantedResidence
-        case .unknown:
-            return .seekingAsylum // fallback
-        case .newAsylumSeeker:
-            return .seekingAsylum
-        case .seekingAsylum:
-            return .seekingAsylum
-        case .residencePermitHolder:
-            return .grantedResidence
-        case .grantedResidence:
-            return .grantedResidence
-        }
-    }
 
     
-    private func handleStatusSelection(_ status: RefugeeStatus) {
+    private func handleStatusSelection(_ status: RefugeeUserType) {
         switch status {
-        case .seekingAsylum:
+        case .asylumSeeker:
             currentStep = .asylumGuide
         case .existingAsylumSeeker:
             currentStep = .existingAsylumGuide
         case .grantedResidence:
             currentStep = .residenceGuide
+        case .unknown:
+            currentStep = .statusSelection
         case .refugee:
-            currentStep = .asylumGuide // or whatever step fits for refugees
-        case .asylumSeeker:
-            currentStep = .asylumGuide // or customize
+            currentStep = .statusSelection
+        case .newAsylumSeeker:
+            currentStep = .statusSelection
+        case .seekingAsylum:
+            currentStep = .asylumGuide
         case .residencePermitHolder:
-            currentStep = .residenceGuide // or customize
+            currentStep = .residenceGuide
+            
         }
     }
-
     
+
     private func showRegistration() {
         hasCompletedInitialSetup = true
         onContinue() // Call completion handler
-    }
-    
-    private var backgroundGradient: some View {
-        LinearGradient(
-            gradient: Gradient(colors: [Color.blue.opacity(0.1), Color.green.opacity(0.1)]),
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .edgesIgnoringSafeArea(.all)
     }
 }
 
@@ -120,99 +120,154 @@ enum OnboardingStep {
     case residenceGuide
 }
 
-// MARK: - Language Selection View
+enum UserStatus {
+    case seekingAsylum
+    case existingAsylumSeeker
+    case grantedResidence
+}
+
 struct LanguageSelection: View {
     @Binding var selectedLanguage: String
+    var primaryColor: Color
     var onContinue: () -> Void
+    
+    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
     
     var body: some View {
         VStack(spacing: 30) {
-            Text("Select your preferred language")
-                .font(.title2.bold())
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.5)
-                .padding()
+            VStack(spacing: 15) {
+                Image(systemName: "globe")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 60, height: 60)
+                    .foregroundColor(primaryColor)
+                
+                Text("Select your preferred language")
+                    .font(.title2.bold())
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(primaryColor)
+            }
+            .padding(.top, 40)
             
             VStack(spacing: 20) {
-                VStack(spacing: 20) {
-                    LanguageButton(language: "English", code: "en", isSelected: selectedLanguage == "en") {
-                        selectedLanguage = "en"
-                    }
-                    
-                    LanguageButton(language: "العربية (Arabic)", code: "ar", isSelected: selectedLanguage == "ar") {
-                        selectedLanguage = "ar"
-                    }
-                    
-                    LanguageButton(language: "Français (French)", code: "fr", isSelected: selectedLanguage == "fr") {
-                        selectedLanguage = "fr"
-                    }
-                    
-                    LanguageButton(language: "فارسی (Farsi)", code: "fa", isSelected: selectedLanguage == "fa") {
-                        selectedLanguage = "fa"
-                    }
-                    
-                    LanguageButton(language: "کوردی (Kurdish)", code: "ku", isSelected: selectedLanguage == "ku") {
-                        selectedLanguage = "ku"
-                    }
-                    
-                    LanguageButton(language: "پښتو (Pashto)", code: "ps", isSelected: selectedLanguage == "ps") {
-                        selectedLanguage = "ps"
-                    }
-                    
-                    LanguageButton(language: "Українська (Ukrainian)", code: "uk", isSelected: selectedLanguage == "uk") {
-                        selectedLanguage = "uk"
-                    }
-                    
-                    LanguageButton(language: "اردو (Urdu)", code: "ur", isSelected: selectedLanguage == "ur") {
-                        selectedLanguage = "ur"
-                    }
+                LanguageButton(
+                    language: "English",
+                    code: "en",
+                    isSelected: selectedLanguage == "en",
+                    primaryColor: primaryColor
+                ) {
+                    selectedLanguage = "en"
                 }
-                .padding(.horizontal)
                 
-                Spacer()
-                
-                Button(action: onContinue) {
-                    Text("Continue")
-                        .font(.title2)
-                        .bold()
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
-                        .padding(.horizontal)
+                LanguageButton(
+                    language: "العربية (Arabic)",
+                    code: "ar",
+                    isSelected: selectedLanguage == "ar",
+                    primaryColor: primaryColor
+                ) {
+                    selectedLanguage = "ar"
                 }
-                .padding(.bottom, 30)
+                
+                LanguageButton(
+                    language: "Français (French)",
+                    code: "fr",
+                    isSelected: selectedLanguage == "fr",
+                    primaryColor: primaryColor
+                ) {
+                    selectedLanguage = "fr"
+                }
+                
+                LanguageButton(
+                    language: "فارسی (Farsi)",
+                    code: "fa",
+                    isSelected: selectedLanguage == "fa",
+                    primaryColor: primaryColor
+                ) {
+                    selectedLanguage = "fa"
+                }
+                
+                LanguageButton(
+                    language: "کوردی (Kurdish)",
+                    code: "ku",
+                    isSelected: selectedLanguage == "ku",
+                    primaryColor: primaryColor
+                ) {
+                    selectedLanguage = "ku"
+                }
+                
+                LanguageButton(
+                    language: "پښتو (Pashto)",
+                    code: "ps",
+                    isSelected: selectedLanguage == "ps",
+                    primaryColor: primaryColor
+                ) {
+                    selectedLanguage = "ps"
+                }
+                
+                LanguageButton(
+                    language: "Українська (Ukrainian)",
+                    code: "uk",
+                    isSelected: selectedLanguage == "uk",
+                    primaryColor: primaryColor
+                ) {
+                    selectedLanguage = "uk"
+                }
+                
+                LanguageButton(
+                    language: "اردو (Urdu)",
+                    code: "ur",
+                    isSelected: selectedLanguage == "ur",
+                    primaryColor: primaryColor
+                ) {
+                    selectedLanguage = "ur"
+                }
             }
+            .padding(.horizontal)
+            
+            Spacer()
+            
+            Button(action: onContinue) {
+                Text("Continue")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(primaryColor)
+                    .cornerRadius(12)
+                    .padding(.horizontal, 40)
+                    .shadow(color: primaryColor.opacity(0.3), radius: 5, x: 0, y: 3)
+            }
+            .padding(.bottom, 30)
         }
+        .padding()
     }
     
     struct LanguageButton: View {
         let language: String
         let code: String
         let isSelected: Bool
+        let primaryColor: Color
         let action: () -> Void
         
         var body: some View {
             Button(action: action) {
                 HStack {
                     Text(language)
-                        .font(.title2)
+                        .font(.body)
                         .foregroundColor(.primary)
                     Spacer()
                     if isSelected {
                         Image(systemName: "checkmark.circle.fill")
-                            .foregroundColor(.green)
+                            .foregroundColor(primaryColor)
                             .font(.title2)
                     }
                 }
                 .padding()
-                .background(Color(.secondarySystemBackground))
+                .background(Color.white)
                 .cornerRadius(12)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 2)
+                        .stroke(isSelected ? primaryColor : Color.gray.opacity(0.3), lineWidth: 1)
                 )
             }
         }
@@ -220,46 +275,50 @@ struct LanguageSelection: View {
 }
 
 // MARK: - Welcome Intro View
-struct UserWelcomeIntroView: View {
+struct WelcomeToIntroView: View {
     let selectedLanguage: String
+    var primaryColor: Color
     var onContinue: () -> Void
+    
+
+
     
     private var welcomeMessage: String {
         switch selectedLanguage {
-        case "ar": return "مرحبًا بك في دليل اللاجئين"
-        case "fr": return "Bienvenue dans Refugee Guide"
-        case "fa": return "به راهنمای پناهندگان خوش آمدید"
-        case "ku": return "بەخێربێیت بۆ ڕێنمای پەنابەران"
-        case "ps": return "د کډوالو لارښود ته ښه راغلاست"
-        case "uk": return "Ласкаво просимо до Посібника для біженців"
-        case "ur": return "ریفیوجی گائیڈ میں خوش آمدید"
-        default: return "Welcome to Refugee Guide"
+        case "ar": "مرحبًا بك في دليل اللاجئين"
+        case "fr": "Bienvenue dans Refugee Guide"
+        case "fa": "به راهنمای پناهندگان خوش آمدید"
+        case "ku": "بەخێربێیت بۆ ڕێنمای پەنابەران"
+        case "ps": "د کډوالو لارښود ته ښه راغلاست"
+        case "uk": "Ласкаво просимо до Посібника для біженців"
+        case "ur": "ریفیوجی گائیڈ میں خوش آمدید"
+        default: "Welcome to Refugee Guide"
         }
     }
     
     private var introText: String {
         switch selectedLanguage {
-        case "ar": return "هذا التطبيق سيساعدك في رحلتك كلاجئ في المملكة المتحدة. سنزودك بالمعلومات والموارد اللازمة لخطواتك التالية."
-        case "fr": return "Cette application vous aidera dans votre parcours de réfugié au Royaume-Uni. Nous vous fournissons les informations et les ressources nécessaires pour vos prochaines étapes."
-        case "fa": return "این برنامه به شما در سفر پناهندگی شما در بریتانیا کمک خواهد کرد. ما اطلاعات و منابع لازم را برای مراحل بعدی شما فراهم می‌کنیم."
-        case "ku": return "ئه‌م بەرنامەیە یارمەتیت دەدات لە گەشتە پەنابەرایەتیەکت لە شانشینی یەکگرتوو. ئێمه‌ زانیاری و سەرچاوە پێشکەشت دەکەین بۆ هەنگاوی دواتر."
-        case "ps": return "دا اپلیکیشن به تاسو سره د مهاجرت په سفر کې په انګلستان کې مرسته وکړي. موږ به تاسو ته اړینې معلومات او سرچینې برابر کړو."
-        case "uk": return "Цей додаток допоможе вам у вашій подорожі як біженця у Великій Британії. Ми надамо вам необхідну інформацію та ресурси для наступних кроків."
-        case "ur": return "یہ ایپ آپ کو برطانیہ میں بطور پناہ گزین آپ کے سفر میں مدد فراہم کرے گی۔ ہم آپ کو آپ کے اگلے مراحل کے لیے ضروری معلومات اور وسائل فراہم کریں گے۔"
-        default: return "This app will assist you in your journey as a refugee in the UK. We provide you with the information and resources needed for your next steps."
+        case "ar": "هذا التطبيق سيساعدك في رحلتك كلاجئ في المملكة المتحدة. سنزودك بالمعلومات والموارد اللازمة لخطواتك التالية."
+        case "fr": "Cette application vous aidera dans votre parcours de réfugié au Royaume-Uni. Nous vous fournissons les informations et les ressources nécessaires pour vos prochaines étapes."
+        case "fa": "این برنامه به شما در سفر پناهندگی شما در بریتانیا کمک خواهد کرد. ما اطلاعات و منابع لازم را برای مراحل بعدی شما فراهم می‌کنیم."
+        case "ku": "ئه‌م بەرنامەیە یارمەتیت دەدات لە گەشتە پەنابەرایەتیەکت لە شانشینی یەکگرتوو. ئێمه‌ زانیاری و سەرچاوە پێشکەشت دەکەین بۆ هەنگاوی دواتر."
+        case "ps": "دا اپلیکیشن به تاسو سره د مهاجرت په سفر کې په انګلستان کې مرسته وکړي. موږ به تاسو ته اړینې معلومات او سرچینې برابر کړو."
+        case "uk": "Цей додаток допоможе вам у вашій подорожі як біженця у Великій Британії. Ми надамо вам необхідну інформацію та ресурси для наступних кроків."
+        case "ur": "یہ ایپ آپ کو برطانیہ میں بطور پناہ گزین آپ کے سفر میں مدد فراہم کرے گی۔ ہم آپ کو آپ کے اگلے مراحل کے لیے ضروری معلومات اور وسائل فراہم کریں گے۔"
+        default: "This app will assist you in your journey as a refugee in the UK. We provide you with the information and resources needed for your next steps."
         }
     }
     
     private var continueButtonText: String {
         switch selectedLanguage {
-        case "ar": return "متابعة"
-        case "fr": return "Continuer"
-        case "fa": return "ادامه"
-        case "ku": return "بەردەوام بە"
-        case "ps": return "ادامه ورکړئ"
-        case "uk": return "Продовжити"
-        case "ur": return "جاری رکھیں"
-        default: return "Continue"
+        case "ar": "متابعة"
+        case "fr": "Continuer"
+        case "fa": "ادامه"
+        case "ku": "بەردەوام بە"
+        case "ps": "ادامه ورکړئ"
+        case "uk": "Продовжити"
+        case "ur": "جاری رکھیں"
+        default: "Continue"
         }
     }
     
@@ -269,11 +328,12 @@ struct UserWelcomeIntroView: View {
                 Text(welcomeMessage)
                     .font(.largeTitle)
                     .bold()
+                    .foregroundColor(primaryColor)
                 
                 Text(selectedLanguage.uppercased())
                     .font(.title2)
                     .padding(10)
-                    .background(Capsule().fill(Color.blue.opacity(0.2)))
+                    .background(Capsule().fill(primaryColor.opacity(0.2)))
                 
                 Text(introText)
                     .font(.title2)
@@ -283,43 +343,50 @@ struct UserWelcomeIntroView: View {
             
             Spacer()
             
-            Text(localizedString("Refugee Guide", translations: [
-                "ar": "دليل اللاجئ",
-                "fr": "Guide du réfugié",
-                "fa": "راهنمای پناهنده",
-                "ku": "ڕێنمای پەنابەر",
-                "ps": "د کډوالو لارښود",
-                "uk": "Посібник для біженців",
-                "ur": "ریفیوجی گائیڈ",
-            ]))
-            .font(.headline)
-            .padding(.bottom, 10)
-            
-            Text(localizedString("Three options below! 👇", translations: [
-                "ar": "ثلاث خيارات أدناه! 👇",
-                "fr": "Trois options ci-dessous! 👇",
-                "fa": "سه گزینه در زیر! 👇",
-                "ku": "سێ هەلبژاردن لە خوارەوە! 👇",
-                "ps": "درې اختیارونه لاندې دي! 👇",
-                "uk": "Три варіанти нижче! 👇",
-                "ur": "تین اختیارات نیچے ہیں! 👇"
-            ]))
-            .font(.subheadline)
-            .foregroundColor(.secondary)
+            VStack(alignment: .center, spacing: 15) {
+                Text(localizedString("Refugee Guide", translations: [
+                    "ar": "دليل اللاجئ",
+                    "fr": "Guide du réfugié",
+                    "fa": "راهنمای پناهنده",
+                    "ku": "ڕێنمای پەنابەر",
+                    "ps": "د کډوالو لارښود",
+                    "uk": "Посібник для біженців",
+                    "ur": "ریفیوجی گائیڈ",
+                ]))
+                .font(.headline)
+                .foregroundColor(primaryColor)
+                
+                Text(localizedString("Three options below! 👇", translations: [
+                    "ar": "ثلاث خيارات أدناه! 👇",
+                    "fr": "Trois options ci-dessous! 👇",
+                    "fa": "سه گزینه در زیر! 👇",
+                    "ku": "سێ هەلبژاردن لە خوارەوە! 👇",
+                    "ps": "درې اختیارونه لاندې دي! 👇",
+                    "uk": "Три варіанти нижче! 👇",
+                    "ur": "تین اختیارات نیچے ہیں! 👇"
+                ]))
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            }
+            .frame(maxWidth: .infinity)
             
             Button(action: onContinue) {
                 Text(continueButtonText)
-                    .font(.title2)
+                    .font(.headline)
                     .bold()
+                    .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
+                    .background(primaryColor)
                     .cornerRadius(12)
-                    .padding(.horizontal)
+                    .padding(.horizontal, 20)
+                    .shadow(color: primaryColor.opacity(0.3), radius: 5, x: 0, y: 3)
             }
             .padding(.bottom, 30)
         }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(red: 0.96, green: 0.96, blue: 0.98).ignoresSafeArea())
     }
     
     func localizedString(_ key: String, translations: [String: String]) -> String {
@@ -328,10 +395,11 @@ struct UserWelcomeIntroView: View {
 }
 
 // MARK: - Status Selection View
-struct UserSelectionView: View {
+struct InlineStatusSelectionView: View {
     let selectedLanguage: String
-    var onStatusSelected: (RefugeeStatus) -> Void
-    
+    let onStatusSelected: (RefugeeUserType) -> Void // see fix below
+   
+   
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Text(statusSelectionTitle)
@@ -342,26 +410,29 @@ struct UserSelectionView: View {
             StatusOptionCard(
                 title: option1Title,
                 description: option1Description,
-                icon: "questionmark.circle.fill"
-            ) {
-                onStatusSelected(.seekingAsylum)
-            }
+                icon: "questionmark.circle.fill",
+                action: {
+                    onStatusSelected(.seekingAsylum)
+                }
+            )
             
             StatusOptionCard(
                 title: option2Title,
                 description: option2Description,
-                icon: "person.fill.questionmark"
-            ) {
-                onStatusSelected(.existingAsylumSeeker)
-            }
+                icon: "person.fill.questionmark",
+                action: {
+                    onStatusSelected(.existingAsylumSeeker)
+                }
+            )
             
             StatusOptionCard(
                 title: option3Title,
                 description: option3Description,
-                icon: "checkmark.shield.fill"
-            ) {
-                onStatusSelected(.grantedResidence)
-            }
+                icon: "checkmark.shield.fill",
+                action: {
+                    onStatusSelected(.grantedResidence)
+                }
+            )
             
             Spacer()
         }
@@ -369,7 +440,6 @@ struct UserSelectionView: View {
     }
     
     // MARK: Localized Content
-    
     private var statusSelectionTitle: String {
         localizedString("Please choose your current status:", translations: [
             "ar": "الرجاء اختيار حالتك الحالية:",
@@ -409,7 +479,7 @@ struct UserSelectionView: View {
     private var option2Title: String {
         localizedString("2. Are you an existing asylum seeker?", translations: [
             "ar": "2. هل أنت لاجئ حالي؟",
-            "fr": "2. Êtes-vous déjà demandeur d’asile?",
+            "fr": "2. Êtes-vous déjà demandeur d'asile?",
             "fa": "2. آیا شما یک پناهجوی موجود هستید؟",
             "ku": "٢. ئایا پەنابەری ئێستا هەیت؟",
             "ps": "2. ایا تاسو اوسنی پناه غوښتونکی یاست؟",
@@ -496,9 +566,12 @@ struct UserSelectionView: View {
 }
 
 // MARK: - Asylum Application Guide
-struct NewAsylumGuideView: View {
+struct GuideView: View {
     let selectedLanguage: String
     var onContinue: () -> Void
+    
+    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)
+    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)
     
     var body: some View {
         GuideContentView(
@@ -507,12 +580,14 @@ struct NewAsylumGuideView: View {
             subtitle: guideSubtitle,
             cards: guideCards,
             continueButtonText: continueButtonText,
-            onContinue: onContinue
+            onContinue: onContinue,
+            primaryColor: primaryColor,
+            accentColor: accentColor
         )
+
     }
     
     // MARK: Localized Content
-    
     private var guideTitle: String {
         localizedString("UK Asylum Application Guide", translations: [
             "ar": "دليل التقدم بطلب اللجوء في المملكة المتحدة",
@@ -689,9 +764,12 @@ struct NewAsylumGuideView: View {
 }
 
 // MARK: - Existing Asylum Seeker Guide
-struct ExistingAsylumGuide: View {
+struct ExistingAsylumContentGuideView: View {
     let selectedLanguage: String
     var onContinue: () -> Void
+    
+    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)
+    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)
     
     var body: some View {
         GuideContentView(
@@ -700,12 +778,13 @@ struct ExistingAsylumGuide: View {
             subtitle: guideSubtitle,
             cards: guideCards,
             continueButtonText: continueButtonText,
-            onContinue: onContinue
+            onContinue: onContinue,
+            primaryColor: primaryColor,
+            accentColor: accentColor
         )
     }
     
     // MARK: Localized Content
-    
     private var guideTitle: String {
         localizedString("Support for Asylum Seekers", translations: [
             "ar": "الدعم للاجئين",
@@ -729,7 +808,6 @@ struct ExistingAsylumGuide: View {
             "ur": "موجودہ پناہ کے متلاشیوں کے لیے وسائل اور اگلے اقدامات"
         ])
     }
-    
     
     private var guideCards: [GuideCardData] {
         [
@@ -883,9 +961,12 @@ struct ExistingAsylumGuide: View {
 }
 
 // MARK: - Residence Permit Guide
-struct ResidenceGuide: View {
+struct GrantedResidenceGuideView: View {
     let selectedLanguage: String
     var onContinue: () -> Void
+    
+    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)
+    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)
     
     var body: some View {
         GuideContentView(
@@ -894,12 +975,13 @@ struct ResidenceGuide: View {
             subtitle: guideSubtitle,
             cards: guideCards,
             continueButtonText: continueButtonText,
-            onContinue: onContinue
+            onContinue: onContinue,
+            primaryColor: primaryColor,
+            accentColor: accentColor
         )
     }
     
     // MARK: Localized Content
-    
     private var guideTitle: String {
         localizedString("Support After Receiving Leave to Remain", translations: [
             "ar": "الدعم بعد الحصول على تصريح الإقامة",
@@ -923,7 +1005,6 @@ struct ResidenceGuide: View {
             "ur": "برطانیہ میں نئی زندگی شروع کرنے کے لیے ضروری چیزیں"
         ])
     }
-    
     
     private var guideCards: [GuideCardData] {
         [
@@ -1170,7 +1251,7 @@ struct ResidenceGuide: View {
             "fr": "Cours d'anglais gratuits pour faciliter l'intégration",
             "fa": "دروس رایگان انگلیسی برای کمک به ادغام",
             "ku": "وانەی زمانی ئینگلیزی بەخۆرایی بۆ یارمەتی لە تێکەڵبوون",
-            "ps": "د یوځای کېدو لپاره وړیا انګلیسي درسونه",
+            "ps": "د یوځای کېدو لپاره وړيا انګليسي درسونه",
             "uk": "Безкоштовні уроки англійської для інтеграції",
             "ur": "انضمام میں مدد کے لیے مفت انگریزی اسباق"
         ])
@@ -1205,6 +1286,16 @@ struct ResidenceGuide: View {
     }
 }
 
+// MARK: - Shared Components
+struct GuideContentCardData: Identifiable {
+    let id = UUID()
+    let title: String
+    let description: String
+    let icon: String
+    let linkText: String?
+    let linkURL: String?
+}
+
 struct UserGuideContentView: View {
     let selectedLanguage: String
     let title: String
@@ -1234,7 +1325,6 @@ struct UserGuideContentView: View {
             }
             .padding()
         }
-        .navigationTitle(title)
     }
     
     private var headerSection: some View {
@@ -1317,13 +1407,19 @@ struct GuideCard: View {
 // MARK: - Preview
 struct LeaveToRemainGuideView_Previews: PreviewProvider {
     static var previews: some View {
-        LeaveToRemainGuideView(onContinue: {})
-            .environment(\.locale, .init(identifier: "en"))
-        
-        LeaveToRemainGuideView(onContinue: {})
-            .environment(\.locale, .init(identifier: "ar"))
-            .environment(\.layoutDirection, .rightToLeft)
+        LeaveToRemainGuideView(
+            selectedLanguage: "en",
+            primaryColor: Color(red: 0.07, green: 0.36, blue: 0.65),
+            onContinue: {}
+        )
+        .environment(\.locale, .init(identifier: "en"))
+
+        LeaveToRemainGuideView(
+            selectedLanguage: "ar",
+            primaryColor: Color(red: 0.07, green: 0.36, blue: 0.65),
+            onContinue: {}
+        )
+        .environment(\.locale, .init(identifier: "ar"))
+        .environment(\.layoutDirection, .rightToLeft)
     }
 }
-
-
