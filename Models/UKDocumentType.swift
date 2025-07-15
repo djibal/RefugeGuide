@@ -7,6 +7,8 @@
 
 
 import Foundation
+import SwiftUI
+import FirebaseFunctions
 
 /// Enum representing supported UK document types for AI analysis
 enum UKDocumentType: String, CaseIterable, Identifiable {

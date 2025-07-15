@@ -3,10 +3,18 @@
 //  RefugeGuide
 //
 // Created by Djibal Ramazani on 28/06/2025.
-
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct OnboardingFlow: View {
+
+    // Shared color constants
+    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)   // Deep UK blue
+    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)    // UK orange
+    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+
+    // Steps in onboarding flow
     private enum OnboardingStep: Int {
         case languageSelection
         case welcome
@@ -15,11 +23,13 @@ struct OnboardingFlow: View {
         case completed
     }
 
+    // AppStorage bindings
     @AppStorage("currentOnboardingStep") private var currentStepRaw = 0
     @AppStorage("selectedLanguage") var selectedLanguage: String = ""
     @AppStorage("userType") var userType: RefugeeUserType = .unknown
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding = false
 
+    // Current onboarding step
     private var currentStep: OnboardingStep {
         get { OnboardingStep(rawValue: currentStepRaw) ?? .languageSelection }
         set { currentStepRaw = newValue.rawValue }
@@ -27,33 +37,46 @@ struct OnboardingFlow: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
-                switch currentStep {
-                case .languageSelection:
-                    LanguageSelectedView(selectedLanguage: $selectedLanguage) {
-                        currentStepRaw = OnboardingStep.welcome.rawValue
+            ZStack {
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.blue.opacity(0.1), Color.green.opacity(0.1)]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+
+                VStack {
+                    switch currentStep {
+                    case .languageSelection:
+                        LanguageSelectedView(selectedLanguage: $selectedLanguage) {
+                            withAnimation {
+                                currentStepRaw = OnboardingStep.welcome.rawValue
+                            }
+                        }
+
+                    case .welcome:
+                        WelcomeView {
+                            withAnimation {
+                                currentStepRaw = OnboardingStep.userTypeSelection.rawValue
+                            }
+                        }
+
+                    case .userTypeSelection:
+                        UserTypeSelectionView { type in
+                            userType = type
+                            withAnimation {
+                                currentStepRaw = OnboardingStep.userDestination.rawValue
+                            }
+                        }
+
+                    case .userDestination:
+                        userDestinationView
+
+                    case .completed:
+                        MainTabView()
                     }
-
-                case .welcome:
-                    WelcomeView {
-                        currentStepRaw = OnboardingStep.userTypeSelection.rawValue
-                    }
-
-                case .userTypeSelection:
-                    UserTypeSelectionView { type in
-                        userType = type
-                        currentStepRaw = OnboardingStep.userDestination.rawValue
-                    }
-
-                case .userDestination:
-                    userDestinationView
-
-                case .completed:
-                    MainTabView()
                 }
             }
-            .animation(.easeInOut, value: currentStepRaw)
-            .transition(.slide)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     #if DEBUG
@@ -64,22 +87,34 @@ struct OnboardingFlow: View {
                     #endif
                 }
             }
+            .transition(.slide)
+            .animation(.easeInOut, value: currentStepRaw)
         }
     }
 
+    // Destination view based on userType
     @ViewBuilder
     private var userDestinationView: some View {
         switch userType {
-        case .asylumSeeker:
-            IntroToAsylumView(onContinue: completeOnboarding)
+        case .asylumSeeker, .newAsylumSeeker, .seekingAsylum:
+            IntroToAsylumView(
+                onContinue: completeOnboarding,
+                selectedLanguage: selectedLanguage
+            )
+
         case .existingAsylumSeeker:
-            ExistingAsylumVerificationView(onVerificationComplete: completeOnboarding)
-        case .refugee:
-            LeaveToRemainGuideView(onContinue: completeOnboarding)
-        case .residencePermitHolder, .grantedResidence:
-            LeaveToRemainGuideView(onContinue: completeOnboarding)
-        case .newAsylumSeeker, .seekingAsylum:
-            IntroToAsylumView(onContinue: completeOnboarding)
+            ExistingAsylumVerificationView(
+                onVerificationComplete: completeOnboarding,
+                selectedLanguage: selectedLanguage
+            )
+
+        case .refugee, .residencePermitHolder, .grantedResidence:
+            RefugeeGuideContentView(
+                selectedLanguage: selectedLanguage,
+                primaryColor: primaryColor,
+                onContinue: completeOnboarding
+            )
+
         case .unknown:
             RegistrationView(onComplete: completeOnboarding)
         }

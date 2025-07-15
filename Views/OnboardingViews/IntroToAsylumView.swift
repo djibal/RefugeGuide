@@ -4,81 +4,131 @@
 //
 //  Created by Djibal Ramazani on 05/06/2025.
 //
-
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct IntroToAsylumView: View {
     var onContinue: () -> Void
     @AppStorage("selectedLanguage") var selectedLanguage: String = "en"
     
-    var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 30) {
-                Text(asylumTitle)
-                    .font(.title)
-                    .bold()
-                
-                Text(asylumDescription)
-                    .font(.body)
-                
-                VStack(alignment: .leading, spacing: 20) {
-                    StepCard(
-                        number: "1",
-                        title: step1Title,
-                        description: step1Description
-                    )
-                    
-                    StepCard(
-                        number: "2",
-                        title: step2Title,
-                        description: step2Description
-                    )
-                    
-                    StepCard(
-                        number: "3",
-                        title: step3Title,
-                        description: step3Description
-                    )
-                    
-                    StepCard(
-                        number: "4",
-                        title: step4Title,
-                        description: step4Description
-                    )
-                }
-                
-                Divider()
-                    .padding(.vertical)
-                
-                Text(asylumBenefitsTitle)
-                    .font(.headline)
-                
-                VStack(alignment: .leading, spacing: 12) {
-                    BenefitItem(text: asylumBenefit1)
-                    BenefitItem(text: asylumBenefit2)
-                    BenefitItem(text: asylumBenefit3)
-                    BenefitItem(text: asylumBenefit4)
-                }
-                
-                Spacer()
-                
-                Button(action: onContinue) {
-                    Text(continueButtonText)
-                        .font(.title3)
-                        .bold()
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.accentColor)
-                        .foregroundColor(.white)
-                        .cornerRadius(12)
-                }
-            }
-            .padding()
-        }
-        .navigationTitle(asylumTitle)
-    }
+    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)
+    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)
+    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+    private let cardBackground = Color.white
     
-    // MARK: - Localized Content
+    var body: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 30) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(asylumTitle)
+                            .font(.title)
+                            .bold()
+                            .foregroundColor(primaryColor)
+                            .lineLimit(nil)
+                        
+                        Text(asylumDescription)
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .lineLimit(nil)
+                    }
+                    .padding(.bottom, 10)
+                    
+                    // Process Steps
+                    VStack(alignment: .leading, spacing: 25) {
+                        Text("UK Asylum Process")
+                            .font(.headline)
+                            .foregroundColor(primaryColor)
+                            .lineLimit(nil)
+                        
+                        StepCard(
+                            number: "1",
+                            title: step1Title,
+                            description: step1Description,
+                            icon: "doc.text.fill",
+                            color: primaryColor
+                        )
+                        
+                        StepCard(
+                            number: "2",
+                            title: step2Title,
+                            description: step2Description,
+                            icon: "person.fill.questionmark",
+                            color: accentColor
+                        )
+                        
+                        StepCard(
+                            number: "3",
+                            title: step3Title,
+                            description: step3Description,
+                            icon: "person.badge.clock",
+                            color: primaryColor
+                        )
+                        
+                        StepCard(
+                            number: "4",
+                            title: step4Title,
+                            description: step4Description,
+                            icon: "checkmark.shield.fill",
+                            color: accentColor
+                        )
+                    }
+                    .padding()
+                    .background(cardBackground)
+                    .cornerRadius(15)
+                    .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
+                    
+                    // Benefits Section
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text(asylumBenefitsTitle)
+                            .font(.headline)
+                            .foregroundColor(primaryColor)
+                            .lineLimit(nil)
+                        
+                        VStack(alignment: .leading, spacing: 15) {
+                            BenefitItem(icon: "house.fill", text: asylumBenefit1, color: primaryColor)
+                            BenefitItem(icon: "heart.fill", text: asylumBenefit2, color: accentColor)
+                            BenefitItem(icon: "book.fill", text: asylumBenefit3, color: primaryColor)
+                            BenefitItem(icon: "sterlingsign.circle.fill", text: asylumBenefit4, color: accentColor)
+                        }
+                        .padding(.vertical, 5)
+                    }
+                    .padding()
+                    .background(cardBackground)
+                    .cornerRadius(15)
+                    .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
+                    
+                    Spacer()
+                    
+                    // Continue Button
+                    Button(action: onContinue) {
+                        Text(continueButtonText)
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(primaryColor)
+                            .cornerRadius(12)
+                            .padding(.horizontal, 20)
+                            .shadow(color: primaryColor.opacity(0.3), radius: 5, x: 0, y: 3)
+                            .lineLimit(nil)
+                    }
+                    .padding(.vertical, 20)
+                }
+                .padding(.top, 20)
+                .padding(.horizontal)
+                .padding(.bottom)
+                .background(backgroundColor)
+                .id("top")
+            }
+            .navigationTitle(asylumTitle)
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                proxy.scrollTo("top", anchor: .top)
+            }
+        }
+    }
     
     private var asylumTitle: String {
         switch selectedLanguage {
@@ -92,7 +142,7 @@ struct IntroToAsylumView: View {
         default: return "Welcome to the UK Asylum Process"
         }
     }
-
+    
     private var asylumDescription: String {
         switch selectedLanguage {
         case "ar": return "إذا كنت تخطط لطلب اللجوء، سيساعدك هذا الدليل على فهم كل خطوة من الرحلة."
@@ -105,9 +155,7 @@ struct IntroToAsylumView: View {
         default: return "If you're planning to seek asylum, this guide will help you understand each step of the journey."
         }
     }
-
-    // MARK: - Steps
-
+    
     private var step1Title: String {
         switch selectedLanguage {
         case "ar": return "التسجيل"
@@ -120,7 +168,7 @@ struct IntroToAsylumView: View {
         default: return "Registration"
         }
     }
-
+    
     private var step1Description: String {
         switch selectedLanguage {
         case "ar": return "تسجيل طلب اللجوء الخاص بك رسميًا لدى السلطات."
@@ -133,7 +181,7 @@ struct IntroToAsylumView: View {
         default: return "Officially register your asylum claim with the authorities."
         }
     }
-
+    
     private var step2Title: String {
         switch selectedLanguage {
         case "ar": return "مقابلة الفحص"
@@ -146,7 +194,7 @@ struct IntroToAsylumView: View {
         default: return "Screening Interview"
         }
     }
-
+    
     private var step2Description: String {
         switch selectedLanguage {
         case "ar": return "سوف تُسأل عن خلفيتك وأسباب لجوئك."
@@ -159,7 +207,7 @@ struct IntroToAsylumView: View {
         default: return "You'll be asked about your background and reason for seeking asylum."
         }
     }
-
+    
     private var step3Title: String {
         switch selectedLanguage {
         case "ar": return "مقابلة اللجوء"
@@ -172,7 +220,7 @@ struct IntroToAsylumView: View {
         default: return "Asylum Interview"
         }
     }
-
+    
     private var step3Description: String {
         switch selectedLanguage {
         case "ar": return "المقابلة الرئيسية التي تقرر حالتك."
@@ -185,7 +233,7 @@ struct IntroToAsylumView: View {
         default: return "The main interview that decides your case."
         }
     }
-
+    
     private var step4Title: String {
         switch selectedLanguage {
         case "ar": return "القرار"
@@ -198,7 +246,7 @@ struct IntroToAsylumView: View {
         default: return "Decision"
         }
     }
-
+    
     private var step4Description: String {
         switch selectedLanguage {
         case "ar": return "ستتلقى النتيجة والمساعدة التالية إذا تمت الموافقة."
@@ -211,9 +259,7 @@ struct IntroToAsylumView: View {
         default: return "You’ll receive the outcome and next support if approved."
         }
     }
-
-    // MARK: - Benefits Section
-
+    
     private var asylumBenefitsTitle: String {
         switch selectedLanguage {
         case "ar": return "فوائد اللجوء"
@@ -226,7 +272,7 @@ struct IntroToAsylumView: View {
         default: return "Asylum Benefits"
         }
     }
-
+    
     private var asylumBenefit1: String {
         switch selectedLanguage {
         case "ar": return "الحماية من الترحيل القسري"
@@ -239,7 +285,7 @@ struct IntroToAsylumView: View {
         default: return "Protection from forced removal"
         }
     }
-
+    
     private var asylumBenefit2: String {
         switch selectedLanguage {
         case "ar": return "الدعم المالي والإقامة"
@@ -252,7 +298,7 @@ struct IntroToAsylumView: View {
         default: return "Financial support and housing"
         }
     }
-
+    
     private var asylumBenefit3: String {
         switch selectedLanguage {
         case "ar": return "الوصول إلى الرعاية الصحية"
@@ -265,7 +311,7 @@ struct IntroToAsylumView: View {
         default: return "Access to healthcare"
         }
     }
-
+    
     private var asylumBenefit4: String {
         switch selectedLanguage {
         case "ar": return "الدراسة والعمل لاحقًا"
@@ -278,9 +324,7 @@ struct IntroToAsylumView: View {
         default: return "Study and work later"
         }
     }
-
-    // MARK: - Continue Button
-
+    
     private var continueButtonText: String {
         switch selectedLanguage {
         case "ar": return "متابعة"
@@ -294,45 +338,56 @@ struct IntroToAsylumView: View {
         }
     }
     
-    
-    // ... (similar localized properties for all text elements)
-    
     struct StepCard: View {
         let number: String
         let title: String
         let description: String
+        let icon: String
+        let color: Color
         
         var body: some View {
             HStack(alignment: .top, spacing: 16) {
-                Text(number)
-                    .font(.title)
-                    .bold()
-                    .frame(width: 40, height: 40)
-                    .background(Color.accentColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(20)
+                ZStack {
+                    Circle()
+                        .fill(color.opacity(0.1))
+                        .frame(width: 40, height: 40)
+                    
+                    Image(systemName: icon)
+                        .foregroundColor(color)
+                        .font(.system(size: 20))
+                }
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(title)
                         .font(.headline)
+                        .foregroundColor(.primary)
+                        .lineLimit(nil)
                     Text(description)
                         .font(.body)
                         .foregroundColor(.secondary)
+                        .lineLimit(nil)
                 }
             }
+            .padding(.vertical, 5)
         }
     }
     
     struct BenefitItem: View {
+        let icon: String
         let text: String
+        let color: Color
         
         var body: some View {
             HStack(alignment: .top) {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(.green)
+                Image(systemName: icon)
+                    .foregroundColor(color)
+                    .font(.system(size: 20))
+                    .frame(width: 30)
+                
                 Text(text)
+                    .font(.subheadline)
+                    .lineLimit(nil)
             }
         }
     }
 }
-

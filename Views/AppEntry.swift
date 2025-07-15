@@ -5,9 +5,9 @@
 //  Created by Djibal Ramazani on 03/06/2025.
 //
 
-// AppEntry.swift
-// RefugeGuide
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import FirebaseAuth
 
 struct AppEntry: View {

@@ -17,112 +17,154 @@ let eVisaInfoButton = "View eVisa Info"
 let portalButton = "Go to UKVI Portal"
 let privacyNote = "Your data is encrypted and securely stored."
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct EVisaView: View {
     @AppStorage("selectedLanguage") private var selectedLanguage = "en"
     
+    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)
+    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)
+    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+    private let cardBackground = Color.white
+    
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                // Header
-                VStack(alignment: .center) {
-                    Image(systemName: "person.crop.rectangle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 100, height: 100)
-                        .foregroundColor(.accentColor)
-                    
-                    Text(eVisaTitle)
-                        .font(.title)
-                        .bold()
-                        .multilineTextAlignment(.center)
-                        .padding(.top, 8)
-                    
-                    Text(eVisaSubtitle)
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 24)
-                
-                // Status Card
-                VStack(alignment: .leading, spacing: 16) {
-                    Text(statusSectionTitle)
-                        .font(.headline)
-                    
-                    StatusItem(icon: "checkmark.shield.fill", label: statusItem1)
-                    StatusItem(icon: "calendar", label: statusItem2)
-                    StatusItem(icon: "house.fill", label: statusItem3)
-                    StatusItem(icon: "briefcase.fill", label: statusItem4)
-                }
-                .padding()
-                .background(Color(.secondarySystemBackground))
-                .cornerRadius(12)
-                
-                // Share Code
-                VStack(alignment: .leading, spacing: 16) {
-                    Text(shareCodeTitle)
-                        .font(.headline)
-                    
-                    HStack {
-                        Text("ABCD-1234")
-                            .font(.title2)
-                            .bold()
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(spacing: 25) {
+                    // Header
+                    VStack(spacing: 20) {
+                        ZStack {
+                            Circle()
+                                .fill(primaryColor.opacity(0.1))
+                                .frame(width: 120, height: 120)
+                            
+                            Image(systemName: "doc.richtext.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 60, height: 60)
+                                .foregroundColor(primaryColor)
+                        }
                         
-                        Spacer()
-                        
-                        Button(action: copyShareCode) {
-                            Image(systemName: "doc.on.doc")
+                        VStack(spacing: 5) {
+                            Text(eVisaTitle)
                                 .font(.title2)
+                                .bold()
+                                .foregroundColor(primaryColor)
+                                .lineLimit(nil)
+                            
+                            Text(eVisaSubtitle)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(nil)
                         }
                     }
-                    .padding()
-                    .background(Color(.tertiarySystemBackground))
-                    .cornerRadius(8)
+                    .padding(.top, 20)
                     
-                    Text(shareCodeDescription)
+                    // Status Card
+                    VStack(alignment: .leading, spacing: 15) {
+                        HStack {
+                            Image(systemName: "chart.bar.doc.horizontal")
+                                .foregroundColor(primaryColor)
+                            
+                            Text(statusSectionTitle)
+                                .font(.headline)
+                                .foregroundColor(primaryColor)
+                                .lineLimit(nil)
+                        }
+                        
+                        StatusItem(icon: "envelope.open.fill", label: statusItem1, color: primaryColor)
+                        StatusItem(icon: "calendar.badge.clock", label: statusItem2, color: accentColor)
+                        StatusItem(icon: "hourglass", label: statusItem3, color: primaryColor)
+                        StatusItem(icon: "checkmark.seal.fill", label: statusItem4, color: .green)
+                    }
+                    .padding()
+                    .background(cardBackground)
+                    .cornerRadius(15)
+                    .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
+                    
+                    // Share Code
+                    VStack(alignment: .leading, spacing: 15) {
+                        HStack {
+                            Image(systemName: "square.and.arrow.up")
+                                .foregroundColor(primaryColor)
+                            
+                            Text(shareCodeTitle)
+                                .font(.headline)
+                                .foregroundColor(primaryColor)
+                                .lineLimit(nil)
+                        }
+                        
+                        HStack {
+                            Text("ABCD-1234")
+                                .font(.title2)
+                                .bold()
+                                .foregroundColor(primaryColor)
+                                .lineLimit(nil)
+                            
+                            Spacer()
+                            
+                            Button(action: copyShareCode) {
+                                Image(systemName: "doc.on.doc")
+                                    .font(.title2)
+                                    .foregroundColor(accentColor)
+                            }
+                        }
+                        .padding()
+                        .background(Color(.tertiarySystemBackground))
+                        .cornerRadius(12)
+                        
+                        Text(shareCodeDescription)
+                            .font(.footnote)
+                            .foregroundColor(.secondary)
+                            .lineLimit(nil)
+                    }
+                    .padding()
+                    .background(cardBackground)
+                    .cornerRadius(15)
+                    .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
+                    
+                    // Actions
+                    VStack(spacing: 15) {
+                        NavigationLink(destination: EVisaInfoView()) {
+                            ActionButton(
+                                title: eVisaInfoButton,
+                                icon: "info.circle.fill",
+                                color: primaryColor
+                            )
+                        }
+                        
+                        Link(destination: URL(string: "https://www.gov.uk/view-prove-immigration-status")!) {
+                            ActionButton(
+                                title: portalButton,
+                                icon: "globe",
+                                color: accentColor
+                            )
+                        }
+                    }
+                    .padding(.vertical, 10)
+                    
+                    // Note
+                    Text(privacyNote)
                         .font(.footnote)
                         .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 10)
+                        .lineLimit(nil)
                 }
                 .padding()
-                .background(Color(.secondarySystemBackground))
-                .cornerRadius(12)
-                
-                // Actions
-                VStack(spacing: 16) {
-                    NavigationLink(destination: EVisaInfoView()) {
-                        ActionButton(
-                            title: eVisaInfoButton,
-                            icon: "info.circle",
-                            color: .blue
-                        )
-                    }
-                    
-                    Link(destination: URL(string: "https://www.gov.uk/view-prove-immigration-status")!) {
-                        ActionButton(
-                            title: portalButton,
-                            icon: "globe",
-                            color: .green
-                        )
-                    }
-                }
-                .padding(.vertical, 8)
-                
-                // Note
-                Text(privacyNote)
-                    .font(.footnote)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 16)
+                .background(backgroundColor.ignoresSafeArea())
+                .id("top")
             }
-            .padding()
+            .onAppear {
+                proxy.scrollTo("top", anchor: .top)
+            }
         }
         .navigationTitle(eVisaTitle)
+        .navigationBarTitleDisplayMode(.inline)
         .alert(isPresented: .constant(false)) {
-            // We'll use a toast or sheet for copy confirmation
             Alert(title: Text("Copied"))
         }
     }
@@ -161,19 +203,21 @@ struct EVisaView: View {
         }
     }
     
-    // ... (similar localized properties for all text elements)
-    
     struct StatusItem: View {
         let icon: String
         let label: String
+        let color: Color
         
         var body: some View {
             HStack {
                 Image(systemName: icon)
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(color)
                     .frame(width: 30)
                 Text(label)
+                    .font(.subheadline)
+                    .lineLimit(nil)
             }
+            .padding(.vertical, 3)
         }
     }
     
@@ -188,21 +232,14 @@ struct EVisaView: View {
                     .font(.headline)
                 Text(title)
                     .fontWeight(.medium)
+                    .lineLimit(nil)
                 Spacer()
                 Image(systemName: "arrow.up.forward")
             }
             .padding()
             .foregroundColor(.white)
             .background(color)
-            .cornerRadius(10)
-        }
-    }
-}
-
-struct EVisaView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            EVisaView()
+            .cornerRadius(12)
         }
     }
 }

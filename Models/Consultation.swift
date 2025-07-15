@@ -8,6 +8,8 @@
 // Consultation.swift
 
 import Foundation
+import SwiftUI
+import FirebaseFunctions
 import FirebaseFirestoreSwift
 
 struct Consultation: Identifiable, Codable {

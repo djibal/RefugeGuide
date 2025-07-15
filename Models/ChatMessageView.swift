@@ -1,12 +1,13 @@
 //
-//  . ChatMessageView.swift
+//  ChatMessageView.swift
 //  RefugeGuide
 //
 //  Created by Djibal Ramazani on 14/07/2025.
 //
-
 import Foundation
 import SwiftUI
+import FirebaseFunctions
+
 
 struct ChatMessageView: View {
     let message: ChatMessage

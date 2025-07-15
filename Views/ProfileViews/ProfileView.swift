@@ -5,7 +5,9 @@
 //  Created by Djibal Ramazani on 10/06/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import FirebaseAuth
 
 
@@ -15,13 +17,12 @@ struct ProfileView: View {
     @State private var showDocumentManager = false
     @State private var showErrorAlert = false
     @State private var errorMessage = ""
-    @State private var userDetails: UserDetails?
-    @State private var isLoading = true
+    @StateObject private var viewModel = ProfileViewModel()
     
     var body: some View {
         NavigationView {
             Group {
-                if isLoading {
+                if viewModel.isLoading {
                     ProgressView("Loading profile...")
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
@@ -102,7 +103,7 @@ struct ProfileView: View {
                         .foregroundColor(.secondary)
                 }
                 
-                if let details = userDetails {
+                  if let details = viewModel.userDetails {
                     HStack {
                         Text("Case Reference")
                         Spacer()
@@ -120,7 +121,7 @@ struct ProfileView: View {
             }
             
             NavigationLink("Edit Profile") {
-                EditProfileView(userDetails: $userDetails)
+                EditProfileView(userDetails: $viewModel.userDetails)
             }
         }
     }
@@ -176,18 +177,18 @@ struct ProfileView: View {
     
     private func loadUserDetails() {
         guard let userId = Auth.auth().currentUser?.uid else {
-            isLoading = false
+            viewModel.isLoading = false
             return
         }
         
         Task {
             do {
-                userDetails = try await UserService.fetchUserDetails(userId: userId)
-                isLoading = false
+                viewModel.userDetails = try await UserService.fetchUserDetails(userId: userId)
+                viewModel.isLoading = false
             } catch {
                 errorMessage = "Failed to load user details: \(error.localizedDescription)"
                 showErrorAlert = true
-                isLoading = false
+                viewModel.isLoading = false
             }
         }
     }
@@ -211,51 +212,12 @@ struct ProfileView: View {
     }
 }
 
-// MARK: - Supporting Structures
-struct UserDetails: Codable {
-    var caseReference: String?
-    var legalStatus: UKLegalStatus
-    var arrivalDate: Date?
-    var nationality: String?
-    var language: String?
-}
-
-    
     enum CodingKeys: String, CodingKey {
         case caseReference = "case_reference"
         case legalStatus = "legal_status"
         case arrivalDate = "arrival_date"
         case nationality, language
     }
-
-enum UKLegalStatus: String, Codable {
-    case asylumSeeker = "asylum_seeker"
-    case refugee = "refugee"
-    case humanitarianProtection = "humanitarian_protection"
-    case discretionaryLeave = "discretionary_leave"
-    case undocumented = "undocumented"
-    
-    var displayName: String {
-        switch self {
-        case .asylumSeeker: return "Asylum Seeker"
-        case .refugee: return "Refugee"
-        case .humanitarianProtection: return "Humanitarian Protection"
-        case .discretionaryLeave: return "Discretionary Leave"
-        case .undocumented: return "Undocumented"
-        }
-    }
-    
-    var color: Color {
-        switch self {
-        case .refugee: return .green
-        case .asylumSeeker: return .orange
-        case .humanitarianProtection: return .blue
-        case .discretionaryLeave: return .purple
-        case .undocumented: return .red
-        }
-    }
-}
-
 
 
 // MARK: - Preview

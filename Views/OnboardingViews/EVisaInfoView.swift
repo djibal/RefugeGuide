@@ -5,66 +5,117 @@
 //  Created by Djibal Ramazani on 02/06/2025.
 //
 
-
 import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct EVisaInfoView: View {
     @AppStorage("selectedLanguage") private var selectedLanguage = "en"
+    
+    
+       // MARK: - UI Constants
+       private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
+       private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)   // UK accent orange
+       private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+       private let cardBackground = Color.white
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                Text(title)
-                    .font(.title)
-                    .bold()
-
-                VStack(alignment: .leading, spacing: 16) {
-                    Text(intro1)
-                    Text(intro2)
+        TopAlignedScrollView { // Replace ScrollView by TopAlignedScrollView
+            VStack(alignment: .leading, spacing: 25) {
+                // Header
+                VStack(spacing: 15) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(primaryColor.opacity(0.1))
+                            .frame(height: 120)
+                        
+                        Image(systemName: "doc.richtext.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(primaryColor)
+                    }
+                    
+                    Text(title)
+                        .font(.title)
+                        .bold()
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(primaryColor)
                 }
-
-                Divider()
-
-                Text(whyTitle)
-                    .font(.headline)
-
-                VStack(alignment: .leading, spacing: 12) {
-                    BenefitItem(icon: "lock.shield", text: benefit1)
-                    BenefitItem(icon: "globe", text: benefit2)
-                    BenefitItem(icon: "doc.text", text: benefit3)
-                    BenefitItem(icon: "airplane.departure", text: benefit4)
-                    BenefitItem(icon: "person.2", text: benefit5)
+                
+                // Introduction
+                InfoCard(
+                    title: "",
+                    content: intro1,
+                    icon: "info.circle.fill",
+                    color: primaryColor
+                )
+                
+                // Benefits
+                InfoCard(
+                    title: whyTitle,
+                    content: "",
+                    icon: "checkmark.shield.fill",
+                    color: accentColor
+                )
+                
+                VStack(alignment: .leading, spacing: 15) {
+                    BenefitItem(icon: "lock.shield", text: benefit1, color: primaryColor)
+                    BenefitItem(icon: "globe", text: benefit2, color: accentColor)
+                    BenefitItem(icon: "doc.text", text: benefit3, color: primaryColor)
+                    BenefitItem(icon: "airplane.departure", text: benefit4, color: accentColor)
+                    BenefitItem(icon: "person.2", text: benefit5, color: primaryColor)
                 }
-                .padding(.vertical, 8)
-
-                Divider()
-
-                Text(howTitle)
-                    .font(.headline)
-
-                VStack(alignment: .leading, spacing: 12) {
-                    HowToStep(number: "1", text: how1)
-                    HowToStep(number: "2", text: how2)
-                    HowToStep(number: "3", text: how3)
+                .padding()
+                .background(cardBackground)
+                .cornerRadius(15)
+                .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
+                
+                // How To
+                InfoCard(
+                    title: howTitle,
+                    content: "",
+                    icon: "questionmark.circle.fill",
+                    color: accentColor
+                )
+                
+                VStack(alignment: .leading, spacing: 15) {
+                    HowToStep(number: "1", text: how1, color: primaryColor)
+                    HowToStep(number: "2", text: how2, color: accentColor)
+                    HowToStep(number: "3", text: how3, color: primaryColor)
                 }
-                .padding(.vertical, 8)
-
-                Divider()
-
-                Link(destination: URL(string: "https://www.gov.uk/view-prove-immigration-status")!) {
-                    ActionButton(title: portalButton, icon: "arrow.up.forward", color: .blue)
+                .padding()
+                .background(cardBackground)
+                .cornerRadius(15)
+                .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
+                
+                // Actions
+                VStack(spacing: 15) {
+                    Link(destination: URL(string: "https://www.gov.uk/view-prove-immigration-status")!) {
+                        ActionButton(
+                            title: portalButton,
+                            icon: "arrow.up.forward.square.fill",
+                            color: primaryColor
+                        )
+                    }
                 }
-
+                .padding(.vertical, 10)
+                
+                // Note
                 Text(note)
                     .font(.footnote)
                     .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 10)
             }
             .padding()
+            .background(backgroundColor.ignoresSafeArea())
         }
         .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
     }
-
+    
+   
     // MARK: - Localized Content
 
     private var title: String {
@@ -210,53 +261,137 @@ struct EVisaInfoView: View {
     // Add other computed properties here (whyTitle, benefit1, benefit2, benefit3, benefit4, benefit5, howTitle, how1, how2, how3, portalButton, note)
     // ... truncated for brevity, already shown in previous message ...
 
-    struct BenefitItem: View {
-        let icon: String
-        let text: String
-
-        var body: some View {
-            HStack(alignment: .top) {
-                Image(systemName: icon)
-                    .foregroundColor(.accentColor)
-                    .frame(width: 30)
-                Text(text)
-            }
-        }
-    }
-
-    struct HowToStep: View {
-        let number: String
-        let text: String
-
-        var body: some View {
-            HStack(alignment: .top) {
-                Text(number)
-                    .bold()
-                    .frame(width: 30)
-                Text(text)
-            }
-        }
-    }
-
-    struct ActionButton: View {
+       
+       struct BenefitItem: View {
+           let icon: String
+           let text: String
+           let color: Color
+           
+           var body: some View {
+               HStack(alignment: .top) {
+                   Image(systemName: icon)
+                       .foregroundColor(color)
+                       .font(.system(size: 20))
+                       .frame(width: 30)
+                   
+                   Text(text)
+                       .font(.subheadline)
+               }
+               .padding(.vertical, 3)
+           }
+       }
+       
+       struct HowToStep: View {
+           let number: String
+           let text: String
+           let color: Color
+           
+           var body: some View {
+               HStack(alignment: .top) {
+                   ZStack {
+                       Circle()
+                           .fill(color.opacity(0.1))
+                           .frame(width: 30, height: 30)
+                       
+                       Text(number)
+                           .font(.subheadline)
+                           .bold()
+                           .foregroundColor(color)
+                   }
+                   
+                   Text(text)
+                       .font(.subheadline)
+                       .padding(.leading, 10)
+               }
+               .padding(.vertical, 5)
+           }
+       }
+    
+    struct InfoCard: View {
         let title: String
+        let content: String
         let icon: String
         let color: Color
+        let subtitle: String?
+        let linkText: String?
+        let linkURL: String?
+        let background: Color
+
+        init(
+            title: String,
+            content: String,
+            icon: String,
+            color: Color,
+            subtitle: String? = nil,
+            linkText: String? = nil,
+            linkURL: String? = nil,
+            background: Color = Color(.systemBackground) // default fallback
+        ) {
+            self.title = title
+            self.content = content
+            self.icon = icon
+            self.color = color
+            self.subtitle = subtitle
+            self.linkText = linkText
+            self.linkURL = linkURL
+            self.background = background
+        }
 
         var body: some View {
-            HStack {
-                Text(title)
-                    .fontWeight(.medium)
-                Spacer()
-                Image(systemName: icon)
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Image(systemName: icon)
+                        .foregroundColor(color)
+                        .font(.title3)
+                    VStack(alignment: .leading, spacing: 4) {
+                        if !title.isEmpty {
+                            Text(title).font(.headline)
+                        }
+                        if let subtitle = subtitle {
+                            Text(subtitle).font(.subheadline).foregroundColor(.gray)
+                        }
+                    }
+                }
+                Text(content).font(.body)
+                if let link = linkText, let urlString = linkURL, let url = URL(string: urlString) {
+                    Link(link, destination: url)
+                        .font(.subheadline)
+                        .foregroundColor(.blue)
+                        .padding(.top, 4)
+                }
             }
             .padding()
-            .foregroundColor(.white)
-            .background(color)
-            .cornerRadius(10)
+            .frame(maxWidth: .infinity)
+            .background(background)
+            .cornerRadius(15)
+            .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
         }
     }
-}
+
+    
+    
+       
+       struct ActionButton: View {
+           let title: String
+           let icon: String
+           let color: Color
+           
+           var body: some View {
+               HStack {
+                   Image(systemName: icon)
+                       .font(.headline)
+                   Text(title)
+                       .fontWeight(.medium)
+                   Spacer()
+                   Image(systemName: "arrow.up.forward")
+               }
+               .padding()
+               .foregroundColor(.white)
+               .background(color)
+               .cornerRadius(12)
+           }
+       }
+   }
 
 struct EVisaInfoView_Previews: PreviewProvider {
     static var previews: some View {

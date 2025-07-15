@@ -8,6 +8,7 @@ import SwiftUI
 import Foundation
 import FirebaseFirestore
 
+
 enum LegalStatus: String, Codable {
     case refugee, asylumSeeker, humanitarianProtection, discretionaryLeave, undocumented
 

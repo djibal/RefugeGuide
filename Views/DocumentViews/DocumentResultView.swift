@@ -4,8 +4,9 @@
 //
 //  Created by Djibal Ramazani on 30/06/2025.
 //
-
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct DocumentResultView: View {
     let result: DocumentAIResult
@@ -43,7 +44,7 @@ struct DocumentResultView: View {
                 }
 
                 Button("Scan Another", action: onRetry)
-                    .buttonStyle(PrimaryButtonStyle())
+                    .buttonStyle(PrimaryButtonStyle(backgroundColor: Color(red: 0.07, green: 0.36, blue: 0.65))) // Deep UK blue
                     .padding(.top)
             }
             .padding()

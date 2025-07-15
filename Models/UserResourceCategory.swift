@@ -4,6 +4,9 @@
 //
 //  Created by Djibal Ramazani on 03/07/2025.
 
+import Foundation
+import SwiftUI
+import FirebaseFunctions
 
 enum UserResourceCategory: String, CaseIterable, Identifiable, Codable {
     case mentalHealth = "Mental Health"

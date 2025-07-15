@@ -5,7 +5,9 @@
 //  Created by Djibal Ramazani on 01/07/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct VisualEffectView: UIViewRepresentable {
     let effect: UIVisualEffect?

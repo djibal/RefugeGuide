@@ -5,7 +5,9 @@
 //  Created by Djibal Ramazani on 17/06/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import MapKit
 
 struct LocalServicesMapView: View {
@@ -33,16 +35,30 @@ struct LocalServicesMapView: View {
 
     init(services: [LocalService]) {
         self.services = services
-        let coordinates = services.map { $0.coordinate }
-        let center = coordinates.centerPoint
-        let span = coordinates.span
-        self._region = State(initialValue: MKCoordinateRegion(
-            center: center,
-            span: MKCoordinateSpan(latitudeDelta: span.latitudeDelta * 1.5, longitudeDelta: span.longitudeDelta * 1.5)
-        ))
+
+        if services.isEmpty {
+            // Default to London if no services available
+            self._region = State(initialValue: MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: 51.5074, longitude: -0.1278),
+                span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
+            ))
+        } else {
+            let coordinates = services.map { $0.coordinate }
+            let center = coordinates.centerPoint
+            let span = coordinates.span
+
+            self._region = State(initialValue: MKCoordinateRegion(
+                center: center,
+                span: MKCoordinateSpan(
+                    latitudeDelta: span.latitudeDelta * 1.5,
+                    longitudeDelta: span.longitudeDelta * 1.5
+                )
+            ))
+        }
     }
 
     var body: some View {
+        
         ZStack(alignment: .topTrailing) {
             Map(
                 coordinateRegion: $region,
@@ -103,6 +119,14 @@ struct LocalServicesMapView: View {
                 }
             }
             .padding(16)
+        }
+        .onAppear {
+            if region.center.latitude.isNaN || region.center.longitude.isNaN {
+                region = MKCoordinateRegion(
+                    center: CLLocationCoordinate2D(latitude: 51.5074, longitude: -0.1278),
+                    span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
+                )
+            }
         }
         .navigationTitle("Local Services")
         .navigationBarTitleDisplayMode(.inline)

@@ -14,7 +14,7 @@ struct MainTabView: View {
                     Label("Home", systemImage: "house")
                 }
 
-            HelpChatView()
+            HelpChat()
                 .tabItem {
                     Label("Help", systemImage: "questionmark.bubble")
                 }

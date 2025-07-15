@@ -7,6 +7,8 @@
 
 import Foundation
 import FirebaseFirestoreSwift
+import SwiftUI
+import FirebaseFunctions
 
 struct CommunityPost: Identifiable, Codable, Hashable {
     @DocumentID var id: String?

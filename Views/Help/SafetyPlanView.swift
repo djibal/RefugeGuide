@@ -5,7 +5,9 @@
 //  Created by Djibal Ramazani on 16/06/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct SafetyPlanView: View {
     var body: some View {

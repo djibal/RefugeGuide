@@ -1,29 +1,29 @@
 //
-//  LeaveToRemainGuideView.swift
+//  RefugeeGuideContentView.swift
 //  RefugeGuide
 //
 //  Created by Djibal Ramazani on 07/05/2025.
 //
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
-struct LeaveToRemainGuideView: View {
+internal struct RefugeeGuideContentView: View {
     @AppStorage("selectedLanguage") var selectedLanguage: String = "en"
     @AppStorage("hasCompletedInitialSetup") var hasCompletedInitialSetup = false
     @State private var currentStep: OnboardingStep = .languageSelection
     
-    // MARK: - UI Constants
-    private var primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
-    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)   // UK accent orange
-    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+    internal var primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
+    internal var accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)   // UK accent
+    internal var backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
     
-    var onContinue: () -> Void // Add closure for completion
+    var onContinue: () -> Void
     
     init(selectedLanguage: String, primaryColor: Color, onContinue: @escaping () -> Void) {
         self.selectedLanguage = selectedLanguage
         self.primaryColor = primaryColor
         self.onContinue = onContinue
     }
-
     
     var body: some View {
         NavigationView {
@@ -47,17 +47,16 @@ struct LeaveToRemainGuideView: View {
                             onContinue: {
                                 withAnimation { currentStep = .statusSelection }
                             },
-                            primaryColor: primaryColor // ✅ moved below
+                            primaryColor: primaryColor
                         )
 
                     case .statusSelection:
                         StatusSelectionView(
                             selectedLanguage: selectedLanguage,
                             onStatusSelected: { status in
-                            handleStatusSelection(status)
+                                handleStatusSelection(status)
                             }
                         )
-
 
                     case .asylumGuide:
                         AsylumGuideView(selectedLanguage: selectedLanguage) {
@@ -79,7 +78,6 @@ struct LeaveToRemainGuideView: View {
             .navigationBarHidden(true)
         }
     }
-
     
     private func handleStatusSelection(_ status: RefugeeUserType) {
         switch status {
@@ -99,18 +97,15 @@ struct LeaveToRemainGuideView: View {
             currentStep = .asylumGuide
         case .residencePermitHolder:
             currentStep = .residenceGuide
-            
         }
     }
     
-
     private func showRegistration() {
         hasCompletedInitialSetup = true
-        onContinue() // Call completion handler
+        onContinue()
     }
 }
 
-// MARK: - Onboarding Steps
 enum OnboardingStep {
     case languageSelection
     case welcomeMessage
@@ -134,112 +129,117 @@ struct LanguageSelection: View {
     private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
     
     var body: some View {
-        VStack(spacing: 30) {
-            VStack(spacing: 15) {
-                Image(systemName: "globe")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 60, height: 60)
-                    .foregroundColor(primaryColor)
-                
-                Text("Select your preferred language")
-                    .font(.title2.bold())
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(primaryColor)
+        TopAlignedScrollView { // Replace ScrollView by TopAlignedScrollView.
+            TopAlignedScrollView {
+                VStack(spacing: 30) {
+                    VStack(spacing: 15) {
+                        Image(systemName: "globe")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(primaryColor)
+                        
+                        Text("Select your preferred language")
+                            .font(.title2.bold())
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(primaryColor)
+                            .lineLimit(nil) // Ensure full text display
+                    }
+                    .padding(.top, 40)
+                    
+                    VStack(spacing: 20) {
+                        LanguageButton(
+                            language: "English",
+                            code: "en",
+                            isSelected: selectedLanguage == "en",
+                            primaryColor: primaryColor
+                        ) {
+                            selectedLanguage = "en"
+                        }
+                        
+                        LanguageButton(
+                            language: "العربية (Arabic)",
+                            code: "ar",
+                            isSelected: selectedLanguage == "ar",
+                            primaryColor: primaryColor
+                        ) {
+                            selectedLanguage = "ar"
+                        }
+                        
+                        LanguageButton(
+                            language: "Français (French)",
+                            code: "fr",
+                            isSelected: selectedLanguage == "fr",
+                            primaryColor: primaryColor
+                        ) {
+                            selectedLanguage = "fr"
+                        }
+                        
+                        LanguageButton(
+                            language: "فارسی (Farsi)",
+                            code: "fa",
+                            isSelected: selectedLanguage == "fa",
+                            primaryColor: primaryColor
+                        ) {
+                            selectedLanguage = "fa"
+                        }
+                        
+                        LanguageButton(
+                            language: "کوردی (Kurdish)",
+                            code: "ku",
+                            isSelected: selectedLanguage == "ku",
+                            primaryColor: primaryColor
+                        ) {
+                            selectedLanguage = "ku"
+                        }
+                        
+                        LanguageButton(
+                            language: "پښتو (Pashto)",
+                            code: "ps",
+                            isSelected: selectedLanguage == "ps",
+                            primaryColor: primaryColor
+                        ) {
+                            selectedLanguage = "ps"
+                        }
+                        
+                        LanguageButton(
+                            language: "Українська (Ukrainian)",
+                            code: "uk",
+                            isSelected: selectedLanguage == "uk",
+                            primaryColor: primaryColor
+                        ) {
+                            selectedLanguage = "uk"
+                        }
+                        
+                        LanguageButton(
+                            language: "اردو (Urdu)",
+                            code: "ur",
+                            isSelected: selectedLanguage == "ur",
+                            primaryColor: primaryColor
+                        ) {
+                            selectedLanguage = "ur"
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    Spacer()
+                    
+                    Button(action: onContinue) {
+                        Text("Continue")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(primaryColor)
+                            .cornerRadius(12)
+                            .padding(.horizontal, 40)
+                            .shadow(color: primaryColor.opacity(0.3), radius: 5, x: 0, y: 3)
+                    }
+                    .padding(.bottom, 30)
+                }
+                .padding()
             }
-            .padding(.top, 40)
-            
-            VStack(spacing: 20) {
-                LanguageButton(
-                    language: "English",
-                    code: "en",
-                    isSelected: selectedLanguage == "en",
-                    primaryColor: primaryColor
-                ) {
-                    selectedLanguage = "en"
-                }
-                
-                LanguageButton(
-                    language: "العربية (Arabic)",
-                    code: "ar",
-                    isSelected: selectedLanguage == "ar",
-                    primaryColor: primaryColor
-                ) {
-                    selectedLanguage = "ar"
-                }
-                
-                LanguageButton(
-                    language: "Français (French)",
-                    code: "fr",
-                    isSelected: selectedLanguage == "fr",
-                    primaryColor: primaryColor
-                ) {
-                    selectedLanguage = "fr"
-                }
-                
-                LanguageButton(
-                    language: "فارسی (Farsi)",
-                    code: "fa",
-                    isSelected: selectedLanguage == "fa",
-                    primaryColor: primaryColor
-                ) {
-                    selectedLanguage = "fa"
-                }
-                
-                LanguageButton(
-                    language: "کوردی (Kurdish)",
-                    code: "ku",
-                    isSelected: selectedLanguage == "ku",
-                    primaryColor: primaryColor
-                ) {
-                    selectedLanguage = "ku"
-                }
-                
-                LanguageButton(
-                    language: "پښتو (Pashto)",
-                    code: "ps",
-                    isSelected: selectedLanguage == "ps",
-                    primaryColor: primaryColor
-                ) {
-                    selectedLanguage = "ps"
-                }
-                
-                LanguageButton(
-                    language: "Українська (Ukrainian)",
-                    code: "uk",
-                    isSelected: selectedLanguage == "uk",
-                    primaryColor: primaryColor
-                ) {
-                    selectedLanguage = "uk"
-                }
-                
-                LanguageButton(
-                    language: "اردو (Urdu)",
-                    code: "ur",
-                    isSelected: selectedLanguage == "ur",
-                    primaryColor: primaryColor
-                ) {
-                    selectedLanguage = "ur"
-                }
-            }
-            .padding(.horizontal)
-            
-            Spacer()
-            
-            Button(action: onContinue) {
-                Text("Continue")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(primaryColor)
-                    .cornerRadius(12)
-                    .padding(.horizontal, 40)
-                    .shadow(color: primaryColor.opacity(0.3), radius: 5, x: 0, y: 3)
-            }
-            .padding(.bottom, 30)
         }
-        .padding()
     }
     
     struct LanguageButton: View {
@@ -255,6 +255,7 @@ struct LanguageSelection: View {
                     Text(language)
                         .font(.body)
                         .foregroundColor(.primary)
+                        .lineLimit(nil) // Ensure full text display
                     Spacer()
                     if isSelected {
                         Image(systemName: "checkmark.circle.fill")
@@ -274,14 +275,10 @@ struct LanguageSelection: View {
     }
 }
 
-// MARK: - Welcome Intro View
 struct WelcomeToIntroView: View {
     let selectedLanguage: String
     var primaryColor: Color
     var onContinue: () -> Void
-    
-
-
     
     private var welcomeMessage: String {
         switch selectedLanguage {
@@ -323,70 +320,80 @@ struct WelcomeToIntroView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 30) {
-            VStack(alignment: .leading, spacing: 20) {
-                Text(welcomeMessage)
-                    .font(.largeTitle)
-                    .bold()
-                    .foregroundColor(primaryColor)
-                
-                Text(selectedLanguage.uppercased())
-                    .font(.title2)
-                    .padding(10)
-                    .background(Capsule().fill(primaryColor.opacity(0.2)))
-                
-                Text(introText)
-                    .font(.title2)
-                    .foregroundColor(.secondary)
-            }
-            .padding(.horizontal)
-            
-            Spacer()
-            
-            VStack(alignment: .center, spacing: 15) {
-                Text(localizedString("Refugee Guide", translations: [
-                    "ar": "دليل اللاجئ",
-                    "fr": "Guide du réfugié",
-                    "fa": "راهنمای پناهنده",
-                    "ku": "ڕێنمای پەنابەر",
-                    "ps": "د کډوالو لارښود",
-                    "uk": "Посібник для біженців",
-                    "ur": "ریفیوجی گائیڈ",
-                ]))
-                .font(.headline)
-                .foregroundColor(primaryColor)
-                
-                Text(localizedString("Three options below! 👇", translations: [
-                    "ar": "ثلاث خيارات أدناه! 👇",
-                    "fr": "Trois options ci-dessous! 👇",
-                    "fa": "سه گزینه در زیر! 👇",
-                    "ku": "سێ هەلبژاردن لە خوارەوە! 👇",
-                    "ps": "درې اختیارونه لاندې دي! 👇",
-                    "uk": "Три варіанти нижче! 👇",
-                    "ur": "تین اختیارات نیچے ہیں! 👇"
-                ]))
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            }
-            .frame(maxWidth: .infinity)
-            
-            Button(action: onContinue) {
-                Text(continueButtonText)
-                    .font(.headline)
-                    .bold()
-                    .foregroundColor(.white)
+        TopAlignedScrollView{  // Replace ScrollViewReader and ScrollView
+            TopAlignedScrollView {
+                VStack(alignment: .leading, spacing: 30) {
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text(welcomeMessage)
+                            .font(.largeTitle)
+                            .bold()
+                            .foregroundColor(primaryColor)
+                            .lineLimit(nil) // Ensure full text display
+                        
+                        Text(selectedLanguage.uppercased())
+                            .font(.title2)
+                            .padding(10)
+                            .background(Capsule().fill(primaryColor.opacity(0.2)))
+                            .lineLimit(nil) // Ensure full text display
+                        
+                        Text(introText)
+                            .font(.title2)
+                            .foregroundColor(.secondary)
+                            .lineLimit(nil) // Ensure full text display
+                    }
+                    .padding(.horizontal)
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .center, spacing: 15) {
+                        Text(localizedString("Refugee Guide", translations: [
+                            "ar": "دليل اللاجئ",
+                            "fr": "Guide du réfugié",
+                            "fa": "راهنمای پناهنده",
+                            "ku": "ڕێنمای پەنابەر",
+                            "ps": "د کډوالو لارښود",
+                            "uk": "Посібник для біженців",
+                            "ur": "ریفیوجی گائیڈ",
+                        ]))
+                        .font(.headline)
+                        .foregroundColor(primaryColor)
+                        .lineLimit(nil) // Ensure full text display
+                        
+                        Text(localizedString("Three options below! 👇", translations: [
+                            "ar": "ثلاث خيارات أدناه! 👇",
+                            "fr": "Trois options ci-dessous! 👇",
+                            "fa": "سه گزینه در زیر! 👇",
+                            "ku": "سێ هەلبژاردن لە خوارەوە! 👇",
+                            "ps": "درې اختیارونه لاندې دي! 👇",
+                            "uk": "Три варіанти нижче! 👇",
+                            "ur": "تین اختیارات نیچے ہیں! 👇"
+                        ]))
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .lineLimit(nil) // Ensure full text display
+                    }
                     .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(primaryColor)
-                    .cornerRadius(12)
-                    .padding(.horizontal, 20)
-                    .shadow(color: primaryColor.opacity(0.3), radius: 5, x: 0, y: 3)
+                    
+                    Button(action: onContinue) {
+                        Text(continueButtonText)
+                            .font(.headline)
+                            .bold()
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(primaryColor)
+                            .cornerRadius(12)
+                            .padding(.horizontal, 20)
+                            .shadow(color: primaryColor.opacity(0.3), radius: 5, x: 0, y: 3)
+                    }
+                    .padding(.bottom, 30)
+                }
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(red: 0.96, green: 0.96, blue: 0.98).ignoresSafeArea())
+                .id("top") // Identifier for scrolling
             }
-            .padding(.bottom, 30)
         }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(red: 0.96, green: 0.96, blue: 0.98).ignoresSafeArea())
     }
     
     func localizedString(_ key: String, translations: [String: String]) -> String {
@@ -394,52 +401,54 @@ struct WelcomeToIntroView: View {
     }
 }
 
-// MARK: - Status Selection View
 struct InlineStatusSelectionView: View {
     let selectedLanguage: String
-    let onStatusSelected: (RefugeeUserType) -> Void // see fix below
-   
-   
+    let onStatusSelected: (RefugeeUserType) -> Void
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text(statusSelectionTitle)
-                .font(.title)
-                .bold()
-                .padding(.bottom, 10)
-            
-            StatusOptionCard(
-                title: option1Title,
-                description: option1Description,
-                icon: "questionmark.circle.fill",
-                action: {
-                    onStatusSelected(.seekingAsylum)
+        TopAlignedScrollView {  // Replace ScrollViewReader and ScrollView
+            TopAlignedScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    Text(statusSelectionTitle)
+                        .font(.title)
+                        .bold()
+                        .padding(.bottom, 10)
+                        .lineLimit(nil) // Ensure full text display
+                    
+                    StatusOptionCard(
+                        title: option1Title,
+                        description: option1Description,
+                        icon: "questionmark.circle.fill",
+                        action: {
+                            onStatusSelected(.seekingAsylum)
+                        }
+                    )
+                    
+                    StatusOptionCard(
+                        title: option2Title,
+                        description: option2Description,
+                        icon: "person.fill.questionmark",
+                        action: {
+                            onStatusSelected(.existingAsylumSeeker)
+                        }
+                    )
+                    
+                    StatusOptionCard(
+                        title: option3Title,
+                        description: option3Description,
+                        icon: "checkmark.shield.fill",
+                        action: {
+                            onStatusSelected(.grantedResidence)
+                        }
+                    )
+                    
+                    Spacer()
                 }
-            )
-            
-            StatusOptionCard(
-                title: option2Title,
-                description: option2Description,
-                icon: "person.fill.questionmark",
-                action: {
-                    onStatusSelected(.existingAsylumSeeker)
-                }
-            )
-            
-            StatusOptionCard(
-                title: option3Title,
-                description: option3Description,
-                icon: "checkmark.shield.fill",
-                action: {
-                    onStatusSelected(.grantedResidence)
-                }
-            )
-            
-            Spacer()
+                .padding()
+            }
         }
-        .padding()
     }
     
-    // MARK: Localized Content
     private var statusSelectionTitle: String {
         localizedString("Please choose your current status:", translations: [
             "ar": "الرجاء اختيار حالتك الحالية:",
@@ -546,9 +555,11 @@ struct InlineStatusSelectionView: View {
                         Text(title)
                             .font(.headline)
                             .foregroundColor(.primary)
+                            .lineLimit(nil) // Ensure full text display
                         Text(description)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
+                            .lineLimit(nil) // Ensure full text display
                     }
                     
                     Spacer()
@@ -565,7 +576,6 @@ struct InlineStatusSelectionView: View {
     }
 }
 
-// MARK: - Asylum Application Guide
 struct GuideView: View {
     let selectedLanguage: String
     var onContinue: () -> Void
@@ -584,10 +594,8 @@ struct GuideView: View {
             primaryColor: primaryColor,
             accentColor: accentColor
         )
-
     }
     
-    // MARK: Localized Content
     private var guideTitle: String {
         localizedString("UK Asylum Application Guide", translations: [
             "ar": "دليل التقدم بطلب اللجوء في المملكة المتحدة",
@@ -763,7 +771,6 @@ struct GuideView: View {
     }
 }
 
-// MARK: - Existing Asylum Seeker Guide
 struct ExistingAsylumContentGuideView: View {
     let selectedLanguage: String
     var onContinue: () -> Void
@@ -784,7 +791,6 @@ struct ExistingAsylumContentGuideView: View {
         )
     }
     
-    // MARK: Localized Content
     private var guideTitle: String {
         localizedString("Support for Asylum Seekers", translations: [
             "ar": "الدعم للاجئين",
@@ -1405,16 +1411,16 @@ struct GuideCard: View {
 }
 
 // MARK: - Preview
-struct LeaveToRemainGuideView_Previews: PreviewProvider {
+struct RefugeeGuideContentView_Previews: PreviewProvider {
     static var previews: some View {
-        LeaveToRemainGuideView(
+        RefugeeGuideContentView(
             selectedLanguage: "en",
             primaryColor: Color(red: 0.07, green: 0.36, blue: 0.65),
             onContinue: {}
         )
         .environment(\.locale, .init(identifier: "en"))
 
-        LeaveToRemainGuideView(
+        RefugeeGuideContentView(
             selectedLanguage: "ar",
             primaryColor: Color(red: 0.07, green: 0.36, blue: 0.65),
             onContinue: {}

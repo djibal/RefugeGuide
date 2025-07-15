@@ -6,6 +6,7 @@
 //
 import Foundation
 import SwiftUI
+import FirebaseFunctions
 import CoreLocation
 
 struct ResourceListView: View {

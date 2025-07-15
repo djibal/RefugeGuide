@@ -23,114 +23,130 @@ struct RegistrationView: View {
     @State private var isLoading = false
     
     var body: some View {
-        NavigationView {
-            Form {
-                Section(header: Text(personalDetailsTitle)) {
-                    TextField(firstNamePlaceholder, text: $firstName)
-                    TextField(lastNamePlaceholder, text: $lastName)
-                }
-                
-                Section(header: Text(accountDetailsTitle)) {
-                    TextField(emailPlaceholder, text: $email)
-                        .keyboardType(.emailAddress)
-                        .autocapitalization(.none)
-                    
-                    SecureField(passwordPlaceholder, text: $password)
-                    
-                    SecureField(confirmPasswordPlaceholder, text: $confirmPassword)
-                }
-                
-                Section {
-                    Toggle(isOn: $agreedToPolicy) {
-                        HStack(spacing: 4) {
-                            Text(agreementText)
-                            Link(policyLinkText, destination: URL(string: "https://refugeguide.org/privacy")!)
-                                .foregroundColor(.accentColor)
-                        }
-                    }
-                }
-                
-                Section {
-                    Button {
-                        registerUser()
-                    } label: {
-                        HStack {
-                            Spacer()
-                            if isLoading {
-                                ProgressView()
-                            } else {
-                                Text(registerButtonText)
-                            }
-                            Spacer()
-                        }
-                    }
-                    .disabled(!formIsValid || isLoading)
-                }
-                
-                if let errorMessage = errorMessage {
-                    Section {
-                        Text(errorMessage)
-                            .foregroundColor(.red)
-                    }
-                }
-            }
-            .navigationTitle(registrationTitle)
-        }
-    }
-    
-    private var formIsValid: Bool {
-        !firstName.isEmpty &&
-        !lastName.isEmpty &&
-        !email.isEmpty &&
-        email.contains("@") &&
-        password.count >= 8 &&
-        password == confirmPassword &&
-        agreedToPolicy
-    }
-    
-    func registerUser() {
-        isLoading = true
-        errorMessage = nil
-        
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
-            isLoading = false
-            
-            if let error = error {
-                errorMessage = error.localizedDescription
-                return
-            }
-            
-            // Save additional user data to Firestore
-            saveUserProfile()
-            
-            onComplete()
-        }
-    }
-    
-    func saveUserProfile() {
-        // Firestore save implementation would go here
-        print("User profile saved: \(firstName) \(lastName)")
-    }
-    
-    // MARK: - Localized Content
-    
-    private var registrationTitle: String {
-        switch selectedLanguage {
-        case "ar": return "التسجيل"
-        case "fr": return "Inscription"
-        case "fa": return "ثبت نام"
-        case "ku": return "تۆمارکردن"
-        case "ps": return "راجسترېشن"
-        case "uk": return "Реєстрація"
-        case "ur": return "رجسٹریشن"
-        default: return "Registration"
-        }
-    }
-
-    
-    // ... (similar localized properties for all text elements)
-}
-
+           NavigationView {
+               Form {
+                   Section(header: Text(personalDetailsTitle)) {
+                       TextField(firstNamePlaceholder, text: $firstName)
+                       TextField(lastNamePlaceholder, text: $lastName)
+                   }
+                   
+                   Section(header: Text(accountDetailsTitle)) {
+                       TextField(emailPlaceholder, text: $email)
+                           .keyboardType(.emailAddress)
+                           .autocapitalization(.none)
+                       
+                       SecureField(passwordPlaceholder, text: $password)
+                       
+                       SecureField(confirmPasswordPlaceholder, text: $confirmPassword)
+                   }
+                   
+                   Section {
+                       Toggle(isOn: $agreedToPolicy) {
+                           HStack(spacing: 4) {
+                               Text(agreementText)
+                               Link(policyLinkText, destination: URL(string: "https://refugeguide.org/privacy")!)
+                                   .foregroundColor(.accentColor)
+                           }
+                       }
+                   }
+                   
+                   Section {
+                       Button {
+                           registerUser()
+                       } label: {
+                           HStack {
+                               Spacer()
+                               if isLoading {
+                                   ProgressView()
+                               } else {
+                                   Text(registerButtonText)
+                               }
+                               Spacer()
+                           }
+                       }
+                       .disabled(!formIsValid || isLoading)
+                   }
+                   
+                   if let errorMessage = errorMessage {
+                       Section {
+                           Text(errorMessage)
+                               .foregroundColor(.red)
+                       }
+                   }
+               }
+               .navigationTitle(registrationTitle)
+           }
+       }
+       
+       private var formIsValid: Bool {
+           !firstName.isEmpty &&
+           !lastName.isEmpty &&
+           !email.isEmpty &&
+           email.contains("@") &&
+           password.count >= 8 &&
+           password == confirmPassword &&
+           agreedToPolicy
+       }
+       
+       func registerUser() {
+           isLoading = true
+           errorMessage = nil
+           
+           Auth.auth().createUser(withEmail: email, password: password) { result, error in
+               isLoading = false
+               
+               if let error = error {
+                   errorMessage = error.localizedDescription
+                   return
+               }
+               
+               // Save additional user data to Firestore
+               saveUserProfile()
+               
+               onComplete()
+           }
+       }
+       
+       func saveUserProfile() {
+           // Firestore save implementation
+           print("User profile saved: \(firstName) \(lastName)")
+       }
+       
+       // MARK: - Localized Content
+       
+       private var registrationTitle: String {
+           switch selectedLanguage {
+           case "ar": "التسجيل"
+           case "fr": "Inscription"
+           case "fa": "ثبت نام"
+           case "ku": "تۆمارکردن"
+           case "ps": "راجسترېشن"
+           case "uk": "Реєстрація"
+           case "ur": "رجسٹریشن"
+           default: "Registration"
+           }
+       }
+       
+       private var personalDetailsTitle: String {
+           switch selectedLanguage {
+           case "ar": "المعلومات الشخصية"
+           case "fr": "Détails personnels"
+           case "fa": "اطلاعات شخصی"
+           default: "Personal Details"
+           }
+       }
+       
+       private var firstNamePlaceholder: String {
+           switch selectedLanguage {
+           case "ar": "الاسم الأول"
+           case "fr": "Prénom"
+           case "fa": "نام"
+           default: "First Name"
+           }
+       }
+       
+       // ... similar localized properties for all text elements ...
+   }
 
 // MARK: - Localized Strings
 
@@ -139,11 +155,11 @@ private var personalDetailsTitle: String {
 }
 
 private var firstNamePlaceholder: String {
-    NSLocalizedString("firstNamePlaceholder", comment: "Placeholder for first name")
+    NSLocalizedString("firstNamePlaceholder", comment: "Enter your first name here")
 }
 
 private var lastNamePlaceholder: String {
-    NSLocalizedString("lastNamePlaceholder", comment: "Placeholder for last name")
+    NSLocalizedString("lastNamePlaceholder", comment: "Enter your last name here")
 }
 
 private var accountDetailsTitle: String {
@@ -151,25 +167,25 @@ private var accountDetailsTitle: String {
 }
 
 private var emailPlaceholder: String {
-    NSLocalizedString("emailPlaceholder", comment: "Placeholder for email")
+    NSLocalizedString("emailPlaceholder", comment: "Enter your email address")
 }
 
 private var passwordPlaceholder: String {
-    NSLocalizedString("passwordPlaceholder", comment: "Placeholder for password")
+    NSLocalizedString("passwordPlaceholder", comment: "Enter your password")
 }
 
 private var confirmPasswordPlaceholder: String {
-    NSLocalizedString("confirmPasswordPlaceholder", comment: "Placeholder for confirm password")
+    NSLocalizedString("confirmPasswordPlaceholder", comment: "Confirm your password")
 }
 
 private var agreementText: String {
-    NSLocalizedString("agreementText", comment: "Text for agreeing to terms")
+    NSLocalizedString("agreementText", comment: "By registering, you agree to our'")
 }
 
 private var policyLinkText: String {
-    NSLocalizedString("policyLinkText", comment: "Link text for privacy policy")
+    NSLocalizedString("policyLinkText", comment: "Privacy Policy")
 }
 
 private var registerButtonText: String {
-    NSLocalizedString("registerButtonText", comment: "Label for registration button")
+    NSLocalizedString("registerButtonText", comment: "Register")
 }

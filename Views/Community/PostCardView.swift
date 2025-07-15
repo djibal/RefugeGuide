@@ -5,7 +5,9 @@
 //    Created by Djibal Ramazani on 02/06/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import FirebaseAuth
 
 struct PostCardView: View {

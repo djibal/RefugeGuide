@@ -7,6 +7,8 @@
 //
 import Foundation
 import SwiftUI
+import FirebaseFunctions
+
 
 enum RefugeeUserType: String, Codable, CaseIterable {
     case unknown

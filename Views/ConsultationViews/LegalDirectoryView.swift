@@ -5,7 +5,9 @@
 //  Created by Djibal Ramazani on 22/06/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import SwiftUICore
 
 struct LegalDirectoryView: View {

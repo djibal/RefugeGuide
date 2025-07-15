@@ -69,3 +69,5 @@ GoogleService-Info.plist
 # 🔐 Secure local config (not committed)
 SecureConfig.swift
 
+RefugeGuide.xcodeproj/project.pbxproj
+Utilities/SecureConfig.swift

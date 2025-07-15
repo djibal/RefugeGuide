@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+import FirebaseFunctions
 import FirebaseStorage
 
 class FileUploader {

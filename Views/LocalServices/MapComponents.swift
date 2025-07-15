@@ -5,7 +5,9 @@
 //  Created by Djibal Ramazani on 17/06/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 @preconcurrency import MapKit
 
 // MARK: - Map Annotation View

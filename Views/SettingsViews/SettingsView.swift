@@ -4,7 +4,9 @@
 //
 //  Created by Djibal Ramazani on 03/06/2025.
 //
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 
 struct SettingsView: View {

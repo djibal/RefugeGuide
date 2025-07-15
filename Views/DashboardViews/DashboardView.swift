@@ -12,18 +12,44 @@ import FirebaseStorage
 
 
 struct DashboardView: View {
+    
+    // MARK: - UI Constants
+       private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
+       private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)   // UK accent orange
+       private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+       private let cardBackground = Color.white
+    
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                StatusTrackerView(currentPhase: .interview)
-                AppointmentsListView(appointments: sampleAppointments)
-                DocumentTaskView()
-            }
-            .padding()
-        }
-        .navigationTitle("My Dashboard")
-    }
-}
+           ScrollView {
+               VStack(spacing: 25) {
+                   // Status Tracker
+                   StatusTrackerView(currentPhase: .interview, primaryColor: primaryColor)
+                       .padding()
+                       .background(cardBackground)
+                       .cornerRadius(15)
+                       .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
+                   
+                   // Appointments
+                   AppointmentsListView(appointments: sampleAppointments, primaryColor: primaryColor)
+                       .padding()
+                       .background(cardBackground)
+                       .cornerRadius(15)
+                       .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
+                   
+                   // Document Tasks
+                   DocumentTaskView(primaryColor: primaryColor)
+                       .padding()
+                       .background(cardBackground)
+                       .cornerRadius(15)
+                       .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
+               }
+               .padding()
+               .background(backgroundColor.ignoresSafeArea())
+           }
+           .navigationTitle("My Dashboard")
+       }
+   }
+
 
 // MARK: - Application Phase Enum
 enum ApplicationPhase: String, CaseIterable {
@@ -36,24 +62,54 @@ enum ApplicationPhase: String, CaseIterable {
 // MARK: - Status Tracker View
 struct StatusTrackerView: View {
     let currentPhase: ApplicationPhase
-
+    let primaryColor: Color
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Application Status")
-                .font(.headline)
+            HStack {
+                Image(systemName: "clock.arrow.circlepath")
+                    .foregroundColor(primaryColor)
+                
+                Text("Application Status")
+                    .font(.headline)
+                    .foregroundColor(primaryColor)
+            }
+            
             ForEach(ApplicationPhase.allCases, id: \.self) { phase in
-                HStack {
-                    Circle()
-                        .fill(phase == currentPhase ? Color.blue : Color.gray.opacity(0.4))
-                        .frame(width: 16, height: 16)
+                HStack(spacing: 15) {
+                    ZStack {
+                        Circle()
+                            .fill(phase == currentPhase ? primaryColor : Color.gray.opacity(0.2))
+                            .frame(width: 24, height: 24)
+                        
+                        if phase == currentPhase {
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundColor(.white)
+                        }
+                    }
+                    
                     Text(phase.rawValue)
-                        .foregroundColor(phase == currentPhase ? .blue : .gray)
+                        .foregroundColor(phase == currentPhase ? primaryColor : .gray)
+                    
+                    Spacer()
+                    
+                    if phase == currentPhase {
+                        Text("Current")
+                            .font(.caption)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 4)
+                            .background(primaryColor)
+                            .cornerRadius(20)
+                    }
                 }
+                .padding(.vertical, 5)
             }
         }
-        .padding(.vertical)
     }
 }
+
 
 // MARK: - Appointment Model & View
 struct MyAppointment: Identifiable {
@@ -69,22 +125,59 @@ let sampleAppointments = [
 
 struct AppointmentsListView: View {
     var appointments: [MyAppointment]
-
+    let primaryColor: Color
+    
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Upcoming Appointments")
-                .font(.headline)
+            HStack {
+                Image(systemName: "calendar")
+                    .foregroundColor(primaryColor)
+                
+                Text("Upcoming Appointments")
+                    .font(.headline)
+                    .foregroundColor(primaryColor)
+            }
+            .padding(.bottom, 10)
+            
             ForEach(appointments) { appointment in
                 HStack {
-                    Text(appointment.title)
+                    Circle()
+                        .fill(primaryColor.opacity(0.1))
+                        .frame(width: 40, height: 40)
+                        .overlay(
+                            Image(systemName: "clock")
+                                .foregroundColor(primaryColor)
+                        )
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(appointment.title)
+                            .font(.subheadline)
+                            .bold()
+                        Text(appointment.date)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    
                     Spacer()
-                    Text(appointment.date)
-                        .foregroundColor(.secondary)
+                    
+                    Button(action: {}) {
+                        Text("Details")
+                            .font(.caption)
+                            .bold()
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(primaryColor.opacity(0.1))
+                            .foregroundColor(primaryColor)
+                            .cornerRadius(20)
+                    }
                 }
-                .padding(.vertical, 4)
+                .padding(.vertical, 8)
+                
+                if appointment.id != appointments.last?.id {
+                    Divider()
+                }
             }
         }
-        .padding()
     }
 }
 
@@ -93,6 +186,8 @@ struct DocumentTaskView: View {
     @State private var showPicker = false
     @State private var uploadedFileName: String?
     @State private var uploadMessage: String?
+    
+    let primaryColor: Color
 
     func uploadFileToFirebase(fileURL: URL) {
         let storageRef = Storage.storage().reference().child("uploads/\(fileURL.lastPathComponent)")
@@ -113,40 +208,63 @@ struct DocumentTaskView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Tasks").font(.headline)
+            VStack(alignment: .leading, spacing: 15) {
+                HStack {
+                    Image(systemName: "checklist")
+                        .foregroundColor(primaryColor)
+                    
+                    Text("Document Tasks")
+                        .font(.headline)
+                        .foregroundColor(primaryColor)
+                }
+                .padding(.bottom, 5)
+                
+                DocumentTaskButton(
+                    icon: "doc.fill",
+                    title: "Upload ID",
+                    color: primaryColor,
+                    action: { showPicker = true }
+                )
+                
+                DocumentTaskButton(
+                    icon: "mappin.and.ellipse",
+                    title: "Confirm Address",
+                    color: primaryColor,
+                    action: {}
+                )
+                
+                DocumentTaskButton(
+                    icon: "envelope.fill",
+                    title: "View Letter",
+                    color: primaryColor,
+                    action: {}
+                )
+                
+                if let msg = uploadMessage {
+                    Text(msg)
+                        .font(.subheadline)
+                        .foregroundColor(msg.contains("✅") ? .green : .red)
+                }
 
-            Button("Upload ID") {
-                showPicker = true
-            }
-
-            Button("Confirm Address") { }
-            Button("View Letter") { }
-
-            if let msg = uploadMessage {
-                Text(msg)
-                    .font(.subheadline)
-                    .foregroundColor(msg.contains("✅") ? .green : .red)
-            }
-
-            if let name = uploadedFileName {
-                Text("Uploaded: \(name)")
-                    .font(.subheadline)
-                    .foregroundColor(.green)
-            }
-        }
-        .sheet(isPresented: $showPicker) {
-            DocumentPicker { urls in
-                if let first = urls.first {
-                    uploadedFileName = first.lastPathComponent
-                    uploadFileToFirebase(fileURL: first)
+                if let name = uploadedFileName {
+                    Text("Uploaded: \(name)")
+                        .font(.subheadline)
+                        .foregroundColor(.green)
                 }
             }
+            .sheet(isPresented: $showPicker) {
+                DocumentPicker { urls in
+                    if let first = urls.first {
+                        uploadedFileName = first.lastPathComponent
+                        uploadFileToFirebase(fileURL: first)
+                    }
+                }
+            }
+            .padding(.vertical)
         }
-        .padding(.vertical)
     }
-}
-
+                // ... rest of existing code ...
+            
 // MARK: - Document Picker
 struct DocumentPicker: UIViewControllerRepresentable {
     var onDocumentsPicked: ([URL]) -> Void
@@ -176,3 +294,32 @@ struct DocumentPicker: UIViewControllerRepresentable {
         }
     }
 }
+
+struct DocumentTaskButton: View {
+        let icon: String
+        let title: String
+        let color: Color
+        let action: () -> Void
+        
+        var body: some View {
+            Button(action: action) {
+                HStack {
+                    Image(systemName: icon)
+                        .foregroundColor(color)
+                    
+                    Text(title)
+                        .foregroundColor(.primary)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(.gray)
+                }
+                .padding()
+                .background(Color(.secondarySystemBackground))
+                .cornerRadius(10)
+            }
+        }
+    }
+    
+

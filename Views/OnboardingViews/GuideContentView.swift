@@ -5,7 +5,9 @@
 //  Created by Djibal Ramazani on 02/07/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct GuideContentView: View {
     let selectedLanguage: String
@@ -13,43 +15,128 @@ struct GuideContentView: View {
     let subtitle: String
     let cards: [GuideCardData]
     let continueButtonText: String
-    let onContinue: () -> Void
-
+    var onContinue: () -> Void
+    
+    let primaryColor: Color
+    let accentColor: Color
+    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+    
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(title)
-                .font(.largeTitle)
-                .padding(.bottom)
-
-            Text(subtitle)
-                .font(.title2)
-                .padding(.bottom)
-
-            ForEach(cards) { card in
-                VStack(alignment: .leading) {
-                    HStack {
-                        Image(systemName: card.icon)
-                        Text(card.title)
-                            .font(.headline)
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 25) {
+                    // Header
+                    VStack(alignment: .leading, spacing: 15) {
+                        Text(title)
+                            .font(.largeTitle)
+                            .bold()
+                            .foregroundColor(primaryColor)
+                            .lineLimit(nil)
+                        
+                        Text(subtitle)
+                            .font(.title3)
+                            .foregroundColor(.secondary)
+                            .lineLimit(nil)
                     }
-                    Text(card.description)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    Link(card.linkText, destination: URL(string: card.linkURL)!)
-                        .font(.footnote)
-                        .foregroundColor(.blue)
+                    .padding(.bottom, 10)
+                    
+                    // Cards
+                    VStack(spacing: 20) {
+                        ForEach(cards) { card in
+                            UserGuideCard(
+                                title: card.title,
+                                description: card.description,
+                                icon: card.icon,
+                                linkText: card.linkText,
+                                linkURL: card.linkURL,
+                                primaryColor: primaryColor,
+                                accentColor: accentColor
+                            )
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    // Continue Button
+                    Button(action: onContinue) {
+                        Text(continueButtonText)
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(primaryColor)
+                            .cornerRadius(12)
+                            .padding(.horizontal, 20)
+                            .shadow(color: primaryColor.opacity(0.3), radius: 5, x: 0, y: 3)
+                            .lineLimit(nil)
+                    }
+                    .padding(.bottom, 20)
                 }
                 .padding()
-                .background(Color(.secondarySystemBackground))
-                .cornerRadius(10)
+                .background(backgroundColor.ignoresSafeArea())
+                .id("top")
             }
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                proxy.scrollTo("top", anchor: .top)
+            }
+        }
+    }
+}
 
-            Spacer()
-
-            Button(continueButtonText, action: onContinue)
-                .buttonStyle(.borderedProminent)
-                .frame(maxWidth: .infinity)
+struct UserGuideCard: View {
+    let title: String
+    let description: String
+    let icon: String
+    var linkText: String?
+    var linkURL: String?
+    let primaryColor: Color
+    let accentColor: Color
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .top) {
+                ZStack {
+                    Circle()
+                        .fill(primaryColor.opacity(0.1))
+                        .frame(width: 40, height: 40)
+                    
+                    Image(systemName: icon)
+                        .foregroundColor(primaryColor)
+                        .font(.system(size: 20))
+                }
+                
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(title)
+                        .font(.headline)
+                        .foregroundColor(primaryColor)
+                        .lineLimit(nil)
+                    
+                    Text(description)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(nil)
+                    
+                    if let linkText = linkText, let linkURL = linkURL {
+                        Link(destination: URL(string: linkURL)!) {
+                            HStack(spacing: 4) {
+                                Text(linkText)
+                                    .lineLimit(nil)
+                                Image(systemName: "arrow.up.forward")
+                            }
+                            .font(.callout)
+                            .foregroundColor(accentColor)
+                            .padding(.top, 4)
+                        }
+                    }
+                }
+            }
         }
         .padding()
+        .background(Color.white)
+        .cornerRadius(15)
+        .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
     }
 }

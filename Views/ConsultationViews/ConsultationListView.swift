@@ -5,8 +5,9 @@
 //  Created by Djibal Ramazani on 15/06/2025.
 //
 
-// ConsultationListView.swift
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct ConsultationListView: View {
     @Binding var consultations: [Consultation]

@@ -4,7 +4,9 @@
 //
 //  Created by Djibal Ramazani on 02/06/2025.
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct ExistingAsylumVerificationView: View {
     var onVerificationComplete: () -> Void
@@ -13,6 +15,12 @@ struct ExistingAsylumVerificationView: View {
     @State private var isVerified = false
     @State private var showError = false
     @State private var isLoading = false
+    
+    // MARK: - UI Constants
+        private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
+        private let secondaryColor = Color(red: 0.94, green: 0.35, blue: 0.15) // UK accent orange
+        private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+        private let cardBackground = Color.white
     
 
     // MARK: - Localized Texts and Labels
@@ -160,82 +168,140 @@ struct ExistingAsylumVerificationView: View {
 
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 30) {
-                Text(verificationTitle)
-                    .font(.title)
-                    .bold()
-                    .multilineTextAlignment(.center)
-                
-                Text(verificationDescription)
-                    .font(.body)
-                    .multilineTextAlignment(.center)
-                
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(uanLabel)
-                        .font(.headline)
-                    
-                    TextField(uanPlaceholder, text: $referenceNumber)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .keyboardType(.asciiCapable)
-                        .autocapitalization(.allCharacters)
-                        .padding(.vertical, 8)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(showError ? Color.red : Color.gray, lineWidth: 1)
-                        )
-                    
-                    if showError {
-                        Text(uanError)
-                            .font(.footnote)
-                            .foregroundColor(.red)
-                    }
-                }
-                .padding()
-                .background(Color(.secondarySystemBackground))
-                .cornerRadius(12)
-                
-                if isLoading {
-                    ProgressView()
-                        .padding()
-                } else {
-                    Button(verifyButtonText) {
-                        verifyReference()
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
-                    .disabled(referenceNumber.isEmpty)
-                }
-                
-                if isVerified {
-                    Button(viewEVisaButtonText) {
-                        onVerificationComplete()
-                    }
-                    .buttonStyle(SuccessButtonStyle())
-                }
-                
-                Button(skipButtonText) {
-                    onVerificationComplete()
-                }
-                .foregroundColor(.accentColor)
-                .padding(.top)
-                
-                VStack(alignment: .leading, spacing: 12) {
-                    Text(uanHelpTitle)
-                        .font(.headline)
-                    
-                    Text(uanHelpDescription)
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-                }
-                .padding()
-                .background(Color(.tertiarySystemBackground))
-                .cornerRadius(12)
-            }
-            .padding()
-        }
-        .navigationTitle(verificationTitle)
-    }
-    
+        TopAlignedScrollView {  // Replace ScrollView by TopAlignedScrollView
+               VStack(spacing: 30) {
+                   // Header with UK flag colors
+                   VStack(spacing: 15) {
+                       Text(verificationTitle)
+                           .font(.title2)
+                           .bold()
+                           .multilineTextAlignment(.center)
+                           .foregroundColor(primaryColor)
+                           .padding(.top, 20)
+                       
+                       Text(verificationDescription)
+                           .font(.body)
+                           .multilineTextAlignment(.center)
+                           .foregroundColor(.secondary)
+                           .padding(.horizontal, 20)
+                   }
+                   
+                   // UAN Input Card
+                   VStack(alignment: .leading, spacing: 12) {
+                       Text(uanLabel.uppercased())
+                           .font(.caption)
+                           .foregroundColor(.secondary)
+                           .padding(.top, 5)
+                       
+                       TextField(uanPlaceholder, text: $referenceNumber)
+                           .padding()
+                           .background(cardBackground)
+                           .cornerRadius(10)
+                           .overlay(
+                               RoundedRectangle(cornerRadius: 10)
+                                   .stroke(showError ? Color.red : Color.gray.opacity(0.3), lineWidth: 1)
+                           )
+                           .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
+                       
+                       if showError {
+                           Text(uanError)
+                               .font(.footnote)
+                               .foregroundColor(.red)
+                               .transition(.opacity)
+                       }
+                   }
+                   .padding()
+                   .background(cardBackground)
+                   .cornerRadius(15)
+                   .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 3)
+                   
+                   // Verification Button
+                   if isLoading {
+                       ProgressView()
+                           .padding()
+                           .scaleEffect(1.5)
+                   } else {
+                       Button(action: verifyReference) {
+                           Text(verifyButtonText)
+                               .font(.headline)
+                               .foregroundColor(.white)
+                               .frame(maxWidth: .infinity)
+                               .padding()
+                               .background(primaryColor)
+                               .cornerRadius(12)
+                               .padding(.horizontal, 20)
+                               .shadow(color: primaryColor.opacity(0.3), radius: 5, x: 0, y: 3)
+                       }
+                       .disabled(referenceNumber.isEmpty)
+                       .opacity(referenceNumber.isEmpty ? 0.6 : 1.0)
+                   }
+                   
+                   // Success Section
+                   if isVerified {
+                       VStack(spacing: 20) {
+                           Image(systemName: "checkmark.circle.fill")
+                               .resizable()
+                               .scaledToFit()
+                               .frame(width: 60, height: 60)
+                               .foregroundColor(.green)
+                           
+                           Text("Verification Successful!")
+                               .font(.headline)
+                               .foregroundColor(.green)
+                           
+                           Button(action: onVerificationComplete) {
+                               Text(viewEVisaButtonText)
+                                   .font(.headline)
+                                   .foregroundColor(.white)
+                                   .frame(maxWidth: .infinity)
+                                   .padding()
+                                   .background(Color.green)
+                                   .cornerRadius(12)
+                                   .padding(.horizontal, 20)
+                           }
+                       }
+                       .padding(.vertical)
+                       .transition(.scale)
+                   }
+                   
+                   // Help Card
+                   VStack(alignment: .leading, spacing: 15) {
+                       HStack {
+                           Image(systemName: "questionmark.circle.fill")
+                               .foregroundColor(secondaryColor)
+                               .font(.title2)
+                           
+                           Text(uanHelpTitle)
+                               .font(.headline)
+                               .foregroundColor(primaryColor)
+                       }
+                       
+                       Text(uanHelpDescription)
+                           .font(.subheadline)
+                           .foregroundColor(.secondary)
+                   }
+                   .padding()
+                   .background(cardBackground)
+                   .cornerRadius(15)
+                   .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
+                   
+                   // Skip Button
+                   Button(action: onVerificationComplete) {
+                       Text(skipButtonText)
+                           .font(.subheadline)
+                           .foregroundColor(primaryColor)
+                           .padding(.top)
+                   }
+               }
+               .padding()
+               .frame(maxWidth: .infinity, maxHeight: .infinity)
+               .background(backgroundColor)
+           }
+           .navigationTitle(verificationTitle)
+           .navigationBarTitleDisplayMode(.inline)
+       }
+       
+       // ... rest of existing code ...
     func verifyReference() {
         isLoading = true
         showError = false

@@ -52,6 +52,23 @@
 
 ---
 
+## 🎨 UI Design System (July 2025)
+To unify the app’s appearance, RefugeGuide now uses a shared design system defined in DesignSystem.swift:
+
+* AppColors.primary        // Deep UK blue
+* AppColors.accent         // UK orange
+* AppColors.background     // Light neutral background
+* AppColors.cardBackground // Clean white surface
+
+- These values are applied consistently across all views including:
+
+ 🎨 Buttons (PrimaryButtonStyle.swift)
+- Cards, scroll backgrounds, and chat input areas
+- Multilingual flows and profile sections
+- This system improves maintainability, brand consistency, and prepares the app for theming and dark mode support in future updates.
+
+---
+
 ## 🛠️ Tech Stack
 
 * **SwiftUI** (iOS 16+)
@@ -121,6 +138,12 @@ Sensitive keys like `GoogleService-Info.plist` & `API and SecureConfig file` are
 ## 👥 Credits
 
 Developed with input from UK refugee organizations and trauma-informed design principles.
+
+---
+* Feel free to clone this repository, explore the code, and contribute improvements or translations.
+* Whether you're a developer or freelancer, designer, or advocate — your input is welcome.
+
+🔗 git clone https://github.com/djibal/RefugeGuide.git
 
 ---
 

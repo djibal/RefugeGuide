@@ -4,9 +4,9 @@
 //
 //  Created by Djibal Ramazani on 30/06/2025.
 //
-
 import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 // Implement rate limiting
 class UKGovAPIService {

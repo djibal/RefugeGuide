@@ -4,7 +4,9 @@
 //
 ////  Created by Djibal Ramazani on 30/06/2025.
 
- import SwiftUI
+import Foundation
+import SwiftUI
+import FirebaseFunctions
 
 struct UKLegalNotice: View {
         let text: String

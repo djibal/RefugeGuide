@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+import FirebaseFunctions  
 
 struct ChatMessage: Identifiable, Equatable {
     let id = UUID()

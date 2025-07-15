@@ -4,18 +4,17 @@
 //
 //  Created by Djibal Ramazani on 02/07/2025.
 //
-//
-//  AsylumGuideView.swift
-//  RefugeGuide
-//
-//  Created by Djibal Ramazani on 02/07/2025.
-//
-
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct AsylumGuideView: View {
     let selectedLanguage: String
     var onContinue: () -> Void
+    
+    // MARK: - UI Constants
+     private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
+     private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)   // UK accent orange
     
     var body: some View {
         GuideContentView(
@@ -24,36 +23,38 @@ struct AsylumGuideView: View {
             subtitle: localizedString("Learn about the UK asylum process.", for: selectedLanguage),
             cards: guideCards,
             continueButtonText: localizedString("Register", for: selectedLanguage),
-            onContinue: onContinue
+            onContinue: onContinue,
+            primaryColor: primaryColor,
+            accentColor: accentColor
         )
     }
     
     private var guideCards: [GuideCardData] {
-        [
-            GuideCardData(
-                title: localizedString("How to Apply", for: selectedLanguage),
-                description: localizedString("Step-by-step guide to the asylum application process", for: selectedLanguage),
-                icon: "doc.text.fill",
-                linkText: localizedString("Application Process", for: selectedLanguage),
-                linkURL: "https://www.gov.uk/claim-asylum"
-            ),
-            GuideCardData(
-                title: localizedString("Legal Support", for: selectedLanguage),
-                description: localizedString("Find free legal advice and representation", for: selectedLanguage),
-                icon: "person.2.fill",
-                linkText: localizedString("Find Help", for: selectedLanguage),
-                linkURL: "https://www.refugeecouncil.org.uk"
-            ),
-            GuideCardData(
-                title: localizedString("Accommodation", for: selectedLanguage),
-                description: localizedString("Housing support during your application", for: selectedLanguage),
-                icon: "house.fill",
-                linkText: localizedString("Housing Support", for: selectedLanguage),
-                linkURL: "https://www.gov.uk/asylum-support"
-            )
-        ]
-    }
-    
+            [
+                GuideCardData(
+                    title: localizedString("How to Apply", for: selectedLanguage),
+                    description: localizedString("Step-by-step guide to the asylum application process", for: selectedLanguage),
+                    icon: "doc.text.fill",
+                    linkText: localizedString("Application Process", for: selectedLanguage),
+                    linkURL: "https://www.gov.uk/claim-asylum"
+                ),
+                GuideCardData(
+                    title: localizedString("Legal Support", for: selectedLanguage),
+                    description: localizedString("Find free legal advice and representation", for: selectedLanguage),
+                    icon: "person.2.fill",
+                    linkText: localizedString("Find Help", for: selectedLanguage),
+                    linkURL: "https://www.refugeecouncil.org.uk"
+                ),
+                GuideCardData(
+                    title: localizedString("Accommodation", for: selectedLanguage),
+                    description: localizedString("Housing support during your application", for: selectedLanguage),
+                    icon: "house.fill",
+                    linkText: localizedString("Housing Support", for: selectedLanguage),
+                    linkURL: "https://www.gov.uk/asylum-support"
+                )
+            ]
+        }
+        
     private func localizedString(_ key: String, for language: String) -> String {
         let translations: [String: [String: String]] = [
             "Seeking Asylum?": [
@@ -98,3 +99,4 @@ struct AsylumGuideView: View {
         return translations[key]?[language] ?? key
     }
 }
+

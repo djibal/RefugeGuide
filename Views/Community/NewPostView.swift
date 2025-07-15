@@ -6,7 +6,9 @@
 //
 
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import FirebaseAuth
 
 struct NewPostView: View {

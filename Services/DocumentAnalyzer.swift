@@ -6,7 +6,10 @@
 //
 
 import Foundation
+import SwiftUI
+import FirebaseFunctions
 import UIKit
+
 
 class DocumentAnalyzer {
     func analyzeDocument(at url: URL, type: UKDocumentType) throws -> DocumentAIResult {

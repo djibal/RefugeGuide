@@ -4,9 +4,13 @@
 //
 //  Created by Djibal Ramazani on 16/06/2025.
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct FlowPreview: View {
+    
+
     
     let mockConsultation = Consultation(
         id: "mock123",
@@ -28,8 +32,9 @@ struct FlowPreview: View {
                 NavigationLink("🔑 Sign In View", destination: SignInView())
                 NavigationLink("📄 Upload Document View", destination: UploadDocumentView())
                 NavigationLink("📁 My Documents View", destination: MyDocumentsView())
-                NavigationLink("💬 Help Chat View", destination: HelpChatView())
+                NavigationLink("💬 Help Chat ", destination: HelpChat())
                 NavigationLink("👥 Community View", destination: CommunityView())
+                NavigationLink("👤 Profile view", destination: ProfileView())
                 NavigationLink("🆘 Emergency Help View", destination: HelpResourcesView())
                 NavigationLink("📹 Video Consultation View", destination: VideoConsultationView(consultation: mockConsultation))
                 NavigationLink("🏠 Main Tab View (Full App)", destination: MainTabView())

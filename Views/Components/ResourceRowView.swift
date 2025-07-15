@@ -5,9 +5,9 @@
 //  Created by Djibal Ramazani on 16/06/2025.
 //
 
+import Foundation
 import SwiftUI
-
-import SwiftUI
+import FirebaseFunctions
 
 struct ResourceRowView: View {
     let resource: HelpResource // It was (let resource: UserResource) changed to (let resource: HelpResource)

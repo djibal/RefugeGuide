@@ -5,7 +5,9 @@
 //  Created by Djibal Ramazani on 02/07/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct LanguageAssistanceView: View {
     var body: some View {

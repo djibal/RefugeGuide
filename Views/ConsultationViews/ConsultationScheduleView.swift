@@ -4,8 +4,9 @@
 //
 //  Created by Djibal Ramazani on 04/07/2025.
 //
-
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct ConsultationScheduleView: View {
     var body: some View {

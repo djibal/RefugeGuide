@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 enum ResourceType: String, Codable {
     case phone

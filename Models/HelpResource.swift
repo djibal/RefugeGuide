@@ -8,6 +8,8 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import CoreLocation
+import SwiftUI
+import FirebaseFunctions
 
 struct HelpResource: Identifiable, Codable {
     @DocumentID var id: String?

@@ -7,6 +7,8 @@
 
 import Foundation
 import AgoraRtcKit
+import SwiftUI
+import FirebaseFunctions
 
 class AgoraManager {
     static let shared = AgoraManager()
