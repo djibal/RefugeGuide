@@ -9,6 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import CoreLocation
+import SwiftUICore
 
 class ServicesViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var services: [LocalService] = []

@@ -14,7 +14,7 @@ class ARNavigationViewModel: NSObject, ObservableObject, ARSCNViewDelegate, CLLo
     @Published var distanceToDestination: CLLocationDistance = 0.0
     @Published var isSetupComplete = false
     @Published var headingOffset: Double = 0.0  // For device heading
-
+    
     private let locationManager = CLLocationManager()
     private var destination: CLLocation?
     private var userLocation: CLLocation?
@@ -40,7 +40,9 @@ class ARNavigationViewModel: NSObject, ObservableObject, ARSCNViewDelegate, CLLo
         locationManager.startUpdatingLocation()
 
         guard ARWorldTrackingConfiguration.isSupported else {
-            instructions = "AR navigation not supported on this device"
+            DispatchQueue.main.async {
+                self.instructions = "AR navigation not supported on this device"
+            }
             return
         }
 

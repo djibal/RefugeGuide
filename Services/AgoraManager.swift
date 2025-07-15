@@ -7,13 +7,15 @@
 
 import Foundation
 import AgoraRtcKit
+import SwiftUI
+import FirebaseFunctions
 
 class AgoraManager {
     static let shared = AgoraManager()
     var agoraKit: AgoraRtcEngineKit!
 
     private init() {
-        agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: "YOUR_AGORA_APP_ID", delegate: nil) // Should be from config
+        agoraKit = AgoraRtcEngineKit.sharedEngine(withAppId: SecureConfig.agoraAppId, delegate: nil)
         agoraKit.setChannelProfile(.communication)
         agoraKit.enableVideo()
     }

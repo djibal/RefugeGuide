@@ -7,7 +7,9 @@
 import Foundation
 import CoreLocation
 import MapKit
-import FirebaseFirestoreSwift 
+import FirebaseFirestoreSwift
+import SwiftUI
+import FirebaseFunctions
 
 
 struct LocalService: Identifiable, Codable, Hashable {

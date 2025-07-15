@@ -4,7 +4,10 @@
 //
 //  Created by Djibal Ramazani on 03/06/2025.
 //
+import Foundation
 import SwiftUI
+import FirebaseFunctions
+import SwiftUICore
 
 
 struct SettingsView: View {
@@ -23,6 +26,14 @@ struct SettingsView: View {
     @Environment(\.colorScheme) private var systemColorScheme
 
     private let themes = ["System", "Light", "Dark"]
+    
+    let primaryColor = Color(hex: "#0D3B66")  // Rich blue
+    let accentColor = Color(hex: "#F95738")   // Bright coral-red
+    let cardColor = Color(hex: "#FFFFFF")     // White
+    let backgroundColor = Color(hex: "#F5F9FF") // Soft blue-white
+    let textPrimary = Color(hex: "#1A1A1A")   // Neutral dark
+    let textSecondary = Color(hex: "#555555") // Medium gray
+
 
     var body: some View {
         NavigationView {

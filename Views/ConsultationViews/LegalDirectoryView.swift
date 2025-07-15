@@ -5,7 +5,9 @@
 //  Created by Djibal Ramazani on 22/06/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import SwiftUICore
 
 struct LegalDirectoryView: View {
@@ -13,6 +15,13 @@ struct LegalDirectoryView: View {
     @State private var selectedSpecialty: LegalSpecialty = .all
     @State private var selectedLanguage: String = "Any"
     @State private var showFilters = false
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
     
     let languages = ["Any", "English", "Arabic", "Farsi", "French", "Ukrainian", "Urdu"]
     let professionals = sampleLegalProfessionals
@@ -333,6 +342,7 @@ struct ProfessionalDetailView: View {
                     .padding()
                     .background(Color.blue)
                     .foregroundColor(.white)
+                    .background(AppColors.primary)
                     .cornerRadius(10)
             }
             

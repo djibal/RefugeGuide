@@ -4,11 +4,14 @@
 //
 //  Created by Djibal Ramazani on 07/07/2025.
 //
+
 import Foundation
+import SwiftUI
 import FirebaseFunctions
 
 struct OpenAIService {
     static private let functions = Functions.functions()
+
 
     static func sendMessage(prompt: String, completion: @escaping (String?) -> Void) {
         let fullPrompt = """

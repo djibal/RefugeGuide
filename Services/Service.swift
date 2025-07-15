@@ -7,6 +7,8 @@
 
 import Foundation
 import CoreLocation
+import SwiftUI
+import FirebaseFunctions
 
 struct Service: Identifiable {
     let id: String

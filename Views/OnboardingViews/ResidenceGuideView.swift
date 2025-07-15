@@ -5,12 +5,21 @@
 //  Created by Djibal Ramazani on 02/07/2025.
 //
 
-
+import Foundation
 import SwiftUI
+import FirebaseFunctions
+import SwiftUICore
 
 struct ResidenceGuideView: View {
     let selectedLanguage: String
     var onContinue: () -> Void
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
 
     var body: some View {
         GuideContentView(
@@ -19,7 +28,9 @@ struct ResidenceGuideView: View {
             subtitle: localizedString("Support after receiving leave to remain in the UK", for: selectedLanguage),
             cards: guideCards,
             continueButtonText: localizedString("Continue", for: selectedLanguage),
-            onContinue: onContinue
+            onContinue: onContinue,
+            primaryColor: primaryColor,
+            accentColor: accentColor
         )
     }
     
@@ -78,7 +89,6 @@ struct ResidenceGuideView: View {
                 "uk": "Універсальний кредит",
                 "ur": "یونیورسل کریڈٹ"
             ],
-            // Add other translations here following the same pattern
             "Continue": [
                 "ar": "متابعة",
                 "fr": "Continuer",

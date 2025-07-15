@@ -3,12 +3,16 @@
 //
 //    Created by Djibal Ramazani on 02/06/2025.
 //
+import Foundation
 import SwiftUI
+import FirebaseFunctions
+import SwiftUICore
 
 struct SearchBar: View {
     @Binding var text: String
     @State private var isEditing = false
     var placeholder: String = "Search..."
+
     
     var body: some View {
         HStack {
@@ -20,7 +24,8 @@ struct SearchBar: View {
                 .overlay(
                     HStack {
                         Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
+                            .foregroundColor(AppColors.textSecondary)
+
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 8)
                         
@@ -29,7 +34,7 @@ struct SearchBar: View {
                                 self.text = ""
                             }) {
                                 Image(systemName: "multiply.circle.fill")
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(AppColors.textSecondary)
                                     .padding(.trailing, 8)
                             }
                         }

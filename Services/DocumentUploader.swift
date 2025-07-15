@@ -7,6 +7,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
+import SwiftUICore
 
 class DocumentUploader {
     static let shared = DocumentUploader()

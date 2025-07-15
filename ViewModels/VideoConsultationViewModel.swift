@@ -8,12 +8,14 @@
 import Foundation
 import AgoraRtcKit
 import SwiftUI
+import SwiftUICore
 
 class VideoConsultationViewModel: NSObject, ObservableObject, AgoraRtcEngineDelegate {
     @Published var inCall = false
     @Published var isMuted = false
     @Published var connectionState: ConnectionState = .disconnected
     @Published var participants = 0
+
     
     var localVideoView = UIView()
     var remoteVideoView = UIView()

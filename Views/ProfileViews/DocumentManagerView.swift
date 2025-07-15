@@ -9,11 +9,20 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
 import FirebaseAuth
+import SwiftUICore
 
 struct DocumentManagerView: View {
     @State private var documents: [UserDocument] = []
     @State private var isLoading = true
     @State private var errorMessage: String?
+    
+    let primaryColor = Color(hex: "#0D3B66")  // Rich blue
+    let accentColor = Color(hex: "#F95738")   // Bright coral-red
+    let cardColor = Color(hex: "#FFFFFF")     // White
+    let backgroundColor = Color(hex: "#F5F9FF") // Soft blue-white
+    let textPrimary = Color(hex: "#1A1A1A")   // Neutral dark
+    let textSecondary = Color(hex: "#555555") // Medium gray
+
 
     var body: some View {
         NavigationView {

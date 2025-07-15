@@ -9,13 +9,23 @@ import SwiftUI
 import FirebaseFirestoreSwift
 import CoreLocation
 import MapKit
+import SwiftUICore
 
 struct LocalServicesView: View {
     @FirestoreQuery(collectionPath: "services") var services: [LocalService]
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
+    
     @State private var searchText = ""
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 51.5072, longitude: -0.1276),
         span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+
     )
 
     var filteredServices: [LocalService] {

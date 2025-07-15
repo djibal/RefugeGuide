@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import SwiftUI
+import FirebaseFunctions
 
 extension URLSession {
     func fetchAsylumCaseStatus(caseId: String) async throws -> AsylumCase {

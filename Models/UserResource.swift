@@ -10,7 +10,7 @@ import SwiftUI
 import CoreLocation
 
 struct UserResource: Identifiable {
-    
+
     // MARK: - Initializer (convert from shared Resource model)
     init(from resource: Resource) {
         self.id = resource.id

@@ -35,10 +35,21 @@
 
 * 🛂 **eVisa Viewer & Verification**
   Simulate immigration status (BRP/eVisa) and store travel permission info.
+  
+  
+## 🔐 Firebase Auth login via EVisaLoginView
+* 🔄 Real-time data fetch from Firestore: /evisa/{uid}
+* 📦 EVisaData struct for clean data modeling
+* 📊 Dynamic display of immigration status items
+* 📤 Share Code section with copy-to-clipboard and alert
+* 🌍 Portal redirect only after login
+* 🚪 Logout button integrated in navigation bar
+* 🌐 Language localization support for titles and status
+* ✅ All enhancements are wrapped in the existing EVisaView UI structure
 
-* 🔐 **Private by Design**
+## 🔐 **Private by Design**
   Your data is encrypted, anonymized, and GDPR-compliant.
-
+  
 ---
 
 ## 🧠 Additional features implemented
@@ -49,6 +60,23 @@
 * [ ] Offline Forms & Emergency Info
 * [ ] Human Support Escalation (Live Help)
 * [ ] Simulated Government API Integration
+
+---
+
+## 🎨 UI Design System (July 2025)
+To unify the app’s appearance, RefugeGuide now uses a shared design system defined in DesignSystem.swift:
+
+* AppColors.primary        // Deep UK blue
+* AppColors.accent         // UK orange
+* AppColors.background     // Light neutral background
+* AppColors.cardBackground // Clean white surface
+
+- These values are applied consistently across all views including:
+
+##  🎨 Buttons (PrimaryButtonStyle.swift)
+- Cards, scroll backgrounds, and chat input areas
+- Multilingual flows and profile sections
+- This system improves maintainability, brand consistency, and prepares the app for theming and dark mode support in future updates.
 
 ---
 
@@ -100,7 +128,10 @@ RefugeGuide/
 - 🗂 Files organized into folders: `Views/OnboardingViews`, `Views/Profile`, `Views/ConsultationViews`, etc.
 - 🗨️ Added ConsultationScheduleView, improved state handling and navigation
 
----
+## ✨ Enhanced Launch Experience
+
+- Added a sophisticated text animation for RefugeGuide's splash screen:
+
 
 ## 🔐 Security
 
@@ -110,10 +141,14 @@ Sensitive keys like `GoogleService-Info.plist` & `API and SecureConfig file` are
 
 ## 📦 Backend Setup
 
-* `firebase init functions` in `refugeguide2025/`
+ `firebase init functions` in `refugeguide2025/`
+
 * Installed OpenAI SDK + Firebase Admin SDK
 * Created `chatWithGPT` function using Node.js 18 (deployed via Node.js 20)
-* Secured OpenAI API key via environment config
+* Created 'getAsylumCaseStatus' function (deployed via Node.js 20)
+* Created 'generateAgoraToken' function  (deployed via Node.js 20)
+* Created 'getConsultations' function  (deployed via Node.js 20)
+* Secured All APIs key via environment config/ Finally, everything was configured in cloud functions
 * ✅ Deployed & tested via Firebase CLI
 
 ---
@@ -121,6 +156,12 @@ Sensitive keys like `GoogleService-Info.plist` & `API and SecureConfig file` are
 ## 👥 Credits
 
 Developed with input from UK refugee organizations and trauma-informed design principles.
+
+---
+* Feel free to clone this repository, explore the code, and contribute improvements or translations.
+* Whether you're a developer or freelancer, designer, or advocate — your input is welcome.
+
+🔗 git clone https://github.com/djibal/RefugeGuide.git
 
 ---
 

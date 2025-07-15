@@ -7,6 +7,8 @@
 
 import Foundation
 import FirebaseFirestoreSwift
+import SwiftUI
+import FirebaseFunctions
 
 struct UploadedDocument: Identifiable, Codable {
     @DocumentID var id: String?

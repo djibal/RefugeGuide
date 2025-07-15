@@ -5,13 +5,17 @@
 //  Created by Djibal Ramazani on 17/06/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
+import SwiftUICore
 @preconcurrency import MapKit
 
 // MARK: - Map Annotation View
 struct MapAnnotationView: View {
     let service: LocalService
     let isSelected: Bool
+
     
     var body: some View {
         VStack(spacing: 4) {
@@ -82,7 +86,7 @@ struct ServiceDetailSheet: View {
             if let rating = service.rating, rating > 0 {
                 HStack {
                     Image(systemName: "star.fill")
-                        .foregroundColor(.yellow)
+                        .background(AppColors.accent) 
                     Text(String(format: "%.1f", rating))
                 }
             }
@@ -106,6 +110,7 @@ struct ServiceDetailSheet: View {
                     .padding()
                     .background(.blue)
                     .foregroundColor(.white)
+                    .background(AppColors.primary)
                     .cornerRadius(12)
             }
             

@@ -5,12 +5,21 @@
 //  Created by Djibal Ramazani on 16/06/2025.
 //
 
+import Foundation
 import SwiftUI
-
-import SwiftUI
+import FirebaseFunctions
+import SwiftUICore
 
 struct ResourceRowView: View {
     let resource: HelpResource // It was (let resource: UserResource) changed to (let resource: HelpResource)
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
+
 
 
     var body: some View {
@@ -44,7 +53,8 @@ struct ResourceRowView: View {
 
             if resource.type == .inApp || resource.urlString != nil {
                 Image(systemName: "chevron.right")
-                    .foregroundColor(.gray)
+                    .foregroundColor(AppColors.textSecondary)
+
             }
         }
         .padding(.vertical, 12)

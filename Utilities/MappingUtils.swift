@@ -5,6 +5,10 @@
 //  Created by Djibal Ramazani on 04/07/2025.
 //
 
+import Foundation
+import SwiftUI
+import FirebaseFunctions
+
 func convertToUserType(from refugeeType: RefugeeUserType) -> RefugeeUserType {
     switch refugeeType {
     case .refugee:

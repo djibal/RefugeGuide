@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
+import SwiftUICore
 
 struct BookAppointmentView: View {
     @State private var selectedDate = Date()
@@ -16,6 +17,14 @@ struct BookAppointmentView: View {
     @State private var isSubmitting = false
     @State private var errorMessage: String?
     @Environment(\.dismiss) var dismiss
+    
+    
+    let primaryColor = Color(hex: "#0D3B66")  // Rich blue
+    let accentColor = Color(hex: "#F95738")   // Bright coral-red
+    let cardColor = Color(hex: "#FFFFFF")     // White
+    let backgroundColor = Color(hex: "#F5F9FF") // Soft blue-white
+    let textPrimary = Color(hex: "#1A1A1A")   // Neutral dark
+    let textSecondary = Color(hex: "#555555") // Medium gray
 
     let appointmentTypes = [
         "Legal Aid",

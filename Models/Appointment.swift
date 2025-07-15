@@ -7,6 +7,8 @@
 
 import Foundation
 import FirebaseFirestoreSwift
+import SwiftUI
+import FirebaseFunctions
 
 struct Appointment: Identifiable, Codable {
     @DocumentID var id: String?

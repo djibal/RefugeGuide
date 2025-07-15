@@ -5,8 +5,11 @@
 //  Created by Djibal Ramazani on 17/06/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import MapKit
+import SwiftUICore
 
 struct LocalServicesMapView: View {
     let services: [LocalService]
@@ -18,6 +21,13 @@ struct LocalServicesMapView: View {
     @State private var searchText = ""
     @State private var showDirections = false
     @State private var route: MKRoute?
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
 
     private let locationManager = CLLocationManager()
 
@@ -33,16 +43,30 @@ struct LocalServicesMapView: View {
 
     init(services: [LocalService]) {
         self.services = services
-        let coordinates = services.map { $0.coordinate }
-        let center = coordinates.centerPoint
-        let span = coordinates.span
-        self._region = State(initialValue: MKCoordinateRegion(
-            center: center,
-            span: MKCoordinateSpan(latitudeDelta: span.latitudeDelta * 1.5, longitudeDelta: span.longitudeDelta * 1.5)
-        ))
+
+        if services.isEmpty {
+            // Default to London if no services available
+            self._region = State(initialValue: MKCoordinateRegion(
+                center: CLLocationCoordinate2D(latitude: 51.5074, longitude: -0.1278),
+                span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
+            ))
+        } else {
+            let coordinates = services.map { $0.coordinate }
+            let center = coordinates.centerPoint
+            let span = coordinates.span
+
+            self._region = State(initialValue: MKCoordinateRegion(
+                center: center,
+                span: MKCoordinateSpan(
+                    latitudeDelta: span.latitudeDelta * 1.5,
+                    longitudeDelta: span.longitudeDelta * 1.5
+                )
+            ))
+        }
     }
 
     var body: some View {
+        
         ZStack(alignment: .topTrailing) {
             Map(
                 coordinateRegion: $region,
@@ -103,6 +127,14 @@ struct LocalServicesMapView: View {
                 }
             }
             .padding(16)
+        }
+        .onAppear {
+            if region.center.latitude.isNaN || region.center.longitude.isNaN {
+                region = MKCoordinateRegion(
+                    center: CLLocationCoordinate2D(latitude: 51.5074, longitude: -0.1278),
+                    span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
+                )
+            }
         }
         .navigationTitle("Local Services")
         .navigationBarTitleDisplayMode(.inline)

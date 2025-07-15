@@ -4,6 +4,9 @@
 //
 //  Created by Djibal Ramazani on 03/07/2025.
 
+import Foundation
+import SwiftUI
+import FirebaseFunctions
 
 enum UserResourceCategory: String, CaseIterable, Identifiable, Codable {
     case mentalHealth = "Mental Health"
@@ -12,7 +15,7 @@ enum UserResourceCategory: String, CaseIterable, Identifiable, Codable {
     case generalSupport = "General Support"
     case housing = "Housing"
     case legal = "Legal Aid"
-
+    
     var id: String { rawValue }
 
     var displayName: String {

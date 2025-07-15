@@ -9,12 +9,19 @@
 import SwiftUI
 import MapKit
 import FirebaseFirestoreInternal
+import SwiftUICore
 
 struct ResourceDetailView: View {
     let resource: HelpResource
     @State private var region: MKCoordinateRegion?
     @State private var showDirections = false
     
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
     
     var body: some View {
         ScrollView {

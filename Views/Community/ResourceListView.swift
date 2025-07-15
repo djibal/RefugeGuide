@@ -6,13 +6,22 @@
 //
 import Foundation
 import SwiftUI
+import FirebaseFunctions
 import CoreLocation
+import SwiftUICore
 
 struct ResourceListView: View {
     @StateObject private var viewModel = ResourceListViewModel()
     @State private var searchText = ""
     @State private var selectedCategory: UserResourceCategory?
     @State private var showFilters = false
+    
+    let primaryColor = Color(hex: "#0D3B66")  // Rich blue
+    let accentColor = Color(hex: "#F95738")   // Bright coral-red
+    let cardColor = Color(hex: "#FFFFFF")     // White
+    let backgroundColor = Color(hex: "#F5F9FF") // Soft blue-white
+    let textPrimary = Color(hex: "#1A1A1A")   // Neutral dark
+    let textSecondary = Color(hex: "#555555") // Medium gray
 
     var body: some View {
         NavigationView {

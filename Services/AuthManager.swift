@@ -8,8 +8,10 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
+import SwiftUICore
 
 class AuthManager {
+    
     static let shared = AuthManager()
     private let db = Firestore.firestore()
 

@@ -3,107 +3,145 @@
 //  RefugeGuide
 //
 //  Created by Djibal Ramazani on 02/06/2025.
-
+import Foundation
 import SwiftUI
+import FirebaseFunctions
+import SwiftUICore
 
 struct UserTypeSelectionView: View {
     let onSelect: (RefugeeUserType) -> Void
-
-    var body: some View {
-        VStack(spacing: 24) {
-            Spacer()
-            
-            Text("Welcome to Refugee Guide")
-                .font(.largeTitle)
-                .bold()
-                .foregroundColor(.accentColor)
-            
-            Text("How can we help you today?")
-                .font(.title2)
-                .foregroundColor(.secondary)
-            
-            Spacer()
-            
-            VStack(spacing: 20) {
-                // Option 1: Planning to seek asylum
-                SelectionCard(
-                    title: "Are you planning to seek asylum?",
-                    description: "Learn about the UK asylum application process",
-                    icon: "doc.text.magnifyingglass",
-                    color: .blue
-                ) {
-                    onSelect(.asylumSeeker)
-                }
-                
-                // Option 2: Existing asylum seeker
-                SelectionCard(
-                    title: "Are you an existing asylum seeker?",
-                    description: "Information and support for current applicants",
-                    icon: "person.fill.questionmark",
-                    color: .orange
-                ) {
-                    onSelect(.existingAsylumSeeker)
-                }
-                
-                // Option 3: Residence permit granted
-                SelectionCard(
-                    title: "Have you been granted a residence permit?",
-                    description: "Next steps and integration support",
-                    icon: "checkmark.shield.fill",
-                    color: .green
-                ) {
-                    onSelect(.refugee)
-                }
-            }
-            .padding(.horizontal)
-            
-            Spacer()
-            
-            Button("Skip and Register") {
-                onSelect(.unknown)
-            }
-            .foregroundColor(.secondary)
-        }
-        .padding()
-    }
-}
-
-
-struct SelectionCard: View {
-    let title: String
-    let description: String
-    let icon: String
-    let color: Color
-    let action: () -> Void
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
     
     var body: some View {
-        Button(action: action) {
-            HStack(spacing: 16) {
-                Image(systemName: icon)
-                    .font(.title)
-                    .foregroundColor(color)
-                    .frame(width: 50, height: 50)
-                    .background(color.opacity(0.2))
-                    .cornerRadius(12)
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(title)
-                        .font(.headline)
-                        .foregroundColor(.primary)
-                    Text(description)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
+        TopAlignedScrollView {   // Replace ScrollViewReader and ScrollView by  TopAlignedScrollView
+            TopAlignedScrollView {
+                VStack(spacing: 30) {
+                    VStack(spacing: 15) {
+                        Image(systemName: "hand.wave.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(primaryColor)
+                        
+                        Text("Welcome to UK Refugee Guide")
+                            .font(.largeTitle)
+                            .bold()
+                            .foregroundColor(primaryColor)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                        
+                        Text("Your trusted companion through the UK asylum process")
+                            .font(.title2)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(.top, 30)
+                    .padding(.horizontal)
+                    
+                    VStack(spacing: 20) {
+                        SelectionCard(
+                            title: "Are you planning to seek asylum?",
+                            description: "Learn about the UK asylum application process",
+                            icon: "doc.text.magnifyingglass",
+                            color: primaryColor
+                        ) {
+                            onSelect(.asylumSeeker)
+                        }
+                        
+                        SelectionCard(
+                            title: "Are you an existing asylum seeker?",
+                            description: "Information and support for current applicants",
+                            icon: "person.fill.questionmark",
+                            color: accentColor
+                        ) {
+                            onSelect(.existingAsylumSeeker)
+                        }
+                        
+                        SelectionCard(
+                            title: "Have you been granted a residence permit?",
+                            description: "Next steps and integration support",
+                            icon: "checkmark.shield.fill",
+                            color: primaryColor
+                        ) {
+                            onSelect(.refugee)
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    Spacer()
+                    
+                    Button("Skip and Register") {
+                        onSelect(.unknown)
+                    }
+                    .font(.subheadline)
+                    .foregroundColor(primaryColor)
+                    .padding(.bottom, 30)
                 }
-                
-                Spacer()
-                
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.gray)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(backgroundColor.ignoresSafeArea())
+                .id("top") // Identifier for scrolling
             }
-            .padding()
-            .background(Color(.secondarySystemBackground))
-            .cornerRadius(16)
         }
-        .buttonStyle(PlainButtonStyle())
+    }
+    
+    struct SelectionCard: View {
+        let title: String
+        let description: String
+        let icon: String
+        let color: Color
+        let action: () -> Void
+        
+        var body: some View {
+            Button(action: action) {
+                HStack(spacing: 16) {
+                    ZStack {
+                        Circle()
+                            .fill(color.opacity(0.1))
+                            .frame(width: 50, height: 50)
+                        
+                        Image(systemName: icon)
+                            .font(.title2)
+                            .foregroundColor(color)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(title)
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                        
+                        Text(description)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                        .foregroundColor(AppColors.textSecondary)
+
+                }
+                .padding()
+                .background(Color.white)
+                .cornerRadius(16)
+                .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
     }
 }

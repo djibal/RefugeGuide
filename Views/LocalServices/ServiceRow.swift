@@ -5,8 +5,10 @@
 //  Created by Djibal Ramazani on 17/06/2025.
 //
 
-
+import Foundation
 import SwiftUI
+import FirebaseFunctions
+import SwiftUICore
 
 struct ServiceRow: View {
     let service: LocalService

@@ -6,14 +6,16 @@
 //
 
 import Foundation
+import SwiftUI
+import FirebaseFunctions
 
-func localizedString(_ defaultValue: String, translations: [String: String]) -> String {
-    let languageCode = Locale.current.languageCode ?? "en"
+func NSlocalizedString(_ defaultValue: String, translations: [String: String]) -> String {
+    let languageCode = Locale.current.language.languageCode?.identifier ?? "en"
     return translations[languageCode] ?? defaultValue
 }
 
 
 func localizedManual(_ defaultText: String, translations: [String: String]) -> String {
-    let lang = Locale.current.languageCode ?? "en"
+    let lang = Locale.current.language.languageCode?.identifier ?? "en"
     return translations[lang] ?? defaultText
 }

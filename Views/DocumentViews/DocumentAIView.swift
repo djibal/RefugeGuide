@@ -5,10 +5,12 @@
 //  Created by Djibal Ramazani on 21/06/2025.
 //
 
-
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import Vision
 import CoreML
+import SwiftUICore
 
 
 struct DocumentAIView: View {
@@ -16,6 +18,13 @@ struct DocumentAIView: View {
     @State private var showPicker = false
     @State private var showCamera = false
     @State private var inputImage: UIImage?
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
 
     var body: some View {
         NavigationView {

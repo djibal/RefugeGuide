@@ -5,7 +5,9 @@
 //  Created by Djibal Ramazani on 30/06/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import UIKit
 
 /// A camera-based image picker view for capturing documents

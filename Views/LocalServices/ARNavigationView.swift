@@ -4,9 +4,12 @@
 //
 //  Created by Djibal Ramazani on 15/06/2025.
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import ARKit
 import CoreLocation
+import SwiftUICore
 
 
 struct ARNavigationView: View {
@@ -14,6 +17,13 @@ struct ARNavigationView: View {
     @Environment(\.presentationMode) var presentationMode
     let destinationCoordinate: CLLocationCoordinate2D
     let destinationName: String
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
 
     var body: some View {
         ZStack(alignment: .bottom) {

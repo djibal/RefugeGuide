@@ -4,12 +4,21 @@
 //
 //  Created by Djibal Ramazani on 30/06/2025.
 //
-
+import Foundation
 import SwiftUI
+import FirebaseFunctions
+import SwiftUICore
 
 struct DocumentResultView: View {
     let result: DocumentAIResult
     let onRetry: () -> Void
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
 
     var body: some View {
         ScrollView {
@@ -43,7 +52,7 @@ struct DocumentResultView: View {
                 }
 
                 Button("Scan Another", action: onRetry)
-                    .buttonStyle(PrimaryButtonStyle())
+                    .buttonStyle(PrimaryButtonStyle(backgroundColor: Color(red: 0.07, green: 0.36, blue: 0.65))) // Deep UK blue
                     .padding(.top)
             }
             .padding()

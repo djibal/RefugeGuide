@@ -5,8 +5,9 @@
 //  Created by Djibal Ramazani on 30/06/2025.
 //
 
-
 import Foundation
+import SwiftUI
+import FirebaseFunctions
 
 /// Enum representing supported UK document types for AI analysis
 enum UKDocumentType: String, CaseIterable, Identifiable {

@@ -4,8 +4,10 @@
 //
 //  Created by Djibal Ramazani on 02/06/2025.
 //
-
+import Foundation
 import SwiftUI
+import FirebaseFunctions
+import SwiftUICore
 
 struct WelcomeView: View {
     var onContinue: () -> Void
@@ -14,51 +16,63 @@ struct WelcomeView: View {
     @State private var animate = false
 
     var body: some View {
-        VStack(spacing: 30) {
-            Spacer()
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(spacing: 30) {
+                    Spacer()
 
-            Image("RefugeGuideLogo")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 120)
-                .accessibilityLabel(Text("RefugeGuide logo"))
+                    Image("RefugeGuideLogo")
+                        .resizable()
+                        .scaledToFill()  // Changed from scaledToFit
+                        .frame(width: 120, height: 120)  // Fixed square dimensions
+                        .clipShape(Circle())  // Makes the image circular
+                        .accessibilityLabel(Text("RefugeGuide logo"))
+                        //.clipShape(Circle())
+                       // .overlay(Circle().stroke(Color.white, lineWidth: 2))  // Optional border
+                    
+                    Text(welcomeTitle)
+                        .font(.largeTitle)
+                        .bold()
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil) // Ensure full text display
+                        .opacity(animate ? 1 : 0)
+                        .animation(.easeInOut.delay(0.2), value: animate)
 
-            Text(welcomeTitle)
-                .font(.largeTitle)
-                .bold()
-                .multilineTextAlignment(.center)
-                .opacity(animate ? 1 : 0)
-                .animation(.easeInOut.delay(0.2), value: animate)
+                    Text(welcomeMessage)
+                        .font(.title3)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 40)
+                        .lineLimit(nil) // Ensure full text display
+                        .opacity(animate ? 1 : 0)
+                        .animation(.easeInOut.delay(0.4), value: animate)
 
-            Text(welcomeMessage)
-                .font(.title3)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.secondary)
-                .padding(.horizontal, 40)
-                .opacity(animate ? 1 : 0)
-                .animation(.easeInOut.delay(0.4), value: animate)
+                    Spacer()
 
-            Spacer()
-
-            Button(action: onContinue) {
-                Text(localizedContinue)
-                    .font(.title3)
-                    .bold()
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.accentColor)
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
-                    .padding(.horizontal)
+                    Button(action: onContinue) {
+                        Text(localizedContinue)
+                            .font(.title3)
+                            .bold()
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.accentColor)
+                            .foregroundColor(.white)
+                            .background(AppColors.primary)
+                            .cornerRadius(12)
+                            .padding(.horizontal)
+                    }
+                    .accessibilityLabel(Text(localizedContinue))
+                    .padding(.bottom, 20)
+                    .opacity(animate ? 1 : 0)
+                    .animation(.easeInOut.delay(0.6), value: animate)
+                }
+                .padding()
+                .id("top") // Identifier for scrolling
             }
-            .accessibilityLabel(Text(localizedContinue))
-            .padding(.bottom, 20)
-            .opacity(animate ? 1 : 0)
-            .animation(.easeInOut.delay(0.6), value: animate)
-        }
-        .padding()
-        .onAppear {
-            animate = true
+            .onAppear {
+                animate = true
+                proxy.scrollTo("top", anchor: .top)
+            }
         }
     }
 

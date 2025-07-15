@@ -8,12 +8,22 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
+import SwiftUICore
 
 struct CaseStatusView: View {
     @State private var currentStep = "screening"
     @State private var isLoading = true
     @State private var errorMessage: String?
-
+    
+    
+    let primaryColor = Color(hex: "#0D3B66")  // Rich blue
+    let accentColor = Color(hex: "#F95738")   // Bright coral-red
+    let cardColor = Color(hex: "#FFFFFF")     // White
+    let backgroundColor = Color(hex: "#F5F9FF") // Soft blue-white
+    let textPrimary = Color(hex: "#1A1A1A")   // Neutral dark
+    let textSecondary = Color(hex: "#555555") // Medium gray
+    
+    
     let steps = [
         "screening": "Screening Interview",
         "awaitingDocuments": "Awaiting Documents",
@@ -22,7 +32,7 @@ struct CaseStatusView: View {
         "approved": "Approved",
         "rejected": "Rejected"
     ]
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             if isLoading {
@@ -30,7 +40,7 @@ struct CaseStatusView: View {
             } else {
                 Text("Current Case Step:")
                     .font(.headline)
-
+                
                 if let status = steps[currentStep] {
                     Text(status)
                         .font(.title2.bold())
@@ -38,9 +48,9 @@ struct CaseStatusView: View {
                 } else {
                     Text("Unknown")
                 }
-
+                
                 Divider()
-
+                
                 ForEach(steps.sorted(by: { $0.key < $1.key }), id: \.key) { key, title in
                     HStack {
                         Image(systemName: key == currentStep ? "circle.fill" : "circle")
@@ -49,7 +59,7 @@ struct CaseStatusView: View {
                     }
                 }
             }
-
+            
             Spacer()
         }
         .padding()
@@ -61,28 +71,44 @@ struct CaseStatusView: View {
             Text(errorMessage ?? "")
         })
     }
-
+    
     private func fetchStatus() {
+        isLoading = true
+        errorMessage = nil
+        
         guard let uid = Auth.auth().currentUser?.uid else {
             errorMessage = "User not logged in."
+            isLoading = false
             return
         }
-
-        let docRef = Firestore.firestore().collection("users").document(uid)
-        docRef.getDocument { snapshot, error in
+        
+        let userRef = Firestore.firestore().collection("users").document(uid)
+        userRef.getDocument { snapshot, error in
             if let error = error {
                 self.errorMessage = "Failed to load: \(error.localizedDescription)"
                 self.isLoading = false
                 return
             }
-
-            if let status = snapshot?.get("caseStatus") as? String {
-                self.currentStep = status
-            } else {
-                self.currentStep = "screening"
+            
+            guard let referenceNumber = snapshot?.get("referenceNumber") as? String else {
+                self.errorMessage = "No reference number found."
+                self.isLoading = false
+                return
             }
-
-            self.isLoading = false
+            
+            let service = AsylumCaseService()
+            service.fetchStatus(referenceNumber: referenceNumber) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let newStatus):
+                        self.currentStep = newStatus
+                    case .failure(let error):
+                        self.errorMessage = error.localizedDescription
+                    }
+                    
+                    self.isLoading = false
+                }
+            }
         }
     }
 }

@@ -3,6 +3,7 @@
 //  RefugeGuide
 //
 //  Created by Djibal Ramazani on 11/06/2025.
+
 import Foundation
 import SwiftUI
 import FirebaseAuth
@@ -10,6 +11,7 @@ import FirebaseCore
 import AuthenticationServices
 import GoogleSignIn
 import CryptoKit
+import FirebaseFunctions  // if needed for GPT/Firestore/etc
 
 
 
@@ -21,70 +23,124 @@ struct SignInView: View {
     @State private var isLoading = false
     @State private var path = NavigationPath()
     @State private var currentNonce: String?
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
+
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
 
     var body: some View {
         NavigationStack(path: $path) {
-            VStack(spacing: 20) {
-                Text("Sign in to RefugeGuide")
-                    .font(.title2)
-                    .bold()
+            VStack(spacing: 30) {
+                VStack(spacing: 10) {
+                    Image(systemName: "person.crop.circle.badge.checkmark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 60, height: 60)
+                        .foregroundColor(primaryColor)
 
-                TextField("Email", text: $email)
-                    .autocapitalization(.none)
-                    .keyboardType(.emailAddress)
-                    .textFieldStyle(.roundedBorder)
-
-                SecureField("Password", text: $password)
-                    .textFieldStyle(.roundedBorder)
-
-                if isLoading {
-                    ProgressView()
-                } else {
-                    Button("Sign In") {
-                        signIn()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .disabled(email.isEmpty || password.isEmpty)
+                    Text("Sign in to RefugeGuide")
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(primaryColor)
                 }
+                .padding(.top, 30)
 
-                Divider().padding(.vertical, 10)
+                VStack(spacing: 20) {
+                    TextField("Email", text: $email)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.3)))
+                        .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
 
-                Button(action: handleGoogleSignIn) {
-                    HStack {
-                        Image(systemName: "globe")
-                        Text("Sign in with Google")
-                            .fontWeight(.semibold)
+                    SecureField("Password", text: $password)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(10)
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.3)))
+                        .shadow(color: Color.black.opacity(0.05), radius: 3, x: 0, y: 2)
+
+                    if isLoading {
+                        ProgressView().padding()
+                    } else {
+                        Button("Sign In") {
+                            signIn()
+                        }
+                        .buttonStyle(PrimaryButtonStyle(backgroundColor: primaryColor))
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.white)
-                    .foregroundColor(.black)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray))
                 }
                 .padding(.horizontal)
 
-                SignInWithAppleButton(
-                    onRequest: { request in
-                        let nonce = randomNonceString()
-                        currentNonce = nonce
-                        request.requestedScopes = [.fullName, .email]
-                        request.nonce = sha256(nonce)
-                    },
-                    onCompletion: handleAppleSignIn
-                )
-                .frame(height: 48)
+                VStack(spacing: 15) {
+                    DividerWithText(text: "Or continue with").padding(.vertical, 10)
+
+                    HStack(spacing: 20) {
+                        Button(action: handleGoogleSignIn) {
+                            HStack {
+                                Image("google-logo")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 50)
+                                Text("Google")
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 2)
+                        }
+
+                        SignInWithAppleButton(
+                            onRequest: { request in
+                                let nonce = randomNonceString()
+                                currentNonce = nonce
+                                request.requestedScopes = [.fullName, .email]
+                                request.nonce = sha256(nonce)
+                            },
+                            onCompletion: handleAppleSignIn
+                        )
+                        .frame(height: 50)
+                        .signInWithAppleButtonStyle(.black)
+                    }
+                    if authViewModel.isBiometricLoginAvailable {
+                        Button(action: {
+                            authViewModel.authenticateWithBiometrics { success in
+                                if success {
+                                    path.append("mainTab")
+                                }
+                            }
+                        }) {
+                            HStack {
+                                Image(systemName: "faceid")
+                                Text("Use Face ID")
+                            }
+                        }
+                        .buttonStyle(PrimaryButtonStyle(backgroundColor: accentColor))
+                    }
+                }
                 .padding(.horizontal)
 
-                NavigationLink("Don’t have an account? Register", destination: RegistrationView(onComplete: {
-                    // Called after registration completes
-                }))
+                HStack {
+                    Text("Don't have an account?")
+                    NavigationLink("Register", destination: RegistrationView(onComplete: {}))
+                        .foregroundColor(primaryColor)
+                        .fontWeight(.medium)
+                }
+                .padding(.top, 10)
 
                 if let errorMessage = errorMessage {
                     Text("❌ \(errorMessage)")
+                        .font(.subheadline)
                         .foregroundColor(.red)
                         .multilineTextAlignment(.center)
-                        .padding(.top)
+                        .padding(.horizontal)
                 }
+
+                Spacer()
 
                 NavigationLink(value: "mainTab") {
                     EmptyView()
@@ -96,10 +152,10 @@ struct SignInView: View {
                 }
             }
             .padding()
+            .background(backgroundColor.ignoresSafeArea())
         }
     }
 
-    // MARK: - Email Sign-In
     func signIn() {
         guard !email.isEmpty, !password.isEmpty else {
             errorMessage = "Please enter both email and password."
@@ -119,7 +175,6 @@ struct SignInView: View {
         }
     }
 
-    // MARK: - Google Sign-In
     func handleGoogleSignIn() {
         guard let clientID = FirebaseApp.app()?.options.clientID else {
             self.errorMessage = "Missing Google Client ID"
@@ -162,7 +217,6 @@ struct SignInView: View {
         }
     }
 
-    // MARK: - Apple Sign-In
     func handleAppleSignIn(result: Result<ASAuthorization, Error>) {
         switch result {
         case .success(let auth):
@@ -190,7 +244,6 @@ struct SignInView: View {
         }
     }
 
-    // MARK: - Helpers
     func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashed = SHA256.hash(data: inputData)
@@ -223,5 +276,38 @@ struct SignInView: View {
         }
 
         return result
+    }
+}
+
+struct DividerWithText: View {
+    let text: String
+
+    var body: some View {
+        HStack {
+            VStack { Divider() }
+            Text(text)
+                .font(.caption)
+                .foregroundColor(.secondary)
+            VStack { Divider() }
+        }
+    }
+}
+
+struct SignInButtonStyle: ButtonStyle {
+    let backgroundColor: Color
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.headline)
+            .foregroundColor(.white)
+            .background(AppColors.primary)
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(backgroundColor)
+            .cornerRadius(12)
+            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
+            .opacity(configuration.isPressed ? 0.9 : 1.0)
+            .shadow(color: backgroundColor.opacity(0.3), radius: 5, x: 0, y: 3)
+            .lineLimit(nil)
     }
 }

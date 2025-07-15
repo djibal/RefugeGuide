@@ -5,8 +5,6 @@
 //  Created by Djibal Ramazani on 15/06/2025.
 //
 
-// Consultation.swift
-
 import Foundation
 import FirebaseFirestoreSwift
 
@@ -18,12 +16,15 @@ struct Consultation: Identifiable, Codable {
     var specialistID: String?
     var notes: String?
     @ServerTimestamp var createdAt: Date?
-}
 
+    enum CodingKeys: String, CodingKey {
+        case id, date, type, status, specialistID, notes, createdAt
+    }
+}
 
 enum ConsultationType: String, Codable, CaseIterable {
     case legal, medical, housing, psychological
-    
+
     var displayName: String {
         switch self {
         case .legal: return "Legal Advice"
@@ -35,14 +36,8 @@ enum ConsultationType: String, Codable, CaseIterable {
 }
 
 enum ConsultationStatus: String, Codable {
-    case scheduled, completed, cancelled, inProgress
-    
-    var color: String {
-        switch self {
-        case .scheduled: return "blue"
-        case .inProgress: return "orange"
-        case .completed: return "green"
-        case .cancelled: return "red"
-        }
-    }
+    case scheduled = "scheduled"
+    case completed = "completed"
+    case cancelled = "cancelled"
+    case inProgress = "inProgress"
 }

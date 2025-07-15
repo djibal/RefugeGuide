@@ -8,6 +8,7 @@ import SwiftUI
 import FirebaseFirestore
 import UniformTypeIdentifiers
 import FirebaseAuth
+import SwiftUICore
 
 struct UploadDocumentView: View {
     @State private var selectedFileURL: URL?
@@ -15,6 +16,14 @@ struct UploadDocumentView: View {
     @State private var isUploading = false
     @State private var uploadSuccess = false
     @State private var uploadError: String?
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
+
 
     let documentCategories = [
         "ARC (Asylum Registration Card)",
@@ -49,7 +58,8 @@ struct UploadDocumentView: View {
                         }
                     } else {
                         Text("No file selected")
-                            .foregroundColor(.gray)
+                            .foregroundColor(AppColors.textSecondary)
+
                     }
 
                     Button("Choose File") {

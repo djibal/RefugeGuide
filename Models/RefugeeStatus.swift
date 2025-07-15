@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
+import FirebaseFunctions
 
 enum RefugeeStatus: String, Codable, CaseIterable {
+    
     case refugee
     case asylumSeeker
     case existingAsylumSeeker

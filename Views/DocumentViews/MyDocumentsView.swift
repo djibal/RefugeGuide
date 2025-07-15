@@ -7,6 +7,7 @@ import SwiftUI
 import FirebaseStorage
 import FirebaseFirestore
 import FirebaseAuth
+import SwiftUICore
 
 struct UploadedDoc: Identifiable {
     let id: String
@@ -22,6 +23,14 @@ struct MyDocumentsView: View {
     @State private var selectedCategory: String = NSLocalizedString("All", comment: "")
     @State private var isLoading = true
     @State private var errorMessage: String?
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
+
 
     let documentCategories = [
         NSLocalizedString("All", comment: ""),
@@ -80,7 +89,8 @@ struct MyDocumentsView: View {
 
                                         Text(String(format: NSLocalizedString("Uploaded on %@", comment: ""), doc.timestamp.formatted(date: .abbreviated, time: .shortened)))
                                             .font(.caption2)
-                                            .foregroundColor(.gray)
+                                            .foregroundColor(AppColors.textSecondary)
+
                                     }
                                 }
                             }

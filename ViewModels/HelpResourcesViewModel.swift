@@ -4,9 +4,10 @@
 //
 //  Created by Djibal Ramazani on 16/06/2025.
 //
-
 import Foundation
 import SwiftUI
+import FirebaseFunctions
+import SwiftUICore
 
 final class HelpResourcesViewModel: ObservableObject {
 

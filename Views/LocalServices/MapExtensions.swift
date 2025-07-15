@@ -4,8 +4,11 @@
 //
 //  Created by Djibal Ramazani on 17/06/2025.
 //
-
+import Foundation
+import SwiftUI
+import FirebaseFunctions
 import MapKit
+import SwiftUICore
 
 extension Sequence where Element == CLLocationCoordinate2D {
     var centerPoint: CLLocationCoordinate2D {

@@ -5,9 +5,22 @@
 //  Created by Djibal Ramazani on 02/07/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
+import SwiftUICore
 
 struct LanguageAssistanceView: View {
+    
+    
+    let primaryColor = Color(hex: "#0D3B66")  // Rich blue
+    let accentColor = Color(hex: "#F95738")   // Bright coral-red
+    let cardColor = Color(hex: "#FFFFFF")     // White
+    let backgroundColor = Color(hex: "#F5F9FF") // Soft blue-white
+    let textPrimary = Color(hex: "#1A1A1A")   // Neutral dark
+    let textSecondary = Color(hex: "#555555") // Medium gray
+
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {

@@ -4,9 +4,6 @@
     "" : {
 
     },
-    " ago" : {
-
-    },
     "(%lld reviews)" : {
 
     },
@@ -40,13 +37,13 @@
     "🏠 Main Tab View (Full App)" : {
 
     },
-    "👉 Refugee Guide" : {
+    "👤 Profile view" : {
 
     },
     "👥 Community View" : {
 
     },
-    "💬 Help Chat View" : {
+    "💬 Help Chat " : {
 
     },
     "📁 My Documents View" : {
@@ -68,9 +65,6 @@
 
     },
     "🧍 User Type Selection" : {
-
-    },
-    "12" : {
 
     },
     "24/7 immediate support" : {
@@ -133,13 +127,7 @@
         }
       }
     },
-    "ABCD-1234" : {
-
-    },
     "About" : {
-
-    },
-    "Access to housing" : {
 
     },
     "Account" : {
@@ -150,6 +138,12 @@
     },
     "accountDetailsTitle" : {
       "comment" : "Section title for account info"
+    },
+    "Add a comment..." : {
+
+    },
+    "Add eVisa Details" : {
+
     },
     "Additional Information" : {
 
@@ -221,7 +215,7 @@
 
     },
     "agreementText" : {
-      "comment" : "Text for agreeing to terms"
+      "comment" : "By registering, you agree to our'"
     },
     "All" : {
 
@@ -238,10 +232,10 @@
     "Announcements" : {
 
     },
-    "Anonymous Refugee" : {
+    "Appearance" : {
 
     },
-    "Appearance" : {
+    "Application Form" : {
 
     },
     "Application Status" : {
@@ -265,28 +259,16 @@
     "ARC (Asylum Registration Card)" : {
 
     },
-    "Are you an existing asylum seeker?" : {
-
-    },
-    "Are you planning to seek asylum?" : {
+    "Are you sure you want to delete this post?" : {
 
     },
     "Arrival Date" : {
-
-    },
-    "Ask about UK support..." : {
-
-    },
-    "Asylum Benefits" : {
 
     },
     "Attach File" : {
 
     },
     "Available Today" : {
-
-    },
-    "Be the first to share your experiences, ask questions, or offer support to fellow refugees in the UK." : {
 
     },
     "Book Appointment" : {
@@ -385,28 +367,28 @@
     "Choose from Library" : {
 
     },
+    "Choose your status" : {
+      "comment" : "Choose your refugee current status"
+    },
     "Clear Cache" : {
+
+    },
+    "Comment" : {
+
+    },
+    "Comments (%lld)" : {
 
     },
     "Community" : {
 
     },
-    "Community Support" : {
-
-    },
-    "Confirm Address" : {
-
-    },
     "confirmPasswordPlaceholder" : {
-      "comment" : "Placeholder for confirm password"
+      "comment" : "Confirm your password"
     },
     "Connecting to legal advisor..." : {
 
     },
     "Connection Error" : {
-
-    },
-    "Consultation" : {
 
     },
     "Contact Information" : {
@@ -418,13 +400,13 @@
     "Continue" : {
 
     },
-    "Copied" : {
-
-    },
     "Copy" : {
 
     },
     "Court Document" : {
+
+    },
+    "Create" : {
 
     },
     "Create Your First Post" : {
@@ -490,7 +472,16 @@
         }
       }
     },
+    "Current" : {
+
+    },
     "Current Case Step:" : {
+
+    },
+    "Current Status" : {
+
+    },
+    "Dashboard" : {
 
     },
     "Delete" : {
@@ -500,6 +491,9 @@
 
     },
     "Delete My Account" : {
+
+    },
+    "Delete Post" : {
 
     },
     "Details" : {
@@ -526,13 +520,16 @@
     "Document Analysis Result" : {
 
     },
+    "Document Tasks" : {
+
+    },
     "Document Type" : {
 
     },
     "Documents" : {
 
     },
-    "Don’t have an account? Register" : {
+    "Don't have an account?" : {
 
     },
     "Done" : {
@@ -541,10 +538,10 @@
     "Duration: %@" : {
 
     },
-    "Edit Profile" : {
+    "Edit Details" : {
 
     },
-    "Education for children" : {
+    "Edit Profile" : {
 
     },
     "Effective Date: August 1, 2023" : {
@@ -554,7 +551,7 @@
 
     },
     "emailPlaceholder" : {
-      "comment" : "Placeholder for email"
+      "comment" : "Enter your email address"
     },
     "Emergency Services" : {
       "comment" : "999 help",
@@ -616,13 +613,28 @@
         }
       }
     },
+    "Enter reference number" : {
+
+    },
+    "Enter your UAN" : {
+
+    },
     "Error" : {
 
     },
     "Events" : {
 
     },
-    "False Information" : {
+    "eVisa" : {
+
+    },
+    "eVisa Details" : {
+
+    },
+    "Expiry Date" : {
+
+    },
+    "Expiry Date:" : {
 
     },
     "Filter" : {
@@ -641,10 +653,58 @@
 
     },
     "firstNamePlaceholder" : {
-      "comment" : "Placeholder for first name"
-    },
-    "Free healthcare" : {
-
+      "comment" : "Placeholder text for first name input field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أدخل اسمك الأول هنا"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your first name here"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نام کوچک خود را اینجا وارد کنید"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrez votre prénom ici"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ناوی یەکەمەکەت لێرە بنووسە"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دلته خپل نوم وليکئ"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введіть ваше ім'я тут"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اپنا پہلا نام یہاں درج کریں"
+          }
+        }
+      }
     },
     "Full Name" : {
 
@@ -655,22 +715,10 @@
     "Get Directions" : {
 
     },
-    "Get Started" : {
-
-    },
-    "Harassment" : {
-
-    },
-    "Hate Speech" : {
-
-    },
-    "Help" : {
+    "Google" : {
 
     },
     "Help & Support" : {
-
-    },
-    "Help Chat" : {
 
     },
     "Help Resources" : {
@@ -733,34 +781,40 @@
         }
       }
     },
-    "Home" : {
-
-    },
     "Home Office Letter" : {
 
     },
     "Hours: %@" : {
 
     },
-    "How can we help you today?" : {
-
-    },
     "How to Request Help" : {
 
     },
-    "I have received Leave to Remain" : {
+    "Identification" : {
 
     },
     "Initializing AR navigation..." : {
 
     },
+    "Issuing Authority" : {
+
+    },
+    "Issuing Authority:" : {
+
+    },
+    "Issuing Country" : {
+
+    },
+    "Issuing Country:" : {
+
+    },
     "Join" : {
 
     },
-    "Key" : {
+    "Key 1" : {
       "extractionState" : "manual"
     },
-    "Key 1" : {
+    "Key 2" : {
       "extractionState" : "manual"
     },
     "Language" : {
@@ -779,7 +833,58 @@
 
     },
     "lastNamePlaceholder" : {
-      "comment" : "Placeholder for last name"
+      "comment" : "Placeholder text for last name input field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أدخل اسم العائلة هنا"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your last name here"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نام خانوادگی خود را اینجا وارد کنید"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrez votre nom de famille ici"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ناوی دووەمەکەت لێرە بنووسە"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دلته خپل تخلص وليکئ"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введіть ваше прізвище тут"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اپنا آخری نام یہاں درج کریں"
+          }
+        }
+      }
     },
     "Legal Aid Services" : {
 
@@ -806,6 +911,9 @@
 
     },
     "Loading community posts..." : {
+
+    },
+    "Loading consultations..." : {
 
     },
     "Loading documents..." : {
@@ -838,7 +946,10 @@
     "Manage My Documents" : {
 
     },
-    "Monthly financial support" : {
+    "Menu" : {
+
+    },
+    "More" : {
 
     },
     "More Filters" : {
@@ -857,6 +968,9 @@
 
     },
     "Name" : {
+
+    },
+    "Name:" : {
 
     },
     "Nationality" : {
@@ -928,6 +1042,9 @@
         }
       }
     },
+    "No consultations found." : {
+
+    },
     "No documents found for the selected type." : {
 
     },
@@ -935,6 +1052,9 @@
 
     },
     "No file selected" : {
+
+    },
+    "No Posts Yet" : {
 
     },
     "No Professionals Found" : {
@@ -1018,8 +1138,26 @@
     "Open in Google Maps" : {
 
     },
-    "Open Uploaded File" : {
+    "Open UK Government eVisa Portal" : {
 
+    },
+    "option1Description" : {
+      "comment" : "Description for asylum seeker option"
+    },
+    "option1Title" : {
+      "comment" : "Title for asylum seeker option"
+    },
+    "option2Description" : {
+      "comment" : "Description for existing asylum seeker option"
+    },
+    "option2Title" : {
+      "comment" : "Title for existing asylum seeker option"
+    },
+    "option3Description" : {
+      "comment" : "Description for refugee/residence permit option"
+    },
+    "option3Title" : {
+      "comment" : "Title for refugee/residence permit option"
     },
     "Other" : {
 
@@ -1028,9 +1166,66 @@
 
     },
     "passwordPlaceholder" : {
-      "comment" : "Placeholder for password"
+      "comment" : "Placeholder text for password input field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أدخل كلمة المرور"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your password"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رمز عبور خود را وارد کنید"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrez votre mot de passe"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تێپەڕوشەکەت لێرە بنووسە"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خپل پټ نوم وليکئ"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введіть ваш пароль"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اپنا پاس ورڈ درج کریں"
+          }
+        }
+      }
+    },
+    "PDF, JPG, or PNG files (Max 10MB)" : {
+
     },
     "Personal Info" : {
+
+    },
+    "Personal Information" : {
 
     },
     "personalDetailsTitle" : {
@@ -1039,10 +1234,22 @@
     "Phone" : {
 
     },
+    "Placeholder text for first name input field" : {
+      "extractionState" : "manual"
+    },
     "Please choose your preferred language" : {
 
     },
+    "Please enter your Unique Application Number (UAN) to verify your status." : {
+
+    },
     "Please select your current status:" : {
+
+    },
+    "Please upload the required documents to complete your application" : {
+
+    },
+    "Please wait while we upload your document" : {
 
     },
     "Police, Ambulance, Fire" : {
@@ -1106,12 +1313,15 @@
       }
     },
     "policyLinkText" : {
-      "comment" : "Link text for privacy policy"
+      "comment" : "Privacy Policy"
     },
     "Post Anonymously" : {
 
     },
-    "Post content" : {
+    "Post Details" : {
+
+    },
+    "Post Options" : {
 
     },
     "Potential Issues:" : {
@@ -1123,16 +1333,13 @@
     "Preferred Language" : {
 
     },
-    "Privacy" : {
-
-    },
     "Privacy Policy" : {
 
     },
     "Processing Error" : {
 
     },
-    "Profile" : {
+    "Proof of Address" : {
 
     },
     "Quick Exit" : {
@@ -1199,6 +1406,9 @@
 
     },
     "Recommended Services" : {
+
+    },
+    "Refresh Status" : {
 
     },
     "Refugee Council" : {
@@ -1273,10 +1483,73 @@
     "RefugeGuide logo" : {
 
     },
-    "registerButtonText" : {
-      "comment" : "Label for registration button"
+    "Register" : {
+
     },
-    "Report Post" : {
+    "registerButtonText" : {
+      "comment" : "Label for registration button",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Register"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ثبت‌نام"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'inscrire"
+          }
+        },
+        "ku" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تۆماربوون"
+          }
+        },
+        "ps" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "راجسټر شئ"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зареєструватися"
+          }
+        },
+        "ur" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رجسٹر کریں"
+          }
+        }
+      }
+    },
+    "Reply" : {
+
+    },
+    "Report: False Information" : {
+
+    },
+    "Report: Harassment" : {
+
+    },
+    "Report: Hate Speech" : {
 
     },
     "Reset" : {
@@ -1351,59 +1624,8 @@
         }
       }
     },
-    "Safety Planning" : {
-      "comment" : "Tips for staying safe during a crisis or emergency",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التخطيط للسلامة"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Safety Planning"
-          }
-        },
-        "fa" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "برنامه‌ریزی ایمنی"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Plan de sécurité"
-          }
-        },
-        "ku" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Planê ewlehiyê"
-          }
-        },
-        "ps" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "د خوندیتوب پلان جوړونه"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "План безпеки"
-          }
-        },
-        "ur" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "حفاظتی منصوبہ بندی"
-          }
-        }
-      }
+    "Save" : {
+
     },
     "Save Changes" : {
 
@@ -1486,6 +1708,9 @@
     "Select Date & Time" : {
 
     },
+    "Select Document to Upload" : {
+
+    },
     "Select Document Type" : {
 
     },
@@ -1495,22 +1720,34 @@
     "Select your preferred language" : {
 
     },
+    "Send" : {
+
+    },
+    "Services" : {
+
+    },
     "Settings" : {
 
     },
     "Share" : {
 
     },
+    "Share Code" : {
+
+    },
+    "Share Code:" : {
+
+    },
     "Share Post" : {
+
+    },
+    "Share your thoughts, questions, or experiences..." : {
 
     },
     "Sign In" : {
 
     },
     "Sign in to RefugeGuide" : {
-
-    },
-    "Sign in with Google" : {
 
     },
     "Sign Out" : {
@@ -1520,6 +1757,12 @@
 
     },
     "Skip and Register" : {
+
+    },
+    "Skip for now" : {
+
+    },
+    "Skip for Now" : {
 
     },
     "🆘 Emergency Help View" : {
@@ -1534,13 +1777,19 @@
     "Spoken Language" : {
 
     },
+    "Start a conversation or ask a question to connect with the community." : {
+
+    },
+    "Status:" : {
+
+    },
+    "Stay On Track" : {
+
+    },
     "Support" : {
 
     },
     "Take Photo" : {
-
-    },
-    "Tasks" : {
 
     },
     "This is where users can create a personalized safety plan." : {
@@ -1561,6 +1810,9 @@
     "Tips" : {
 
     },
+    "Title (required)" : {
+
+    },
     "Travel Document" : {
 
     },
@@ -1573,7 +1825,7 @@
     "Type" : {
 
     },
-    "Type your question here..." : {
+    "Type your message here…" : {
 
     },
     "UK Asylum Information" : {
@@ -1591,16 +1843,13 @@
     "Upcoming Appointments" : {
 
     },
-    "Upload" : {
-
-    },
     "Upload Document" : {
 
     },
-    "Upload ID" : {
+    "Upload Required Documents" : {
 
     },
-    "Upload required documents" : {
+    "Upload Successful" : {
 
     },
     "Uploaded on %@" : {
@@ -1618,19 +1867,40 @@
     "Urgent Support" : {
 
     },
+    "Use Face ID" : {
+
+    },
     "User not logged in." : {
 
     },
     "User Type" : {
 
     },
+    "Verification Successful!" : {
+
+    },
+    "Verify" : {
+
+    },
+    "Verify Your Asylum Reference" : {
+
+    },
     "Video Consultations" : {
 
     },
-    "View Letter" : {
+    "View on Map" : {
 
     },
-    "View on Map" : {
+    "View Uploaded Document" : {
+
+    },
+    "Visa Details" : {
+
+    },
+    "Visa Type" : {
+
+    },
+    "Visa Type:" : {
 
     },
     "Visit Website" : {
@@ -1639,37 +1909,40 @@
     "Website" : {
 
     },
-    "Welcome to Refugee Guide" : {
+    "Welcome to RefugeGuide" : {
 
     },
-    "Welcome to the Community" : {
+    "Welcome to UK Refugee Guide" : {
+
+    },
+    "What is a UAN?" : {
 
     },
     "What To Do Now" : {
 
     },
-    "You already have a Home Office reference number." : {
-
-    },
     "You are entitled to free interpretation and translation support when dealing with UK immigration, healthcare, and legal systems." : {
-
-    },
-    "You are starting or planning to start the asylum process in the UK." : {
 
     },
     "You have no upcoming appointments." : {
 
     },
-    "You now have refugee status or humanitarian protection in the UK." : {
-
-    },
     "You've been granted Leave to Remain – what next?" : {
 
     },
-    "Your Post" : {
+    "Your document has been uploaded successfully" : {
+
+    },
+    "Your Message" : {
 
     },
     "Your Right to Language Assistance" : {
+
+    },
+    "Your trusted companion through the UK asylum process" : {
+
+    },
+    "Your Unique Application Number (UAN) is provided by the UK Home Office in asylum correspondence." : {
 
     }
   },

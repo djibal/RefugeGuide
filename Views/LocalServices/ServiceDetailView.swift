@@ -5,12 +5,22 @@
 //  Created by Djibal Ramazani on 17/06/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import CoreLocation
+import SwiftUICore
 
 struct ServiceDetailView: View {
     let service: LocalService
     @State private var userLocation: CLLocation? = LocationManager.shared.currentLocation
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
 
     var body: some View {
         ScrollView {
@@ -23,7 +33,7 @@ struct ServiceDetailView: View {
                     if let rating = service.rating {
                         Spacer()
                         Label(String(format: "%.1f", rating), systemImage: "star.fill")
-                            .foregroundColor(.yellow)
+                            .background(AppColors.accent) 
                     }
                 }
 

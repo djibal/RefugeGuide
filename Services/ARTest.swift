@@ -7,6 +7,8 @@
 
 import ARKit
 import SceneKit
+import SwiftUI
+import FirebaseFunctions
 
 let view = ARSCNView()
 let config = ARWorldTrackingConfiguration()

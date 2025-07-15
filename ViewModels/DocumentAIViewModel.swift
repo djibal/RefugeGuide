@@ -10,7 +10,6 @@ import SwiftUI
 import Vision
 import UIKit
 
-
 class DocumentAIViewModel: ObservableObject {
     enum State {
         case idle
@@ -45,19 +44,13 @@ class DocumentAIViewModel: ObservableObject {
 
         state = .processing(progress: 0)
 
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            do {
-                let result = try self?.docAnalyzer.analyzeDocument(at: url, type: type)
-                DispatchQueue.main.async {
-                    if let result = result {
-                        self?.state = .result(result)
-                    } else {
-                        self?.state = .error("Failed to process document.")
-                    }
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self?.state = .error(error.localizedDescription)
+        docAnalyzer.analyzeDocument(at: url, type: type) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let documentResult):
+                    self?.state = .result(documentResult)
+                case .failure(let error):
+                    self?.state = .error("Failed to process document: \(error.localizedDescription)")
                 }
             }
         }
@@ -71,19 +64,13 @@ class DocumentAIViewModel: ObservableObject {
 
         state = .processing(progress: 0)
 
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            do {
-                let result = try self?.docAnalyzer.analyzeImage(image, type: type)
-                DispatchQueue.main.async {
-                    if let result = result {
-                        self?.state = .result(result)
-                    } else {
-                        self?.state = .error("Failed to process image.")
-                    }
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self?.state = .error(error.localizedDescription)
+        docAnalyzer.analyzeImage(image, type: type) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let imageResult):
+                    self?.state = .result(imageResult)
+                case .failure(let error):
+                    self?.state = .error("Failed to process image: \(error.localizedDescription)")
                 }
             }
         }

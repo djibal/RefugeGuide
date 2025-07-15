@@ -5,11 +5,21 @@
 //  Created by Djibal Ramazani on 15/06/2025.
 //
 
+import Foundation
 import SwiftUI
+import FirebaseFunctions
 import AgoraRtcKit
+import SwiftUICore
 
 struct VideoCallView: View {
     @ObservedObject var vm: VideoConsultationViewModel
+    
+    let primaryColor = Color(hex: "#0D3B66")
+    let accentColor = Color(hex: "#F95738")
+    let backgroundColor = Color(hex: "#F5F9FF")
+    let cardColor = Color(hex: "#FFFFFF")
+    let textPrimary = Color(hex: "#1A1A1A")
+    let textSecondary = Color(hex: "#555555")
 
     var body: some View {
         ZStack {
@@ -33,6 +43,7 @@ struct VideoCallView: View {
                             .padding()
                             .background(Circle().fill(Color.gray.opacity(0.7)))
                             .foregroundColor(.white)
+                            .background(AppColors.primary)
                     }
 
                     Button(action: vm.endCall) {
@@ -40,6 +51,7 @@ struct VideoCallView: View {
                             .padding()
                             .background(Circle().fill(Color.red))
                             .foregroundColor(.white)
+                            .background(AppColors.primary)
                     }
                 }
                 .padding()

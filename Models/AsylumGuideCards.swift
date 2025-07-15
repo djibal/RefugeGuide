@@ -7,8 +7,11 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFunctions
 
 struct AsylumGuideCardsProvider {
+    
+    
     static func cards(for language: String) -> [GuideCardData] {
         return [
             GuideCardData(
