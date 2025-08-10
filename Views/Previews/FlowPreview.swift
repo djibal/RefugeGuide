@@ -7,6 +7,7 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
+<<<<<<< HEAD
 import SwiftUICore
 
 struct FlowPreview: View {
@@ -17,6 +18,12 @@ struct FlowPreview: View {
     let cardColor = Color(hex: "#FFFFFF")
     let textPrimary = Color(hex: "#1A1A1A")
     let textSecondary = Color(hex: "#555555")
+=======
+
+struct FlowPreview: View {
+    
+
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     
     let mockConsultation = Consultation(
         id: "mock123",

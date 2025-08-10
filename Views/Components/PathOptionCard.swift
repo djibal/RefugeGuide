@@ -7,7 +7,10 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
+<<<<<<< HEAD
 import SwiftUICore
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct PathOptionCard: View {
     let title: String
@@ -15,7 +18,10 @@ struct PathOptionCard: View {
     let color: Color
     let iconName: String?
     let spacing: CGFloat
+<<<<<<< HEAD
   
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
     var body: some View {
         VStack(alignment: .leading, spacing: spacing) {

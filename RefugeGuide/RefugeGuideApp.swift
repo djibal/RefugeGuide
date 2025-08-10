@@ -19,9 +19,13 @@ struct RefugeGuideApp: App {
     @AppStorage("selectedLanguage") private var selectedLanguage = "en"
 
     @StateObject private var initViewModel = AppInitializationViewModel()
+<<<<<<< HEAD
     @StateObject private var authVM = AuthenticationViewModel()
 
     @State private var showSplash = true
+=======
+    @StateObject private var authVM = AuthenticationViewModel() // ✅ Injected ViewModel
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
     var body: some Scene {
         WindowGroup {
@@ -57,6 +61,11 @@ struct RefugeGuideApp: App {
                     .environmentObject(authVM)
                 }
             }
+<<<<<<< HEAD
+=======
+            .environment(\.locale, Locale(identifier: selectedLanguage))
+            .environmentObject(authVM) // ✅ Inject here for use in ProfileView and others
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
         }
     }
 }

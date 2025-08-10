@@ -8,9 +8,19 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
+<<<<<<< HEAD
 import Vision
 import UIKit
 
+=======
+import UIKit
+
+
+class DocumentAnalyzer {
+    func analyzeDocument(at url: URL, type: UKDocumentType) throws -> DocumentAIResult {
+        // Simulate some processing delay
+        Thread.sleep(forTimeInterval: 1.0)
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 class DocumentAnalyzer {
     private lazy var functions = Functions.functions()

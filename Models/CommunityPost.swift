@@ -9,7 +9,12 @@ import SwiftUI
 import Foundation
 import FirebaseFunctions
 import FirebaseFirestoreSwift
+<<<<<<< HEAD
 import FirebaseAuth
+=======
+import SwiftUI
+import FirebaseFunctions
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct CommunityPost: Identifiable, Codable, Hashable {
     @DocumentID var id: String?

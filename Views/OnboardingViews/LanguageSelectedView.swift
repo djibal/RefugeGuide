@@ -7,13 +7,17 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
+<<<<<<< HEAD
 import SwiftUICore
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct LanguageSelectedView: View {
     
     @Binding var selectedLanguage: String
     var onContinue: () -> Void
     
+<<<<<<< HEAD
     
     
     let primaryColor = Color(hex: "#0D3B66")
@@ -24,6 +28,8 @@ struct LanguageSelectedView: View {
     let textSecondary = Color(hex: "#555555")
 
     
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     var body: some View {
         TopAlignedScrollView {
             TopAlignedScrollView {
@@ -80,7 +86,10 @@ struct LanguageSelectedView: View {
                             .padding()
                             .background(Color.blue)
                             .foregroundColor(.white)
+<<<<<<< HEAD
                             .background(AppColors.primary)
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                             .cornerRadius(12)
                             .padding(.horizontal)
                     }

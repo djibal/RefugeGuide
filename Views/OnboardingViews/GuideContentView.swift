@@ -8,7 +8,10 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
+<<<<<<< HEAD
 import SwiftUICore
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct GuideContentView: View {
     let selectedLanguage: String
@@ -20,12 +23,17 @@ struct GuideContentView: View {
     
     let primaryColor: Color
     let accentColor: Color
+<<<<<<< HEAD
     
     let backgroundColor = Color(hex: "#F5F9FF")
     let cardColor = Color(hex: "#FFFFFF")
     let textPrimary = Color(hex: "#1A1A1A")
     let textSecondary = Color(hex: "#555555")
 
+=======
+    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+    
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
@@ -67,7 +75,10 @@ struct GuideContentView: View {
                         Text(continueButtonText)
                             .font(.headline)
                             .foregroundColor(.white)
+<<<<<<< HEAD
                             .background(AppColors.primary)
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(primaryColor)

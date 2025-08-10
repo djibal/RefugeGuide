@@ -4,11 +4,17 @@
 //
 //  Created by Djibal Ramazani on 15/06/2025.
 //
+<<<<<<< HEAD
 import Foundation
 import SwiftUI
 import FirebaseFunctions
 import FirebaseAuth
+=======
+
+import Foundation
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 import SwiftUI
+import FirebaseFunctions
 
 struct ConsultationListView: View {
     @Binding var consultations: [Consultation]

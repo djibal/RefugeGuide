@@ -7,10 +7,15 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
+<<<<<<< HEAD
 import SwiftUICore
 
 enum Language: String, CaseIterable, Identifiable {
     
+=======
+
+enum Language: String, CaseIterable, Identifiable {
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     case english = "en"
     case arabic = "ar"
     case urdu = "ur"
@@ -19,13 +24,19 @@ enum Language: String, CaseIterable, Identifiable {
     case ukrainian = "uk"
     case pashto = "ps"
     case kurdish = "ku"
+<<<<<<< HEAD
     
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
     var id: String { rawValue }
 
     var displayName: String {
+<<<<<<< HEAD
         
         
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
         switch self {
         case .english: return "English"
         case .arabic: return "العربية"

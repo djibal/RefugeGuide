@@ -7,12 +7,16 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
+<<<<<<< HEAD
 import SwiftUICore
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct WelcomeIntroView: View {
     let selectedLanguage: String
     var onContinue: () -> Void
     
+<<<<<<< HEAD
     let primaryColor = Color(hex: "#0D3B66")
     let accentColor = Color(hex: "#F95738")
     let backgroundColor = Color(hex: "#F5F9FF")
@@ -20,6 +24,12 @@ struct WelcomeIntroView: View {
     let textPrimary = Color(hex: "#1A1A1A")
     let textSecondary = Color(hex: "#555555")
 
+=======
+    internal var primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
+    internal var accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)   // UK accent orange
+    internal var backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+    
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     private var welcomeMessage: String {
         switch selectedLanguage {
         case "ar": "مرحبًا بك في دليل اللاجئين"
@@ -118,7 +128,10 @@ struct WelcomeIntroView: View {
                             .padding()
                             .background(Color.blue)
                             .foregroundColor(.white)
+<<<<<<< HEAD
                             .background(AppColors.primary)
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                             .cornerRadius(12)
                             .padding(.horizontal)
                     }

@@ -3,6 +3,7 @@
 //  RefugeGuide
 //
 // Created by Djibal Ramazani on 28/06/2025.
+<<<<<<< HEAD
 
 import Foundation
 import SwiftUI
@@ -10,6 +11,19 @@ import FirebaseFunctions
 import SwiftUICore
 
 struct OnboardingFlow: View {
+=======
+import Foundation
+import SwiftUI
+import FirebaseFunctions
+
+struct OnboardingFlow: View {
+
+    // Shared color constants
+    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)   // Deep UK blue
+    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)    // UK orange
+    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     // Steps in onboarding flow
     private enum OnboardingStep: Int {
         case languageSelection
@@ -93,6 +107,7 @@ struct OnboardingFlow: View {
     private var userDestinationView: some View {
         switch userType {
         case .asylumSeeker, .newAsylumSeeker, .seekingAsylum:
+<<<<<<< HEAD
             NewAsylumSeekerOnboardingView(
                 onContinue: completeOnboarding, selectedLanguage: selectedLanguage
             )
@@ -105,6 +120,24 @@ struct OnboardingFlow: View {
         case .refugee, .residencePermitHolder, .grantedResidence:
             GrantedAsylumSeekerOnboardingView(
                 onContinue: completeOnboarding, selectedLanguage: selectedLanguage
+=======
+            IntroToAsylumView(
+                onContinue: completeOnboarding,
+                selectedLanguage: selectedLanguage
+            )
+
+        case .existingAsylumSeeker:
+            ExistingAsylumVerificationView(
+                onVerificationComplete: completeOnboarding,
+                selectedLanguage: selectedLanguage
+            )
+
+        case .refugee, .residencePermitHolder, .grantedResidence:
+            RefugeeGuideContentView(
+                selectedLanguage: selectedLanguage,
+                primaryColor: primaryColor,
+                onContinue: completeOnboarding
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
             )
 
         case .unknown:

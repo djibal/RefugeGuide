@@ -8,7 +8,17 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
+<<<<<<< HEAD
 import SwiftUICore
+=======
+
+let asylumBenefitsTitle = NSLocalizedString("Asylum Benefits", comment: "")
+let asylumBenefit1 = NSLocalizedString("Access to housing", comment: "")
+let asylumBenefit2 = NSLocalizedString("Free healthcare", comment: "")
+let asylumBenefit3 = NSLocalizedString("Education for children", comment: "")
+let asylumBenefit4 = NSLocalizedString("Monthly financial support", comment: "")
+let continueButtonText = NSLocalizedString("Continue", comment: "")
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct NewAsylumSeekerOnboardingView: View {
     var onContinue: () -> Void
@@ -24,6 +34,14 @@ struct NewAsylumSeekerOnboardingView: View {
     let textSecondary = Color(hex: "#555555") // Medium gray
 
     
+<<<<<<< HEAD
+=======
+    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
+    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)   // UK accent orange
+    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+    private let cardBackground = Color.white
+    
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
@@ -33,11 +51,16 @@ struct NewAsylumSeekerOnboardingView: View {
                             .font(.title)
                             .bold()
                             .foregroundColor(primaryColor)
+<<<<<<< HEAD
                             .lineLimit(nil)
+=======
+                            .lineLimit(nil) // Ensure full text display
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                         
                         Text(asylumDescription)
                             .font(.body)
                             .foregroundColor(.secondary)
+<<<<<<< HEAD
                             .lineLimit(nil)
                     }
                     .padding(.bottom, 10)
@@ -48,6 +71,17 @@ struct NewAsylumSeekerOnboardingView: View {
                             .font(.headline)
                             .foregroundColor(primaryColor)
                             .lineLimit(nil)
+=======
+                            .lineLimit(nil) // Ensure full text display
+                    }
+                    .padding(.bottom, 10)
+                    
+                    VStack(alignment: .leading, spacing: 25) {
+                        Text("UK Asylum Process")
+                            .font(.headline)
+                            .foregroundColor(primaryColor)
+                            .lineLimit(nil) // Ensure full text display
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                         
                         StepCard(
                             icon: "doc.text.fill",
@@ -85,6 +119,7 @@ struct NewAsylumSeekerOnboardingView: View {
                         )
                     }
                     .padding()
+<<<<<<< HEAD
                     .background(backgroundColor)
                     .cornerRadius(15)
                     .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
@@ -103,10 +138,28 @@ struct NewAsylumSeekerOnboardingView: View {
                             BenefitItem(icon: "sterlingsign.circle.fill", text: localized("Financial support (£49.18/week)"), color: accentColor)
                             BenefitItem(icon: "gavel.fill", text: localized("Free legal advice"), color: primaryColor)
                             BenefitItem(icon: "hands.sparkles.fill", text: localized("Protection from deportation"), color: accentColor)
+=======
+                    .background(cardBackground)
+                    .cornerRadius(15)
+                    .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
+                    
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text(asylumBenefitsTitle)
+                            .font(.headline)
+                            .foregroundColor(primaryColor)
+                            .lineLimit(nil) // Ensure full text display
+                        
+                        VStack(alignment: .leading, spacing: 15) {
+                            BenefitItem(icon: "house.fill", text: asylumBenefit1, color: primaryColor)
+                            BenefitItem(icon: "heart.fill", text: asylumBenefit2, color: accentColor)
+                            BenefitItem(icon: "book.fill", text: asylumBenefit3, color: primaryColor)
+                            BenefitItem(icon: "sterlingsign.circle.fill", text: asylumBenefit4, color: accentColor)
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                         }
                         .padding(.vertical, 5)
                     }
                     .padding()
+<<<<<<< HEAD
                     .background(backgroundColor)
                     .cornerRadius(15)
                     .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
@@ -143,16 +196,26 @@ struct NewAsylumSeekerOnboardingView: View {
                     }
                     .padding()
                     .background(backgroundColor)
+=======
+                    .background(cardBackground)
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                     .cornerRadius(15)
                     .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 3)
                     
                     Spacer()
                     
+<<<<<<< HEAD
                     Button(action: { showRefEntry = true }) {
                         Text(localized("Continue"))
                             .font(.headline)
                             .foregroundColor(.white)
                             .background(AppColors.primary)
+=======
+                    Button(action: onContinue) {
+                        Text(continueButtonText)
+                            .font(.headline)
+                            .foregroundColor(.white)
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(primaryColor)
@@ -164,7 +227,11 @@ struct NewAsylumSeekerOnboardingView: View {
                 }
                 .padding()
                 .background(backgroundColor.ignoresSafeArea())
+<<<<<<< HEAD
                 .id("top")
+=======
+                .id("top") // Identifier for scrolling
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
             }
             .navigationTitle(asylumTitle)
             .navigationBarTitleDisplayMode(.inline)
@@ -172,6 +239,7 @@ struct NewAsylumSeekerOnboardingView: View {
                 proxy.scrollTo("top", anchor: .top)
             }
         }
+<<<<<<< HEAD
         .navigationDestination(isPresented: $showRefEntry) {
             EnterReferenceNumberView(
                 title: localized("Enter Your Home Office Ref Number"),
@@ -180,12 +248,23 @@ struct NewAsylumSeekerOnboardingView: View {
             ) { _ in
                 onContinue()
             }
+=======
+    }
+    
+    private var asylumTitle: String {
+        switch selectedLanguage {
+        case "ar": return "دليل طالبي اللجوء الجدد"
+        case "fr": return "Guide des nouveaux demandeurs d'asile"
+        case "fa": return "راهنمای تازه واردان پناهجو"
+        default: return "New Asylum Seeker's Guide"
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
         }
     }
         // MARK: - Localized Content
         private var asylumTitle: String {
             localized("New Asylum Seeker's Guide")
         }
+<<<<<<< HEAD
         
         private var asylumDescription: String {
             localized("Your comprehensive guide to starting your asylum journey in the UK")
@@ -309,11 +388,134 @@ struct NewAsylumSeekerOnboardingView: View {
                             .font(.footnote)
                             .foregroundColor(.secondary)
                     }
-                }
-            }
+=======
+    }
+    
+    private var step1Title: String {
+        switch selectedLanguage {
+        case "ar": return "التسجيل"
+        case "fr": return "Enregistrement"
+        case "fa": return "ثبت‌نام"
+        default: return "Registration"
+        }
+    }
+
+    private var step1Description: String {
+        switch selectedLanguage {
+        case "ar": return "ابدأ رحلتك بتقديم طلب اللجوء رسميًا."
+        case "fr": return "Commencez votre parcours en enregistrant officiellement votre demande d'asile."
+        case "fa": return "سفر خود را با ثبت رسمی درخواست پناهندگی آغاز کنید."
+        default: return "Start your journey by officially submitting your asylum application."
+        }
+    }
+
+    private var step2Title: String {
+        switch selectedLanguage {
+        case "ar": return "المقابلة الأولية"
+        case "fr": return "Entretien initial"
+        case "fa": return "مصاحبه اولیه"
+        default: return "Initial Interview"
+        }
+    }
+
+    private var step2Description: String {
+        switch selectedLanguage {
+        case "ar": return "مقابلة قصيرة للتحقق من هويتك وأسباب اللجوء."
+        case "fr": return "Un bref entretien pour vérifier votre identité et les raisons de votre demande."
+        case "fa": return "مصاحبه کوتاه برای تأیید هویت و دلایل درخواست شما."
+        default: return "A short interview to verify your identity and asylum reasons."
+        }
+    }
+
+    private var step3Title: String {
+        switch selectedLanguage {
+        case "ar": return "الانتظار للقرار"
+        case "fr": return "Attente de la décision"
+        case "fa": return "انتظار برای تصمیم"
+        default: return "Waiting for a Decision"
+        }
+    }
+
+    private var step3Description: String {
+        switch selectedLanguage {
+        case "ar": return "قد يستغرق اتخاذ القرار بعض الوقت. ستتلقى دعمًا مؤقتًا."
+        case "fr": return "La décision peut prendre du temps. Vous recevrez un soutien temporaire."
+        case "fa": return "ممکن است مدتی طول بکشد تا تصمیم گرفته شود. شما از پشتیبانی موقت برخوردار خواهید شد."
+        default: return "It may take time to receive a decision. You’ll get temporary support."
+        }
+    }
+
+    private var step4Title: String {
+        switch selectedLanguage {
+        case "ar": return "دعم الإقامة"
+        case "fr": return "Soutien au logement"
+        case "fa": return "حمایت اقامتی"
+        default: return "Housing Support"
+        }
+    }
+
+    private var step4Description: String {
+        switch selectedLanguage {
+        case "ar": return "قد يتم توفير سكن مؤقت لك أثناء انتظار القرار."
+        case "fr": return "Un logement temporaire peut vous être fourni pendant l'attente."
+        case "fa": return "در طول انتظار ممکن است اقامت موقت برای شما فراهم شود."
+        default: return "Temporary housing may be provided while you wait."
+        }
+    }
+
+    private var step5Title: String {
+        switch selectedLanguage {
+        case "ar": return "الدعم المجتمعي"
+        case "fr": return "Soutien communautaire"
+        case "fa": return "پشتیبانی اجتماعی"
+        default: return "Community Support"
+        }
+    }
+
+    private var step5Description: String {
+        switch selectedLanguage {
+        case "ar": return "الوصول إلى المساعدة من المنظمات والجمعيات المحلية."
+        case "fr": return "Accès à l'aide des organisations et associations locales."
+        case "fa": return "دسترسی به کمک از سازمان‌ها و انجمن‌های محلی."
+        default: return "Access help from local organizations and community groups."
         }
     }
     
+    struct StepCard: View {
+        let icon: String
+        let title: String
+        let description: String
+        let color: Color
+        
+        var body: some View {
+            HStack(alignment: .top, spacing: 16) {
+                ZStack {
+                    Circle()
+                        .fill(color.opacity(0.1))
+                        .frame(width: 40, height: 40)
+                    
+                    Image(systemName: icon)
+                        .foregroundColor(color)
+                        .font(.system(size: 20))
+                }
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(title)
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                        .lineLimit(nil) // Ensure full text display
+                    Text(description)
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                        .lineLimit(nil) // Ensure full text display
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
+                }
+            }
+            .padding(.vertical, 5)
+        }
+    }
+    
+<<<<<<< HEAD
     struct NewAsylumSeekerOnboardingView_Previews: PreviewProvider {
         static var previews: some View {
             NavigationView {
@@ -321,3 +523,32 @@ struct NewAsylumSeekerOnboardingView: View {
             }
         }
     }
+=======
+    struct BenefitItem: View {
+        let icon: String
+        let text: String
+        let color: Color
+        
+        var body: some View {
+            HStack(alignment: .top) {
+                Image(systemName: icon)
+                    .foregroundColor(color)
+                    .font(.system(size: 20))
+                    .frame(width: 30)
+                
+                Text(text)
+                    .font(.subheadline)
+                    .lineLimit(nil) // Ensure full text display
+            }
+        }
+    }
+}
+
+struct NewAsylumSeekerOnboardingView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            NewAsylumSeekerOnboardingView(onContinue: {})
+        }
+    }
+}
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf

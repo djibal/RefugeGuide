@@ -13,7 +13,11 @@ class HelpChatViewModel: ObservableObject {
     @Published var messages: [ChatMessage] = []
     @Published var isLoading = false
     @Published var errorMessage = ""
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     private var functions = Functions.functions()
     
     func addMessage(_ message: ChatMessage) {
@@ -23,7 +27,11 @@ class HelpChatViewModel: ObservableObject {
     func addWelcomeMessage() {
         let welcomeMessage = """
         Welcome to RefugeGuide! I'm here to help with information about:
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
         • UK asylum process
         • Finding housing support
         • Legal advice services
@@ -31,20 +39,28 @@ class HelpChatViewModel: ObservableObject {
         • Education opportunities
         • Employment support
         • And many more...
+<<<<<<< HEAD
         
         
+=======
+
+
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
         How can I assist you today?
         """
         messages.append(ChatMessage(content: welcomeMessage, isUser: false))
     }
     
     func sendMessage(_ prompt: String) {
+<<<<<<< HEAD
         if prompt.lowercased().contains("talk to human") || prompt.lowercased().contains("urgent") {
             messages.append(ChatMessage(content: "Connecting you to a human advisor. Please wait…", isUser: false))
             // Optionally trigger navigation to live chat or alert a team
             return
         }
         
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
         isLoading = true
         
         let ukContextPrompt = """
@@ -52,6 +68,7 @@ class HelpChatViewModel: ObservableObject {
         The user is a refugee in the United Kingdom seeking assistance.
         Provide information relevant to UK services, laws, and support systems.
         Be empathetic and practical in your responses.
+<<<<<<< HEAD
         
         User Question: \(prompt)
         """
@@ -64,6 +81,16 @@ class HelpChatViewModel: ObservableObject {
         ]) { [weak self] result, error in
 
             
+=======
+
+        User Question: \(prompt)
+        """
+        
+        functions.httpsCallable("chatWithGPT").call([
+            "message": ukContextPrompt,
+            "systemPrompt": "You are an expert advisor for refugees in the UK."
+        ]) { [weak self] result, error in
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
             guard let self = self else { return }
             self.isLoading = false
             

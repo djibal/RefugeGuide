@@ -5,12 +5,17 @@
 //  Created by Djibal Ramazani on 29/06/2025.
 //
 
+import Foundation
 import SwiftUI
+<<<<<<< HEAD
 import Foundation
 import FirebaseFunctions
 import FirebaseFirestoreSwift
 import FirebaseAuth
 import SwiftUICore
+=======
+import FirebaseFunctions
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct CommunityView: View {
     @StateObject var viewModel = CommunityViewModel()

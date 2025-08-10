@@ -73,7 +73,11 @@ To unify the app’s appearance, RefugeGuide now uses a shared design system def
 
 - These values are applied consistently across all views including:
 
+<<<<<<< HEAD
 ##  🎨 Buttons (PrimaryButtonStyle.swift)
+=======
+ 🎨 Buttons (PrimaryButtonStyle.swift)
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 - Cards, scroll backgrounds, and chat input areas
 - Multilingual flows and profile sections
 - This system improves maintainability, brand consistency, and prepares the app for theming and dark mode support in future updates.

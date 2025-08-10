@@ -7,7 +7,10 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
+<<<<<<< HEAD
 import SwiftUICore
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct WelcomeView: View {
     var onContinue: () -> Void
@@ -57,7 +60,10 @@ struct WelcomeView: View {
                             .padding()
                             .background(Color.accentColor)
                             .foregroundColor(.white)
+<<<<<<< HEAD
                             .background(AppColors.primary)
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                             .cornerRadius(12)
                             .padding(.horizontal)
                     }

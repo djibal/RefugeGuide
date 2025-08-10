@@ -8,18 +8,27 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
+<<<<<<< HEAD
 import SwiftUICore
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct ResidenceGuideView: View {
     let selectedLanguage: String
     var onContinue: () -> Void
     
+<<<<<<< HEAD
     let primaryColor = Color(hex: "#0D3B66")
     let accentColor = Color(hex: "#F95738")
     let backgroundColor = Color(hex: "#F5F9FF")
     let cardColor = Color(hex: "#FFFFFF")
     let textPrimary = Color(hex: "#1A1A1A")
     let textSecondary = Color(hex: "#555555")
+=======
+    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
+    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)   // UK accent orange
+    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
     var body: some View {
         GuideContentView(

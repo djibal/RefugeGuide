@@ -7,7 +7,10 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
+<<<<<<< HEAD
 import SwiftUICore
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct ExistingAsylumVerificationView: View {
     var onVerificationComplete: () -> Void
@@ -18,6 +21,7 @@ struct ExistingAsylumVerificationView: View {
     @State private var isLoading = false
     
     // MARK: - UI Constants
+<<<<<<< HEAD
     let primaryColor = Color(hex: "#0D3B66")
     let accentColor = Color(hex: "#F95738")
     let backgroundColor = Color(hex: "#F5F9FF")
@@ -27,6 +31,12 @@ struct ExistingAsylumVerificationView: View {
     
     
     private let cardBackground = Color.white
+=======
+        private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
+        private let secondaryColor = Color(red: 0.94, green: 0.35, blue: 0.15) // UK accent orange
+        private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+        private let cardBackground = Color.white
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     
 
     // MARK: - Localized Texts and Labels
@@ -172,7 +182,10 @@ struct ExistingAsylumVerificationView: View {
     
     var body: some View {
         TopAlignedScrollView {  // Replace ScrollView by TopAlignedScrollView
+<<<<<<< HEAD
 
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                VStack(spacing: 30) {
                    // Header with UK flag colors
                    VStack(spacing: 15) {
@@ -229,7 +242,10 @@ struct ExistingAsylumVerificationView: View {
                            Text(verifyButtonText)
                                .font(.headline)
                                .foregroundColor(.white)
+<<<<<<< HEAD
                                .background(AppColors.primary)
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                                .frame(maxWidth: .infinity)
                                .padding()
                                .background(primaryColor)
@@ -258,7 +274,10 @@ struct ExistingAsylumVerificationView: View {
                                Text(viewEVisaButtonText)
                                    .font(.headline)
                                    .foregroundColor(.white)
+<<<<<<< HEAD
                                    .background(AppColors.primary)
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                                    .frame(maxWidth: .infinity)
                                    .padding()
                                    .background(Color.green)
@@ -274,7 +293,11 @@ struct ExistingAsylumVerificationView: View {
                    VStack(alignment: .leading, spacing: 15) {
                        HStack {
                            Image(systemName: "questionmark.circle.fill")
+<<<<<<< HEAD
                                .foregroundColor(AppColors.secondary)
+=======
+                               .foregroundColor(secondaryColor)
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                                .font(.title2)
                            
                            Text(uanHelpTitle)

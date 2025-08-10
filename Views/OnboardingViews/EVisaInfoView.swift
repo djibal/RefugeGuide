@@ -5,15 +5,18 @@
 //  Created by Djibal Ramazani on 02/06/2025.
 //
 
-
 import Foundation
 import SwiftUI
 import FirebaseFunctions
+<<<<<<< HEAD
 import SwiftUICore
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct EVisaInfoView: View {
     @AppStorage("selectedLanguage") private var selectedLanguage = "en"
     
+<<<<<<< HEAD
        // MARK: - UI Constants
     let primaryColor = Color(hex: "#0D3B66")
     let accentColor = Color(hex: "#F95738")
@@ -23,6 +26,14 @@ struct EVisaInfoView: View {
     let textSecondary = Color(hex: "#555555")
     
     private let cardBackground = Color.white
+=======
+    
+       // MARK: - UI Constants
+       private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
+       private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)   // UK accent orange
+       private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
+       private let cardBackground = Color.white
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
     var body: some View {
         TopAlignedScrollView { // Replace ScrollView by TopAlignedScrollView
@@ -353,8 +364,12 @@ struct EVisaInfoView: View {
                             Text(title).font(.headline)
                         }
                         if let subtitle = subtitle {
+<<<<<<< HEAD
                             Text(subtitle).font(.subheadline).foregroundColor(AppColors.textSecondary)
 
+=======
+                            Text(subtitle).font(.subheadline).foregroundColor(.gray)
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                         }
                     }
                 }
@@ -393,7 +408,10 @@ struct EVisaInfoView: View {
                }
                .padding()
                .foregroundColor(.white)
+<<<<<<< HEAD
                .background(AppColors.primary)
+=======
+>>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                .background(color)
                .cornerRadius(12)
            }
