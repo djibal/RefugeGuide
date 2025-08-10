@@ -1,4 +1,14 @@
-# RefugeGuide 🇬🇧
+# 10 August 2025:
+-----------------------
+RefugeGuide app is built and running successfully, and all features have been tested and are working well.
+Unfortunately, the UK government does not have an API for asylum seekers and those granted visas.
+Given that this app focuses on refugees and tracks their progress, without an API is truly unprofessional, as I have to ask users to manually add all their details.
+
+From now I'm taking a break from developing the app.
+---------------------------------------------------
+
+
+# UK RefugeGuide App 🇬🇧
 
 **RefugeGuide** is a secure, multilingual iOS app designed to support asylum seekers and refugees navigating the UK asylum process. Built with SwiftUI and Firebase, it offers trusted guidance, document tools, live assistance, and access to local support resources — all in one accessible app.
 
