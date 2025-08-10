@@ -24,6 +24,13 @@ GoogleService-Info*.plist
 *.xcconfig # If using for secrets
 
 # ========================
+Info.plist
+*.AgoraAppID
+*.com.googleusercontent.apps
+*.com.googleusercontent.apps.
+
+
+# ========================
 # 📦 CocoaPods
 # ========================
 Pods/
