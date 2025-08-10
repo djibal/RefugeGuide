@@ -19,8 +19,6 @@ struct ProfileView: View {
     @State private var showErrorAlert = false
     @State private var errorMessage = ""
     @StateObject private var viewModel = ProfileViewModel()
-<<<<<<< HEAD
-    
     
     let primaryColor = Color(hex: "#0D3B66")  // Rich blue
     let accentColor = Color(hex: "#F95738")   // Bright coral-red
@@ -28,9 +26,6 @@ struct ProfileView: View {
     let backgroundColor = Color(hex: "#F5F9FF") // Soft blue-white
     let textPrimary = Color(hex: "#1A1A1A")   // Neutral dark
     let textSecondary = Color(hex: "#555555") // Medium gray
-
-=======
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     
     var body: some View {
         NavigationView {

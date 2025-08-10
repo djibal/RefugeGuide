@@ -17,10 +17,6 @@ struct UserDetails: Codable, Identifiable {
     var nationality: String?
     var language: String?
     
-<<<<<<< HEAD
-    
-=======
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     enum CodingKeys: String, CodingKey {
         case caseReference = "case_reference"
         case legalStatus = "legal_status"

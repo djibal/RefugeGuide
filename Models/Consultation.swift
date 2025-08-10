@@ -6,13 +6,9 @@
 //
 
 import Foundation
-<<<<<<< HEAD
 import FirebaseFunctions
 import FirebaseAuth
-=======
 import SwiftUI
-import FirebaseFunctions
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 import FirebaseFirestoreSwift
 
 /// Represents a scheduled or past consultation in the RefugeGuide app.

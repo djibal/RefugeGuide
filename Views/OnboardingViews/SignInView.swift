@@ -32,10 +32,6 @@ struct SignInView: View {
     let textPrimary = Color(hex: "#1A1A1A")
     let textSecondary = Color(hex: "#555555")
 
-    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)
-    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)
-    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
-
     var body: some View {
         NavigationStack(path: $path) {
             VStack(spacing: 30) {
@@ -110,7 +106,6 @@ struct SignInView: View {
                         .frame(height: 50)
                         .signInWithAppleButtonStyle(.black)
                     }
-<<<<<<< HEAD
                     if authViewModel.isBiometricLoginAvailable {
                         Button(action: {
                             authViewModel.authenticateWithBiometrics { success in
@@ -126,8 +121,6 @@ struct SignInView: View {
                         }
                         .buttonStyle(PrimaryButtonStyle(backgroundColor: accentColor))
                     }
-=======
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                 }
                 .padding(.horizontal)
 
@@ -307,10 +300,8 @@ struct SignInButtonStyle: ButtonStyle {
         configuration.label
             .font(.headline)
             .foregroundColor(.white)
-<<<<<<< HEAD
             .background(AppColors.primary)
-=======
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
+
             .frame(maxWidth: .infinity)
             .padding()
             .background(backgroundColor)

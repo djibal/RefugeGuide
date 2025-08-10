@@ -4,18 +4,10 @@
 //
 //  Created by Djibal Ramazani on 19/06/2025.
 //
-<<<<<<< HEAD
-import SwiftUI
-import Foundation
-import FirebaseFunctions
-import FirebaseFirestoreSwift
-=======
-
 
 import Foundation
 import SwiftUI
 import FirebaseFunctions
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 import FirebaseAuth
 import SwiftUICore
 

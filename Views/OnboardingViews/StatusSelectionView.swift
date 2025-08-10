@@ -7,17 +7,11 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
-<<<<<<< HEAD
 import SwiftUICore
-=======
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct StatusSelectionView: View {
     let selectedLanguage: String
     var onStatusSelected: (RefugeeUserType) -> Void
-    
-<<<<<<< HEAD
-    
     
     let primaryColor = Color(hex: "#0D3B66")
     let accentColor = Color(hex: "#F95738")
@@ -25,11 +19,7 @@ struct StatusSelectionView: View {
     let cardColor = Color(hex: "#FFFFFF")
     let textPrimary = Color(hex: "#1A1A1A")
     let textSecondary = Color(hex: "#555555")
-=======
-    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)
-    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)
-    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
+
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -156,12 +146,8 @@ struct StatusSelectionView: View {
                     Spacer()
                     
                     Image(systemName: "chevron.right")
-<<<<<<< HEAD
                         .foregroundColor(AppColors.textSecondary)
-
-=======
                         .foregroundColor(.gray)
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                 }
                 .padding()
                 .background(Color.white)

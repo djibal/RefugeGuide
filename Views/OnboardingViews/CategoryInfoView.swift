@@ -8,10 +8,7 @@
 import Foundation
 import SwiftUI
 import FirebaseFunctions
-<<<<<<< HEAD
 import SwiftUICore
-=======
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
 struct CategoryInfoView: View {
     let title: String
@@ -19,18 +16,12 @@ struct CategoryInfoView: View {
     let benefits: [String]
     let onContinue: () -> Void
     
-<<<<<<< HEAD
     let primaryColor = Color(hex: "#0D3B66")
     let accentColor = Color(hex: "#F95738")
     let backgroundColor = Color(hex: "#F5F9FF")
     let cardColor = Color(hex: "#FFFFFF")
     let textPrimary = Color(hex: "#1A1A1A")
     let textSecondary = Color(hex: "#555555")
-=======
-    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)
-    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)
-    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 
     var body: some View {
         ScrollViewReader { proxy in
@@ -65,10 +56,7 @@ struct CategoryInfoView: View {
                             .padding()
                             .background(primaryColor)
                             .foregroundColor(.white)
-<<<<<<< HEAD
                             .background(AppColors.primary)
-=======
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
                             .cornerRadius(12)
                             .lineLimit(nil)
                     }

@@ -7,13 +7,8 @@
 
 import Foundation
 import SwiftUI
-<<<<<<< HEAD
-import Foundation
 import FirebaseFunctions
 import FirebaseFirestoreSwift
-=======
-import FirebaseFunctions
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
 import FirebaseAuth
 import SwiftUICore
 

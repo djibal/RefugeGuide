@@ -20,7 +20,7 @@ struct DocumentChecklistView: View {
     @State private var isUploading = false
     @State private var selectedDocumentType: String = "Other"  // You can wire this to a Picker if needed
     
-<<<<<<< HEAD
+
        // MARK: - UI Constants
     let primaryColor = Color(hex: "#0D3B66")
     let accentColor = Color(hex: "#F95738")
@@ -28,14 +28,6 @@ struct DocumentChecklistView: View {
     let cardColor = Color(hex: "#FFFFFF")
     let textPrimary = Color(hex: "#1A1A1A")
     let textSecondary = Color(hex: "#555555")
-
-=======
-    
-       // MARK: - UI Constants
-       private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)  // Deep UK blue
-       private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)   // UK accent orange
-       private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     
     var onFinish: () -> Void = {}
     
@@ -168,10 +160,8 @@ struct DocumentChecklistView: View {
                     }
                     .font(.headline)
                     .foregroundColor(.white)
-<<<<<<< HEAD
                     .background(AppColors.primary)
-=======
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
+
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(primaryColor)

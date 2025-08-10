@@ -3,7 +3,6 @@
 //  RefugeGuide
 //
 // Created by Djibal Ramazani on 28/06/2025.
-<<<<<<< HEAD
 
 import Foundation
 import SwiftUI
@@ -11,19 +10,12 @@ import FirebaseFunctions
 import SwiftUICore
 
 struct OnboardingFlow: View {
-=======
-import Foundation
-import SwiftUI
-import FirebaseFunctions
 
-struct OnboardingFlow: View {
+    // Shared colors (use your design system)
+    private let primaryColor = AppColors.primary
+    private let accentColor = AppColors.accent
+    private let backgroundColor = AppColors.background
 
-    // Shared color constants
-    private let primaryColor = Color(red: 0.07, green: 0.36, blue: 0.65)   // Deep UK blue
-    private let accentColor = Color(red: 0.94, green: 0.35, blue: 0.15)    // UK orange
-    private let backgroundColor = Color(red: 0.96, green: 0.96, blue: 0.98)
-
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
     // Steps in onboarding flow
     private enum OnboardingStep: Int {
         case languageSelection
@@ -59,24 +51,18 @@ struct OnboardingFlow: View {
                     switch currentStep {
                     case .languageSelection:
                         LanguageSelectedView(selectedLanguage: $selectedLanguage) {
-                            withAnimation {
-                                currentStepRaw = OnboardingStep.welcome.rawValue
-                            }
+                            withAnimation { currentStepRaw = OnboardingStep.welcome.rawValue }
                         }
 
                     case .welcome:
                         WelcomeView {
-                            withAnimation {
-                                currentStepRaw = OnboardingStep.userTypeSelection.rawValue
-                            }
+                            withAnimation { currentStepRaw = OnboardingStep.userTypeSelection.rawValue }
                         }
 
                     case .userTypeSelection:
                         UserTypeSelectionView { type in
                             userType = type
-                            withAnimation {
-                                currentStepRaw = OnboardingStep.userDestination.rawValue
-                            }
+                            withAnimation { currentStepRaw = OnboardingStep.userDestination.rawValue }
                         }
 
                     case .userDestination:
@@ -92,7 +78,7 @@ struct OnboardingFlow: View {
                     #if DEBUG
                     Button(action: resetOnboarding) {
                         Label("Reset", systemImage: "arrow.uturn.backward")
-                            .labelStyle(IconOnlyLabelStyle())
+                            .labelStyle(.iconOnly)
                     }
                     #endif
                 }
@@ -107,38 +93,28 @@ struct OnboardingFlow: View {
     private var userDestinationView: some View {
         switch userType {
         case .asylumSeeker, .newAsylumSeeker, .seekingAsylum:
-<<<<<<< HEAD
+            // If you prefer to show IntroToAsylumView first, replace the next line with:
+            // IntroToAsylumView(onContinue: completeOnboarding, selectedLanguage: selectedLanguage)
             NewAsylumSeekerOnboardingView(
-                onContinue: completeOnboarding, selectedLanguage: selectedLanguage
-            )
-
-        case .existingAsylumSeeker:
-            ExistingAsylumSeekerOnboardingView(
-                onContinue: completeOnboarding, selectedLanguage: selectedLanguage
-            )
-
-        case .refugee, .residencePermitHolder, .grantedResidence:
-            GrantedAsylumSeekerOnboardingView(
-                onContinue: completeOnboarding, selectedLanguage: selectedLanguage
-=======
-            IntroToAsylumView(
                 onContinue: completeOnboarding,
                 selectedLanguage: selectedLanguage
             )
 
         case .existingAsylumSeeker:
-            ExistingAsylumVerificationView(
-                onVerificationComplete: completeOnboarding,
+            ExistingAsylumSeekerOnboardingView(
+                onContinue: completeOnboarding,
                 selectedLanguage: selectedLanguage
             )
+            // If you meant to verify instead, swap to:
+            // ExistingAsylumVerificationView(onVerificationComplete: completeOnboarding, selectedLanguage: selectedLanguage)
 
         case .refugee, .residencePermitHolder, .grantedResidence:
-            RefugeeGuideContentView(
-                selectedLanguage: selectedLanguage,
-                primaryColor: primaryColor,
-                onContinue: completeOnboarding
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
+            GrantedAsylumSeekerOnboardingView(
+                onContinue: completeOnboarding,
+                selectedLanguage: selectedLanguage
             )
+            // Or, if you want a content hub instead of onboarding:
+            // RefugeeGuideContentView(selectedLanguage: selectedLanguage, primaryColor: primaryColor, onContinue: completeOnboarding)
 
         case .unknown:
             RegistrationView(onComplete: completeOnboarding)

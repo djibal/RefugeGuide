@@ -6,31 +6,53 @@
 //
 
 import Foundation
-import SwiftUI
 import FirebaseFunctions
-<<<<<<< HEAD
 import Vision
 import UIKit
 
-=======
-import UIKit
-
-
-class DocumentAnalyzer {
-    func analyzeDocument(at url: URL, type: UKDocumentType) throws -> DocumentAIResult {
-        // Simulate some processing delay
-        Thread.sleep(forTimeInterval: 1.0)
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
-
-class DocumentAnalyzer {
+final class DocumentAnalyzer {
     private lazy var functions = Functions.functions()
 
-    func analyzeDocument(at url: URL, type: UKDocumentType, completion: @escaping (Result<DocumentAIResult, Error>) -> Void) {
+    // ✅ Keeps your original sync signature working by bridging to the async/closure flow.
+    //    (Blocks the calling thread; ok for quick compatibility. Prefer the completion API below.)
+    func analyzeDocument(at url: URL, type: UKDocumentType) throws -> DocumentAIResult {
+        var output: Result<DocumentAIResult, Error>?
+        let sema = DispatchSemaphore(value: 0)
+
+        analyzeDocument(at: url, type: type) { result in
+            output = result
+            sema.signal()
+        }
+
+        // Optional timeout to avoid hanging forever.
+        _ = sema.wait(timeout: .now() + 30)
+
+        guard let resolved = output else {
+            throw NSError(domain: "DocumentAnalyzer",
+                          code: 408,
+                          userInfo: [NSLocalizedDescriptionKey: "Analysis timed out."])
+        }
+        switch resolved {
+        case .success(let value): return value
+        case .failure(let error): throw error
+        }
+    }
+
+    // ✅ Preferred completion-based API
+    func analyzeDocument(at url: URL, type: UKDocumentType,
+                         completion: @escaping (Result<DocumentAIResult, Error>) -> Void) {
         guard let image = UIImage(contentsOfFile: url.path) else {
-            completion(.failure(NSError(domain: "DocumentAnalyzer", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to load image from URL."])))
+            completion(.failure(NSError(domain: "DocumentAnalyzer", code: 1,
+                                        userInfo: [NSLocalizedDescriptionKey: "Failed to load image from URL."])))
             return
         }
-        recognizeText(in: image) { result in
+        analyzeImage(image, type: type, completion: completion)
+    }
+
+    func analyzeImage(_ image: UIImage, type: UKDocumentType,
+                      completion: @escaping (Result<DocumentAIResult, Error>) -> Void) {
+        recognizeText(in: image) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let text):
                 self.callCloudFunction(with: text, type: type, completion: completion)
@@ -40,77 +62,69 @@ class DocumentAnalyzer {
         }
     }
 
-    func analyzeImage(_ image: UIImage, type: UKDocumentType, completion: @escaping (Result<DocumentAIResult, Error>) -> Void) {
-        recognizeText(in: image) { result in
-            switch result {
-            case .success(let text):
-                self.callCloudFunction(with: text, type: type, completion: completion)
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
+    // MARK: - OCR
 
-    private func recognizeText(in image: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
+    private func recognizeText(in image: UIImage,
+                               completion: @escaping (Result<String, Error>) -> Void) {
         guard let cgImage = image.cgImage else {
-            completion(.failure(NSError(domain: "DocumentAnalyzer", code: 2, userInfo: [NSLocalizedDescriptionKey: "Failed to create CGImage."])))
+            completion(.failure(NSError(domain: "DocumentAnalyzer", code: 2,
+                                        userInfo: [NSLocalizedDescriptionKey: "Failed to create CGImage."])))
             return
         }
 
-        let requestHandler = VNImageRequestHandler(cgImage: cgImage)
+        let handler = VNImageRequestHandler(cgImage: cgImage)
         let request = VNRecognizeTextRequest { request, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-
-            guard let observations = request.results as? [VNRecognizedTextObservation] else {
-                completion(.success(""))
-                return
-            }
-
-            let recognizedStrings = observations.compactMap { observation in
-                return observation.topCandidates(1).first?.string
-            }
-
-            completion(.success(recognizedStrings.joined(separator: "\n")))
+            let observations = (request.results as? [VNRecognizedTextObservation]) ?? []
+            let recognized = observations.compactMap { $0.topCandidates(1).first?.string }
+            completion(.success(recognized.joined(separator: "\n")))
         }
 
         do {
-            try requestHandler.perform([request])
+            try handler.perform([request])
         } catch {
             completion(.failure(error))
         }
     }
 
-    private func callCloudFunction(with text: String, type: UKDocumentType, completion: @escaping (Result<DocumentAIResult, Error>) -> Void) {
-        functions.httpsCallable("analyzeDocument").call(["text": text, "type": type.rawValue]) { result, error in
+    // MARK: - Cloud Function
+
+    private func callCloudFunction(with text: String, type: UKDocumentType,
+                                   completion: @escaping (Result<DocumentAIResult, Error>) -> Void) {
+        functions.httpsCallable("analyzeDocument").call([
+            "text": text,
+            "type": type.rawValue
+        ]) { result, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
 
             guard let data = result?.data as? [String: Any],
-            let validationStatusRaw = data["validationStatus"] as? String,
-            let validationStatus = DocumentAIResult.ValidationStatus(rawValue: validationStatusRaw) else {
-                completion(.failure(NSError(domain: "DocumentAnalyzer", code: 3, userInfo: [NSLocalizedDescriptionKey: "Invalid response from cloud function."])))
+                  let statusRaw = data["validationStatus"] as? String,
+                  let status = DocumentAIResult.ValidationStatus(rawValue: statusRaw)
+            else {
+                completion(.failure(NSError(domain: "DocumentAnalyzer", code: 3,
+                                            userInfo: [NSLocalizedDescriptionKey: "Invalid response from cloud function."])))
                 return
             }
 
-            let expiryDateTimestamp = data["expiryDate"] as? Double
-            let expiryDate = expiryDateTimestamp != nil ? Date(timeIntervalSince1970: expiryDateTimestamp!) : nil
+            let expirySeconds = data["expiryDate"] as? Double
+            let expiryDate = expirySeconds.map { Date(timeIntervalSince1970: $0) }
             let issues = data["issues"] as? [String] ?? []
             let suggestions = data["suggestions"] as? [String] ?? []
 
-            let documentResult = DocumentAIResult(
+            let doc = DocumentAIResult(
                 type: type,
-                validationStatus: validationStatus,
+                validationStatus: status,
                 expiryDate: expiryDate,
                 issues: issues,
                 suggestions: suggestions
             )
-
-            completion(.success(documentResult))
+            completion(.success(doc))
         }
     }
 }
