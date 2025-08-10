@@ -1,12 +1,10 @@
-# 10 August 2025:
------------------------
+# I'm taking a break from now / 10 August 2025:
+----------------------------------------------------------------------
 RefugeGuide app is built and running successfully, and all features have been tested and are working well.
 Unfortunately, the UK government does not have an API for asylum seekers and those granted visas.
 Given that this app focuses on refugees and tracks their progress, without an API is truly unprofessional, as I have to ask users to manually add all their details.
 
-From now I'm taking a break from developing the app.
----------------------------------------------------
-
+---
 
 # UK RefugeGuide App 🇬🇧
 
@@ -83,11 +81,9 @@ To unify the app’s appearance, RefugeGuide now uses a shared design system def
 
 - These values are applied consistently across all views including:
 
-<<<<<<< HEAD
 ##  🎨 Buttons (PrimaryButtonStyle.swift)
-=======
  🎨 Buttons (PrimaryButtonStyle.swift)
->>>>>>> f344d62e85b95a56d858d009284b283cacfae5cf
+ 
 - Cards, scroll backgrounds, and chat input areas
 - Multilingual flows and profile sections
 - This system improves maintainability, brand consistency, and prepares the app for theming and dark mode support in future updates.
