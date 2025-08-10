@@ -24,27 +24,27 @@ final class EVisaViewModel: ObservableObject {
     let textSecondary = Color(hex: "#555555")
     
     @Published var errorMessage = ""
-
+    
     let statusOptions = [
         "Application Received",
         "Interview Scheduled",
         "Decision Pending",
         "Visa Issued"
     ]
-
+    
     init() {
         loadEVisaData()
     }
-
+    
     func loadEVisaData() {
         guard let uid = Auth.auth().currentUser?.uid else {
             errorMessage = "User not authenticated"
             return
         }
-
+        
         isLoading = true
         let docRef = Firestore.firestore().collection("evisa").document(uid)
-
+        
         docRef.getDocument { [weak self] snapshot, error in
             DispatchQueue.main.async {
                 self?.isLoading = false
@@ -52,12 +52,12 @@ final class EVisaViewModel: ObservableObject {
                     self?.errorMessage = error?.localizedDescription ?? "No eVisa data found"
                     return
                 }
-
+                
                 guard let expiryTimestamp = data["expiryDate"] as? Timestamp else {
                     self?.errorMessage = "Invalid expiry date"
                     return
                 }
-
+                
                 self?.eVisaData = EVisaData(
                     userId: uid,
                     fullName: data["fullName"] as? String ?? "",
@@ -71,35 +71,38 @@ final class EVisaViewModel: ObservableObject {
             }
         }
     }
-
+    
     @MainActor
     func saveEVisaData(data: EVisaData) async throws {
         guard let uid = Auth.auth().currentUser?.uid else {
-            // Create a more specific error if you have an error enum
             throw NSError(domain: "AuthError", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
         }
-
+        
         isLoading = true
+        defer { isLoading = false }
         
         let payload: [String: Any] = [
             "fullName": data.fullName,
             "visaType": data.visaType,
-            "expiryDate": data.expiryDate,
-            "currentStatus": data.currentStatus,
-            "shareCode": data.shareCode,
+            "expiryDate": data.expiryDate,          // Timestamp is OK
+            "currentStatus": data.currentStatus,    // must be one of the allowed values
+            "shareCode": data.shareCode,            // <= 20 chars
             "issuingCountry": data.issuingCountry,
-            "issuingAuthority": data.issuingAuthority
+            "issuingAuthority": data.issuingAuthority,
+            // "statusItems": data.statusItems,      // optional: include if you add a timeline
+            "updatedAt": FieldValue.serverTimestamp()
         ]
-
+        
         do {
-            try await Firestore.firestore().collection("evisa").document(uid).setData(payload)
+            try await Firestore.firestore()
+                .collection("evisa")
+                .document(uid)
+                .setData(payload, merge: true)      // merge so we don’t wipe future fields
             self.eVisaData = data
             self.errorMessage = ""
         } catch {
             self.errorMessage = error.localizedDescription
             throw error
         }
-        
-        self.isLoading = false
     }
 }

@@ -147,7 +147,7 @@ struct MainContentView: View {
                 .rotationEffect(showMainApp ? .degrees(5) : .degrees(0))
                 .animation(.easeInOut(duration: 0.3).repeatForever(autoreverses: true), value: showMainApp)
 
-            Text("Welcome to RefugeGuide")
+            Text(NSLocalizedString("Welcome to RefugeGuide", comment: "Splash screen welcome message"))
                 .font(.title2)
                 .fontWeight(.medium)
                 .foregroundColor(AppColors.cardBackground)

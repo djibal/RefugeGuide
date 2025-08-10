@@ -347,7 +347,7 @@
 
     },
     "Cancel" : {
-
+      "comment" : "Button label to cancel an action"
     },
     "Case Reference" : {
 
@@ -359,7 +359,7 @@
 
     },
     "Category" : {
-
+      "comment" : "Picker label for post category"
     },
     "Choose File" : {
 
@@ -977,7 +977,7 @@
 
     },
     "New Post" : {
-
+      "comment" : "Navigation title for new post view"
     },
     "New Scan" : {
 
@@ -1316,10 +1316,10 @@
       "comment" : "Privacy Policy"
     },
     "Post Anonymously" : {
-
+      "comment" : "Label for anonymous posting toggle"
     },
     "Post Details" : {
-
+      "comment" : "Section header for post details"
     },
     "Post Options" : {
 
@@ -1739,10 +1739,10 @@
 
     },
     "Share Post" : {
-
+      "comment" : "Button label to share a post"
     },
     "Share your thoughts, questions, or experiences..." : {
-
+      "comment" : "Placeholder for post content text editor"
     },
     "Sign In" : {
 
@@ -1811,7 +1811,7 @@
 
     },
     "Title (required)" : {
-
+      "comment" : "Placeholder for post title"
     },
     "Travel Document" : {
 
@@ -1910,7 +1910,7 @@
 
     },
     "Welcome to RefugeGuide" : {
-
+      "comment" : "Splash screen welcome message"
     },
     "Welcome to UK Refugee Guide" : {
 
@@ -1934,7 +1934,7 @@
 
     },
     "Your Message" : {
-
+      "comment" : "Section header for post content"
     },
     "Your Right to Language Assistance" : {
 

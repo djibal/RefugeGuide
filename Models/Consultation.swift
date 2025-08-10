@@ -6,24 +6,51 @@
 //
 
 import Foundation
+import FirebaseFunctions
+import FirebaseAuth
 import FirebaseFirestoreSwift
 
-struct Consultation: Identifiable, Codable {
+/// Represents a scheduled or past consultation in the RefugeGuide app.
+struct Consultation: Identifiable, Codable, Hashable {
+    /// Firestore document ID for the consultation.
     @DocumentID var id: String?
+    
+    /// The scheduled date & time for the consultation.
     let date: Date
+    
+    /// The type of consultation (legal, medical, etc.).
     let type: ConsultationType
+    
+    /// The current status of the consultation.
     var status: ConsultationStatus
+    
+    /// Optional ID of the specialist handling the consultation.
     var specialistID: String?
+    
+    /// Optional notes or description for the consultation.
     var notes: String?
+    
+    /// Date when the consultation document was created in Firestore.
     @ServerTimestamp var createdAt: Date?
-
-    enum CodingKeys: String, CodingKey {
-        case id, date, type, status, specialistID, notes, createdAt
+    
+    // MARK: - Hashable & Equatable
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id ?? "")
+    }
+    
+    static func == (lhs: Consultation, rhs: Consultation) -> Bool {
+        lhs.id == rhs.id
     }
 }
 
-enum ConsultationType: String, Codable, CaseIterable {
-    case legal, medical, housing, psychological
+// MARK: - Consultation Types
+
+enum ConsultationType: String, Codable, CaseIterable, Hashable {
+    case legal
+    case medical
+    case housing
+    case psychological
 
     var displayName: String {
         switch self {
@@ -35,9 +62,20 @@ enum ConsultationType: String, Codable, CaseIterable {
     }
 }
 
-enum ConsultationStatus: String, Codable {
-    case scheduled = "scheduled"
-    case completed = "completed"
-    case cancelled = "cancelled"
-    case inProgress = "inProgress"
+// MARK: - Consultation Status
+
+enum ConsultationStatus: String, Codable, Hashable {
+    case scheduled
+    case completed
+    case cancelled
+    case inProgress
+
+    var displayName: String {
+        switch self {
+        case .scheduled: return "Scheduled"
+        case .completed: return "Completed"
+        case .cancelled: return "Cancelled"
+        case .inProgress: return "In Progress"
+        }
+    }
 }

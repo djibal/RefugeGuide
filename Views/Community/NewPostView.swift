@@ -31,11 +31,11 @@ struct NewPostView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Post Details")) {
-                    TextField("Title (required)", text: $postTitle)
+                Section(header: Text(NSLocalizedString("Post Details", comment: "Section header for post details"))) {
+                    TextField(NSLocalizedString("Title (required)", comment: "Placeholder for post title"), text: $postTitle)
                         .font(.headline)
                     
-                    Picker("Category", selection: $selectedCategory) {
+                    Picker(NSLocalizedString("Category", comment: "Picker label for post category"), selection: $selectedCategory) {
                         ForEach(CommunityPost.Category.allCases, id: \.self) { category in
                             Label(category.localizedName, systemImage: category.iconName)
                                 .tag(category)
@@ -44,14 +44,14 @@ struct NewPostView: View {
                     .pickerStyle(.menu)
                     
                     Toggle(isOn: $isAnonymous) {
-                        Label("Post Anonymously", systemImage: "eye.slash")
+                        Label(NSLocalizedString("Post Anonymously", comment: "Label for anonymous posting toggle"), systemImage: "eye.slash")
                     }
                 }
                 
-                Section(header: Text("Your Message")) {
+                Section(header: Text(NSLocalizedString("Your Message", comment: "Section header for post content"))) {
                     ZStack(alignment: .topLeading) {
                         if postContent.isEmpty {
-                            Text("Share your thoughts, questions, or experiences...")
+                            Text(NSLocalizedString("Share your thoughts, questions, or experiences...", comment: "Placeholder for post content text editor"))
                                 .foregroundColor(AppColors.textSecondary)
                                 .padding(.top, 8)
                                 .padding(.leading, 4)
@@ -71,7 +71,7 @@ struct NewPostView: View {
                                 ProgressView()
                             } else {
                                 Image(systemName: "paperplane.fill")
-                                Text("Share Post")
+                                Text(NSLocalizedString("Share Post", comment: "Button label to share a post"))
                                     .bold()
                             }
                             Spacer()
@@ -85,11 +85,11 @@ struct NewPostView: View {
                     .disabled(postTitle.isEmpty || postContent.isEmpty || isPosting)
                 }
             }
-            .navigationTitle("New Post")
+            .navigationTitle(NSLocalizedString("New Post", comment: "Navigation title for new post view"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button(NSLocalizedString("Cancel", comment: "Button label to cancel an action")) {
                         dismiss()
                     }
                 }

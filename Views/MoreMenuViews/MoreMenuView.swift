@@ -33,7 +33,7 @@ import SwiftUI
                         MoreMenuItem(title: "Help Resources", icon: "book.fill", destination: AnyView(HelpResourcesView()))
                         MoreMenuItem(title: "Safety Plan", icon: "shield.lefthalf.fill", destination: AnyView(SafetyPlanView()))
                         MoreMenuItem(title: "Consultations", icon: "video.fill", destination: AnyView(ConsultationListWrapper()))
-                        MoreMenuItem(title: "Legal Directory", icon: "scale.balance.fill", destination: AnyView(LegalDirectoryView()))
+                        MoreMenuItem(title: "Legal Directory", icon: "scales.circle.fill", destination: AnyView(LegalDirectoryView()))
                         MoreMenuItem(title: "Upload Document", icon: "tray.and.arrow.up.fill", destination: AnyView(UploadDocumentView()))
                         MoreMenuItem(title: "Profile", icon: "person.crop.circle", destination: AnyView(ProfileView()))
                         MoreMenuItem(title: "Settings", icon: "gearshape.fill", destination: AnyView(SettingsView()))
