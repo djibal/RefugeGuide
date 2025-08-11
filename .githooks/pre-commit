@@ -1,0 +1,4 @@
+if git diff --cached --name-only | grep -E 'GoogleService-Info.*\.plist' >/dev/null; then
+  echo "❌ Blocking commit: GoogleService-Info*.plist should not be committed."
+  exit 1
+fi
