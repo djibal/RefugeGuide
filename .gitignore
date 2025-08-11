@@ -79,3 +79,4 @@ SecureConfig.swift
 
 RefugeGuide.xcodeproj/project.pbxproj
 Utilities/SecureConfig.swift
+GoogleService-Info.plist
